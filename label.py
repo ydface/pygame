@@ -15,7 +15,7 @@ ViewInterval = 3 #间隔显示
 
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
 class LabelViewState:
-    def __init__(self, view, view_frame, move):
+    def __init__(self, view, view_frame = 0, move = [0,0]):
         self.view = view
         self.viewFrame = view_frame
         self.move = move
@@ -30,7 +30,7 @@ class FontLabel(object):
         self.fontSize = font_size
         self.text = text
 
-        self.my_font = pygame.font.SysFont(self.font, self.fontSize)
+        self.my_font = pygame.font.Font(self.font, self.fontSize)
         self.name_surface = self.my_font.render(self.text, True, (255, 255, 255))
 
     def update(self):
