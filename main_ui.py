@@ -28,11 +28,12 @@ class ExitButton(button.Button):
         button.Button.__init__(self, rect, normal_image, select_image, father)
 
     def MouseHoverEffect(self):
+        x,y = pygame.mouse.get_pos()
         if self.mouseStance:
-            text1 = label.FontLabel(Rect(100 + 5, 100, 100, 50), label.LabelViewState(label.ViewInterval,50,[0,0]), "宋体", 64, u"测 试")
-            self.father.label["test"] = text1
-        elif not self.mouseStance and self.father.label.has_key("test"):
-            del self.father.label["test"]
+            text1 = label.FontLabel(Rect(x + 50, y, 100, 50), label.LabelViewState(label.ViewForver), "resource/msyh.ttf", 16, u"点击此处退出")
+            self.father.label["exit_tips"] = text1
+        elif not self.mouseStance and self.father.label.has_key("exit_tips"):
+            del self.father.label["exit_tips"]
         #self.text1.drawSelf()
 
     def clickUpEffect(self):
