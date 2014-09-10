@@ -64,7 +64,7 @@ class UIMain(object):
         self.btn.append(ExitButton(Rect(550, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self))
 
         self.label = dict()
-        #self.text1 = label.FontLabel(Rect(250, 440, 100, 50), label.LabelViewState(label.ViewTimer,50,[0,0]), "宋体", 64, u"测 试")
+
     def drawSelf(self):
         #绘制内容
         screen.blit(self.background, (0, 0))
@@ -73,7 +73,7 @@ class UIMain(object):
 
         for lb in self.label:
             self.label[lb].drawSelf()
-        #self.text1.drawSelf()
+
     def handleEvent(self, event):
         for btn in self.btn:
             btn.handleEvent(event)

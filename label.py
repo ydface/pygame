@@ -9,13 +9,18 @@ import mypygame
 
 screen = mypygame.screen
 
-ViewForver = 1 #永久显示
-ViewTimer = 2 #定时显示
-ViewInterval = 3 #间隔显示
+#永久显示
+ViewForver = 1
+
+#定时显示
+ViewTimer = 2
+
+#间隔显示
+ViewInterval = 3
 
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
 class LabelViewState:
-    def __init__(self, view, view_frame = 0, move = [0,0]):
+    def __init__(self, view, view_frame=0, move=[0, 0]):
         self.view = view
         self.viewFrame = view_frame
         self.move = move
@@ -23,7 +28,7 @@ class LabelViewState:
         self.isView = True
 
 class FontLabel(object):
-    def __init__(self, rect, view_state, font, font_size, text = "TEXT"):
+    def __init__(self, rect, view_state, font, font_size, text="TEXT"):
         self.rect = rect
         self.viewState = view_state
         self.font = font
@@ -38,11 +43,11 @@ class FontLabel(object):
         self.rect[1] = self.rect[1] + self.viewState.move[1]
         if self.viewState.view == ViewTimer:
             if self.viewState.viewFrame > 0:
-                self.viewState.viewFrame = self.viewState.viewFrame - 1
+                self.viewState.viewFrame -= 1
                 if self.viewState.viewFrame <= 0:
                     self.viewState.isView = False
         elif self.viewState.view == ViewInterval:
-            self.viewState.curFrame = self.viewState.curFrame + 1
+            self.viewState.curFrame += + 1
             if self.viewState.viewFrame == self.viewState.curFrame:
                 self.viewState.isView = not self.viewState.isView
                 self.viewState.curFrame = 0

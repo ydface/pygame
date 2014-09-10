@@ -22,9 +22,6 @@ def drawMouse():
     pos = pygame.mouse.get_pos()
     screen.blit(resource.getImage("mouse"), (pos[0], pos[1]))
 
-    #由于鼠标变化较频繁，所以更新鼠标位子后，刷新屏幕绘制内容
-    #pygame.display.update()
-
 def hello_world():
     resource.init()
 
@@ -53,9 +50,9 @@ def hello_world():
 
         text = "FPS : " + str(1000.0 / clock.tick(60))
         view = label.LabelViewState(label.ViewForver)
-        text1 = label.FontLabel(Rect(10, 600, 10, 10), view, "resource/msyh.ttf", 16, text)
-        text1.drawSelf()
-        del text1
+        fps_label = label.FontLabel(Rect(10, 600, 10, 10), view, "resource/msyh.ttf", 16, text)
+        fps_label.drawSelf()
+        del fps_label
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
         drawMouse()
 

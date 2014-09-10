@@ -13,7 +13,7 @@ class Button(object):
     def __init__(self, rect, normal_image, select_image, father):
         #矩形 (x,y,w,h)
         self.rect = rect
-
+        
         self.father = father
         # 正常状态下图片
         self.imageNormal = normal_image
