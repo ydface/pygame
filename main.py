@@ -31,23 +31,19 @@ def hello_world():
     main = main_ui.UIMain()
     game = game_ui.UIGame()
 
-
     #循环，直到接收到窗口关闭事件
-    while True:
-
+    running = True
+    while running:
          #处理事件
         for event in pygame.event.get():
             #接收到窗口关闭事件
             if event.type == QUIT:
-                #退出
-                pygame.quit()
-                sys.exit()
+                running = False
             else:
                 if gamestate.GameState == gamestate.MainUI:
                     main.handleEvent(event)
                 elif gamestate.GameState == gamestate.GameUI:
                     game.handleEvent(event)
-
         #绘制界面
         if gamestate.GameState == gamestate.MainUI:
             main.drawSelf()
@@ -62,6 +58,9 @@ def hello_world():
 
         #将Surface对象绘制在屏幕上
         pygame.display.update()
+
+    pygame.quit()
+    sys.exit()
 
 if __name__ == "__main__":
     hello_world()
