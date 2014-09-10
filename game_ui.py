@@ -9,6 +9,7 @@ import mypygame
 import button
 import gamestate
 import resource
+import battle
 
 screen = mypygame.screen
 
@@ -40,9 +41,11 @@ class PlayerInfoButton(button.Button):
 
     def clickUpEffect(self):
         gamestate.SenceLevel = gamestate.LEVEL_0
+        self.father.battle = None
 
 class UIGame(object):
     def __init__(self):
+        self.battle = None
         self.background = []
         self.background.append(pygame.transform.scale(pygame.image.load("resource/background.jpg").convert_alpha(), screen.get_size()))
         self.background.append(pygame.transform.scale(pygame.image.load("resource/level_1_background.jpg").convert_alpha(), screen.get_size()))
@@ -112,6 +115,11 @@ class UIGame(object):
                 if self.mapOffest > 21 - self.levelBtn3.drawImage.get_width():
                     self.levelBtn3.rect[0] = baseOffest - 75 + self.battleMap.get_width() + 5 + self.levelBtn3.drawImage.get_width() - self.mapOffest
                 self.drawSelf()
+        if gamestate.SenceLevel != gamestate.LEVEL_0:
+            if not self.battle:
+                self.battle = battle.Battle(10)
+            elif self.battle:
+                self.battle.update()
 
     def resetOffest(self):
         self.mapOffest = 0
