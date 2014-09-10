@@ -13,15 +13,15 @@ import resource
 screen = mypygame.screen
 
 class LevelButton1(button.Button):
-    def __init__(self, rect, normal_image, select_image):
-        button.Button.__init__(self, rect, normal_image, select_image)
+    def __init__(self, rect, normal_image, select_image, father):
+        button.Button.__init__(self, rect, normal_image, select_image, father)
 
     def clickUpEffect(self):
         gamestate.SenceLevel = gamestate.LEVEL_1
 
 class PlayerInfoButton(button.Button):
-    def __init__(self, rect, normal_image, select_image):
-        button.Button.__init__(self, rect, normal_image, select_image)
+    def __init__(self, rect, normal_image, select_image, father):
+        button.Button.__init__(self, rect, normal_image, select_image, father)
 
     def clickUpEffect(self):
         gamestate.GameState = gamestate.MainUI
@@ -34,7 +34,7 @@ class UIGame(object):
         self.background.append(pygame.transform.scale(pygame.image.load("resource/level_2_background.jpg").convert_alpha(), screen.get_size()))
 
         self.playerBtnRect = Rect(mypygame.screenwidth - 100, mypygame.screenheight - 80, resource.getImage("player").get_width(), resource.getImage("player").get_height())
-        self.playerBtn = PlayerInfoButton(self.playerBtnRect, resource.getImage("player"), None)
+        self.playerBtn = PlayerInfoButton(self.playerBtnRect, resource.getImage("player"), None, self)
 
         self.battleMap = resource.getImage("big_map")
         self.battleMap = pygame.transform.scale(self.battleMap,( self.battleMap.get_width() /2, self.battleMap.get_height() / 2))
@@ -46,7 +46,7 @@ class UIGame(object):
         self.levelBtn1Rect = Rect(163,111,resource.getImage("level_1_0").get_width() / 2, resource.getImage("level_1_0").get_height() / 2)
         imageLevel11 = pygame.transform.scale(resource.getImage("level_1_1"),( resource.getImage("level_1_1").get_width() /2, resource.getImage("level_1_1").get_height() / 2))
         imageLevel10 = pygame.transform.scale(resource.getImage("level_1_0"),( resource.getImage("level_1_0").get_width() /2, resource.getImage("level_1_0").get_height() / 2))
-        self.levelBtn1 = LevelButton1(self.levelBtn1Rect, imageLevel11, imageLevel10)
+        self.levelBtn1 = LevelButton1(self.levelBtn1Rect, imageLevel11, imageLevel10, self)
 
     def drawSelf(self):
         #绘制内容

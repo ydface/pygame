@@ -10,10 +10,11 @@ import mypygame
 screen = mypygame.screen
 
 class Button(object):
-    def __init__(self, rect, normal_image, select_image):
+    def __init__(self, rect, normal_image, select_image, father):
         #矩形 (x,y,w,h)
         self.rect = rect
 
+        self.father = father
         # 正常状态下图片
         self.imageNormal = normal_image
 
@@ -35,7 +36,12 @@ class Button(object):
         if event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
+                self.mouseStance = True
                 self.MouseHoverEffect()
+            else:
+                self.mouseStance = False
+                self.MouseHoverEffect()
+
         elif event.type == MOUSEBUTTONUP:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
