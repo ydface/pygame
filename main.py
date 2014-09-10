@@ -32,13 +32,12 @@ def hello_world():
     game = game_ui.UIGame()
 
     #循环，直到接收到窗口关闭事件
-    running = True
-    while running:
+    while mypygame.running:
          #处理事件
         for event in pygame.event.get():
             #接收到窗口关闭事件
             if event.type == QUIT:
-                running = False
+                mypygame.running = False
             else:
                 if gamestate.GameState == gamestate.MainUI:
                     main.handleEvent(event)
@@ -52,7 +51,11 @@ def hello_world():
             game.update()
             game.drawSelf()
 
-        frame = clock.tick(60)
+        text = "FPS : " + str(1000.0 / clock.tick(60))
+        view = label.LabelViewState(label.ViewForver)
+        text1 = label.FontLabel(Rect(10, 600, 10, 10), view, "resource/msyh.ttf", 16, text)
+        text1.drawSelf()
+        del text1
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
         drawMouse()
 

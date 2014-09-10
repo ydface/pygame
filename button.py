@@ -37,15 +37,16 @@ class Button(object):
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.mouseStance = True
-                self.MouseHoverEffect()
             else:
                 self.mouseStance = False
-                self.MouseHoverEffect()
+            self.MouseHoverEffect()
 
         elif event.type == MOUSEBUTTONUP:
+            self.clickUp()
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
-                self.clickUp()
+                #点中影响
+                self.clickUpEffect()
 
     def MouseHoverEffect(self):
         pass
@@ -67,6 +68,3 @@ class Button(object):
     def clickUp(self):
         self.drawImage = self.imageNormal
         self.drawSelf()
-
-        #点中影响
-        self.clickUpEffect()

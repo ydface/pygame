@@ -19,6 +19,16 @@ class StartButton(button.Button):
     def __init__(self, rect, normal_image, select_image, father):
         button.Button.__init__(self, rect, normal_image, select_image, father)
 
+    def MouseHoverEffect(self):
+        if self.mouseStance:
+            x, y = pygame.mouse.get_pos()
+            rect = Rect(x + 30, y + 30, 100, 50)
+            view = label.LabelViewState(label.ViewForver)
+            text1 = label.FontLabel(rect, view, "resource/msyh.ttf", 16, u"点击开始游戏")
+            self.father.label["start_tips"] = text1
+        elif not self.mouseStance and self.father.label.has_key("start_tips"):
+            del self.father.label["start_tips"]
+
     def clickUpEffect(self):
         gamestate.GameState = gamestate.GameUI
 
@@ -28,16 +38,18 @@ class ExitButton(button.Button):
         button.Button.__init__(self, rect, normal_image, select_image, father)
 
     def MouseHoverEffect(self):
-        x,y = pygame.mouse.get_pos()
         if self.mouseStance:
-            text1 = label.FontLabel(Rect(x + 50, y, 100, 50), label.LabelViewState(label.ViewForver), "resource/msyh.ttf", 16, u"点击此处退出")
+            x, y = pygame.mouse.get_pos()
+            rect = Rect(x + 30, y + 30, 100, 50)
+            view = label.LabelViewState(label.ViewForver)
+            text1 = label.FontLabel(rect, view, "resource/msyh.ttf", 16, u"点击此处退出")
             self.father.label["exit_tips"] = text1
         elif not self.mouseStance and self.father.label.has_key("exit_tips"):
             del self.father.label["exit_tips"]
         #self.text1.drawSelf()
 
     def clickUpEffect(self):
-        raise SystemExit
+        mypygame.running = False
 
 #主界面
 class UIMain(object):

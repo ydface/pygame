@@ -45,16 +45,27 @@ def loadMainUIImage():
     image = loadImage("resource/2.png")
     game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
 
+    image = loadImage(("resource/2.jpg"))
+    game_sources["play_btn"] = image.subsurface((20, 160), (130, 200))
+
 def loadBattleMapImage():
     global game_sources
-    image = loadImage("resource/worldmapUI/map_background1.pvr.ccz.png")
+    image1 = loadImage("resource/worldmapUI/map_background1.pvr.ccz.png")
+    image2 = loadImage("resource/worldmapUI/worldmapui.pvr.ccz.png")
 
-    game_sources["big_map"] = image.subsurface((0, 0), (850, 570))
-    game_sources["map_key"] = image.subsurface((890, 2), (40, 620))
+    game_sources["big_map"] = image1.subsurface((0, 0), (850, 570))
+    game_sources["map_key"] = image1.subsurface((890, 2), (40, 620))
 
-    game_sources["level_1_0"] = image.subsurface((0, 575), (185, 100))
-    game_sources["level_1_1"] = image.subsurface((185, 575), (185, 100))
+    game_sources["level_1_0"] = image1.subsurface((0, 575), (185, 100))
+    game_sources["level_1_1"] = image1.subsurface((185, 575), (185, 100))
+    game_sources["level_1_1"] = image1.subsurface((185, 575), (185, 100))
+    game_sources["level_1_1"] = image1.subsurface((185, 575), (185, 100))
 
+    game_sources["level_2_0"] = image2.subsurface((2, 180), (240, 150))
+    game_sources["level_2_1"] = image2.subsurface((245, 180), (240, 150))
+
+    game_sources["level_3_1"] = image2.subsurface((240, 475), (185, 150))
+    game_sources["level_3_0"] = image2.subsurface((556, 537), (185, 150))
 
 def loadHeaderImage():
     global game_sources
