@@ -69,10 +69,10 @@ def loadBattleMapImage():
 
 def loadHeaderImage():
     global game_sources
-    image = loadImage("resource/header.png")
+    image = loadImage("resource/header1.png")
 
-    hImage = image.subsurface((0, 0), (450, 160))
-    hImage = pygame.transform.scale(hImage, (hImage.get_width() / 2, hImage.get_height() / 2))
+    hImage = image.subsurface((365, 95), (175, 63))
+    hImage = pygame.transform.scale(hImage, (hImage.get_width(), hImage.get_height()))
     game_sources["header_line"] = hImage
 
 def init():

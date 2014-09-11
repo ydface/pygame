@@ -46,7 +46,7 @@ def hello_world():
             game.resetOffest()
         elif gamestate.GameState == gamestate.GameUI:
             game.update()
-            game.drawSelf()
+            #game.drawSelf()
 
         text = "FPS : " + str(1000.0 / clock.tick(60))
         view = label.LabelViewState(label.ViewForver)

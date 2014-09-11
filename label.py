@@ -54,4 +54,5 @@ class FontLabel(object):
     def drawSelf(self):
         self.update()
         if self.viewState.isView:
+            #print "not draw"
             screen.blit(self.name_surface, (self.rect[0], self.rect[1]))

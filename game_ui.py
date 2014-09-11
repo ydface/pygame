@@ -10,6 +10,7 @@ import button
 import gamestate
 import resource
 import battle
+import label
 
 screen = mypygame.screen
 
@@ -42,6 +43,7 @@ class PlayerInfoButton(button.Button):
     def clickUpEffect(self):
         gamestate.SenceLevel = gamestate.LEVEL_0
         self.father.battle = None
+        self.father.labels.clear()
 
 class UIGame(object):
     def __init__(self):
@@ -77,6 +79,7 @@ class UIGame(object):
         imageLevel30 = pygame.transform.scale(resource.getImage("level_3_0"),( resource.getImage("level_3_0").get_width() /2, resource.getImage("level_3_0").get_height() / 2))
         self.levelBtn3 = LevelButton3(self.levelBtn3Rect, imageLevel31, imageLevel30, self)
 
+        self.labels = dict()
     def drawSelf(self):
         #绘制内容
         screen.blit(self.background[gamestate.SenceLevel], (0, 0))
@@ -92,9 +95,20 @@ class UIGame(object):
             screen.set_clip((0, 0, mypygame.screenwidth, mypygame.screenwidth))
 
             screen.blit(self.mapKey, (baseOffest + 6 + self.battleMap.get_width() - self.mapOffest - self.mapKey.get_width(), 10))
-        elif gamestate.SenceLevel == gamestate.LEVEL_1:
-            screen.blit(resource.getImage("header_line"), (250, 250))
+
         self.playerBtn.drawSelf()
+
+        #self.labels = filter(lambda x: x.viewState.view == label.ViewTimer and not x.viewState.isView, self.labels)
+
+        if self.battle:
+            self.battle.drawSelf()
+
+        for lb in self.labels.keys():
+            if self.labels[lb].viewState.view == label.ViewTimer and not self.labels[lb].viewState.isView:
+                del self.labels[lb]
+        #print len(self.labels)
+        for lb in self.labels:
+            self.labels[lb].drawSelf()
 
     def handleEvent(self, event):
         self.playerBtn.handleEvent(event)
@@ -114,12 +128,13 @@ class UIGame(object):
                     self.levelBtn2.rect[0] = baseOffest + 168 + self.battleMap.get_width() + 5 + self.levelBtn2.drawImage.get_width() - self.mapOffest
                 if self.mapOffest > 21 - self.levelBtn3.drawImage.get_width():
                     self.levelBtn3.rect[0] = baseOffest - 75 + self.battleMap.get_width() + 5 + self.levelBtn3.drawImage.get_width() - self.mapOffest
-                self.drawSelf()
+                #self.drawSelf()
         if gamestate.SenceLevel != gamestate.LEVEL_0:
             if not self.battle:
-                self.battle = battle.Battle(10)
+                self.battle = battle.Battle(10, self)
             elif self.battle:
                 self.battle.update()
+        self.drawSelf()
 
     def resetOffest(self):
         self.mapOffest = 0
