@@ -82,7 +82,7 @@ class BattleUnit(button.Button):
         if not self.target or self.target.dead:
             for m in self.father.layer_child[LayerButton]:
                 monster = self.father.layer_child[LayerButton][m]
-                if monster.type == "monster" and not monster.dead:
+                if isinstance(monster, BattleUnit) and monster.type == "monster" and not monster.dead:
                     self.target = monster
 
         self.attack_enable = False
@@ -93,7 +93,7 @@ class BattleUnit(button.Button):
         if self.target.hp <= 0:
             self.target.hp = 0
         rect = Rect(self.target.rect[0] + 200, self.target.rect[1] + 30, 100, 50)
-        view = label.LabelViewState(label.ViewTimer, 120, [0, -0.3])
+        view = label.LabelViewState(label.ViewTimer, 60, [0, -0.3])
         text = str(-self.attack)
         text1 = label.FontLabel(rect, view, 16, text)
         self.father.layer_child[LayerLabel][str(count)] = text1
@@ -120,18 +120,20 @@ class Battle(util.node.Node):
         player.update()
         if not player.dead and player.attack_enable:
             player.attack_target()
-            self.check_end()
 
-        if not self.end:
+        if not self.check_end():
             for unit in self.layer_child[LayerButton]:
                 monster = self.layer_child[LayerButton][unit]
+                if not isinstance(monster, BattleUnit) or monster.type != "monster" or monster.dead:
+                    continue
                 monster.update()
-                if not monster.dead and monster.attack_enable and unit != "player":
-                    monster.attack_target()
-                    self.check_end()
-                    if self.end:
-                        break
-        if self.end:
+                if not monster.attack_enable:
+                    continue
+                monster.update()
+                monster.attack_target()
+                if self.check_end():
+                    break
+        else:
             self.next_delay += 1
 
             rect = Rect(200, 30, 100, 50)
@@ -154,6 +156,9 @@ class Battle(util.node.Node):
 
 
     def check_end(self):
+        if self.end:
+            return self.end
+
         player = self.layer_child[LayerButton]["player"]
         if player.hp <= 0:
             self.end = True
@@ -167,7 +172,7 @@ class Battle(util.node.Node):
             for unit in self.layer_child[LayerButton]:
                 monster = self.layer_child[LayerButton][unit]
                 if not monster.dead and unit != "player":
-                    return
+                    return False
             self.end = True
             self.playerWin = True
 
@@ -175,4 +180,6 @@ class Battle(util.node.Node):
             view = label.LabelViewState(label.ViewForver)
             text1 = label.FontLabel(rect, view, 16, "You Win")
             self.layer_child[LayerLabel]["result"] = text1
+
+        return self.end
 
