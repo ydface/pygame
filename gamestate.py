@@ -16,3 +16,7 @@ LEVEL_4 = 4
 LEVEL_5 = 5
 LEVEL_6 = 6
 SenceLevel = LEVEL_0
+
+LayerUI = "0"
+LayerButton = "1"
+LayerLabel = "2"

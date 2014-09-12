@@ -6,13 +6,17 @@ __author__ = 'Ydface'
 import pygame, sys, pygame.mixer
 from pygame.locals import *
 import mypygame
+import util.node
 import button
 import gamestate
 import resource
 import label
 
-pygame = mypygame.pygame
 screen = mypygame.screen
+
+LayerButton = gamestate.LayerButton
+LayerLabel = gamestate.LayerLabel
+LayerUI = gamestate.LayerUI
 
 #开始游戏按钮
 class StartButton(button.Button):
@@ -25,9 +29,9 @@ class StartButton(button.Button):
             rect = Rect(x + 30, y + 30, 100, 50)
             view = label.LabelViewState(label.ViewForver)
             text1 = label.FontLabel(rect, view, "resource/msyh.ttf", 16, u"点击开始游戏")
-            self.father.label["start_tips"] = text1
-        elif not self.mouseStance and self.father.label.has_key("start_tips"):
-            del self.father.label["start_tips"]
+            self.father.layer_child[LayerLabel]["start_tips"] = text1
+        elif not self.mouseStance and self.father.layer_child[LayerLabel].has_key("start_tips"):
+            del self.father.layer_child[LayerLabel]["start_tips"]
 
     def clickUpEffect(self):
         gamestate.GameState = gamestate.GameUI
@@ -43,37 +47,18 @@ class ExitButton(button.Button):
             rect = Rect(x + 30, y + 30, 100, 50)
             view = label.LabelViewState(label.ViewForver)
             text1 = label.FontLabel(rect, view, "resource/msyh.ttf", 16, u"点击此处退出")
-            self.father.label["exit_tips"] = text1
-        elif not self.mouseStance and self.father.label.has_key("exit_tips"):
-            del self.father.label["exit_tips"]
+            self.father.layer_child[LayerLabel]["exit_tips"] = text1
+        elif not self.mouseStance and self.father.layer_child[LayerLabel].has_key("exit_tips"):
+            del self.father.layer_child[LayerLabel]["exit_tips"]
         #self.text1.drawSelf()
 
     def clickUpEffect(self):
         mypygame.running = False
 
 #主界面
-class UIMain(object):
+class UIMain(util.node.Node):
     def __init__(self):
-        #背景
-        self.background = pygame.image.load("resource/background.jpg").convert_alpha()
-        self.background = pygame.transform.scale(self.background, screen.get_size())
+        util.node.Node.__init__(self)
 
-        #按钮
-        self.btn = []
-        self.btn.append(StartButton(Rect(350, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self))
-        self.btn.append(ExitButton(Rect(550, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self))
-
-        self.label = dict()
-
-    def drawSelf(self):
-        #绘制内容
-        #screen.blit(self.background, (0, 0))
-        for btn in self.btn:
-            btn.drawSelf()
-
-        for lb in self.label:
-            self.label[lb].drawSelf()
-
-    def handleEvent(self, event):
-        for btn in self.btn:
-            btn.handleEvent(event)
+        self.layer_child[LayerButton]["start"] = StartButton(Rect(350, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
+        self.layer_child[LayerButton]["exit"] = ExitButton(Rect(550, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)

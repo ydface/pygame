@@ -6,6 +6,7 @@ __author__ = 'Ydface'
 import pygame, sys, pygame.mixer
 from pygame.locals import *
 import mypygame
+import util.node
 
 screen = mypygame.screen
 
@@ -27,8 +28,10 @@ class LabelViewState:
         self.curFrame = 0
         self.isView = True
 
-class FontLabel(object):
+class FontLabel(util.node.Node):
     def __init__(self, rect, view_state, font, font_size, text="TEXT"):
+        util.node.Node.__init__(self)
+
         self.rect = rect
         self.viewState = view_state
         self.font = font
@@ -51,7 +54,7 @@ class FontLabel(object):
             if self.viewState.viewFrame == self.viewState.curFrame:
                 self.viewState.isView = not self.viewState.isView
                 self.viewState.curFrame = 0
-    def drawSelf(self):
+    def draw_self(self):
         self.update()
         if self.viewState.isView:
             #print "not draw"

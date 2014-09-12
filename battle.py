@@ -9,12 +9,14 @@ import mypygame
 import random
 import resource
 import label
+import util.node
 
 screen = mypygame.screen
 
 count = 0
-class BattleUnit(object):
+class BattleUnit(util.node.Node):
     def __init__(self, level, image, rect, father):
+        util.node.Node.__init__(self)
         self.hp = 1000 + level * 100
         self.maxHp = self.hp
         self.attack = 100 + level * 20
@@ -26,7 +28,7 @@ class BattleUnit(object):
         self.activeProcess = 0
         self.deadDraw = False
 
-    def drawSelf(self):
+    def draw_self(self):
         global count
         screen.blit(self.image, (self.rect[0], self.rect[1]))
         w = int(float(self.hp) / self.maxHp * 100)
@@ -83,10 +85,10 @@ class Battle(object):
                     if self.end:
                         break
 
-    def drawSelf(self):
-        self.player.drawSelf()
+    def draw_self(self):
+        self.player.draw_self()
         for unit in self.monsters:
-            unit.drawSelf()
+            unit.draw_self()
 
     def checkEnd(self):
         if self.player.hp <= 0:

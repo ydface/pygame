@@ -3,13 +3,14 @@
 
 __author__ = 'Ydface'
 
-import pygame, sys, pygame.mixer
+import pygame
+import sys
+import pygame.mixer
 from pygame.locals import *
 import mypygame
 import button
 import gamestate
 
-pygame = mypygame.pygame
 screen = mypygame.screen
 
 game_sources = dict()

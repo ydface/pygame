@@ -4,7 +4,9 @@
 __author__ = 'Ydface'
 
 
-import pygame, sys, pygame.mixer
+import pygame
+import sys
+import pygame.mixer
 from pygame.locals import *
 
 #pygame 初始化
@@ -21,7 +23,7 @@ pygame.mouse.set_visible(False)
 pygame.mixer.set_num_channels(32)
 
 #设置窗口标题
-pygame.display.set_caption("放弃传奇")
+pygame.display.set_caption("放置传奇")
 
 screenwidth=screen.get_width()
 screenheight=screen.get_height()

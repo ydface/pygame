@@ -3,14 +3,18 @@
 
 __author__ = 'Ydface'
 
-import pygame, sys, pygame.mixer
+import pygame
+import sys
+import pygame.mixer
 from pygame.locals import *
 import mypygame
+import util.node
 
 screen = mypygame.screen
 
-class Button(object):
+class Button(util.node.Node):
     def __init__(self, rect, normal_image, select_image, father):
+        util.node.Node.__init__(self)
         #矩形 (x,y,w,h)
         self.rect = rect
         
@@ -24,10 +28,10 @@ class Button(object):
 
         self.moveAble = False
 
-    def drawSelf(self):
+    def draw_self(self):
         screen.blit(self.drawImage, (self.rect[0], self.rect[1]))
 
-    def handleEvent(self, event):
+    def handle_event(self, event):
         #点击事件检测与处理
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
@@ -62,9 +66,9 @@ class Button(object):
         #如果有点中效果变化，则变化
         if self.imageSelected:
             self.drawImage = self.imageSelected
-            self.drawSelf()
+            self.draw_self()
         self.clickDownEffect()
 
     def clickUp(self):
         self.drawImage = self.imageNormal
-        self.drawSelf()
+        self.draw_self()
