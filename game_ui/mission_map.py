@@ -28,6 +28,8 @@ class LevelButton1(button.Button):
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_1
+        gamestate.current_ui = battle.Battle(3,None)
+        #del self.father.father.layer_child[LayerUI]["mission_map"]
 
 class LevelButton2(button.Button):
     def __init__(self, rect, normal_image, select_image, father):
@@ -35,6 +37,8 @@ class LevelButton2(button.Button):
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_2
+        gamestate.current_ui = battle.Battle(3,None)
+        #del self.father.father.layer_child[LayerUI]["mission_map"]
 
 class LevelButton3(button.Button):
     def __init__(self, rect, normal_image, select_image, father):
@@ -42,12 +46,16 @@ class LevelButton3(button.Button):
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_3
+        gamestate.current_ui = battle.Battle(3,None)
+        #del self.father.father.layer_child[LayerUI]["mission_map"]
 
-baseOffest = 200
+base_offest = 200
 
-class MissionMap(util.node.Node):
-    def __init__(self):
-        util.node.Node.__init__(self)
+class MissionMapUI(util.node.Node):
+    def __init__(self, father, zorder):
+        util.node.Node.__init__(self, zorder)
+
+        self.father = father
 
         self.offest = 0
 
@@ -74,9 +82,9 @@ class MissionMap(util.node.Node):
 
     def draw_self(self):
         if gamestate.SenceLevel == gamestate.LEVEL_0:
-            screen.blit(self.background_side, (baseOffest + self.background.get_width(), 10))
-            screen.set_clip(baseOffest + 3 + self.background.get_width() - self.offest, 20, self.offest, self.background.get_height())
-            screen.blit(self.background, (baseOffest + self.background.get_width() - self.offest, 20))
+            screen.blit(self.background_side, (base_offest + self.background.get_width(), 10))
+            screen.set_clip(base_offest + 3 + self.background.get_width() - self.offest, 20, self.offest, self.background.get_height())
+            screen.blit(self.background, (base_offest + self.background.get_width() - self.offest, 20))
 
             for dc in self.layer_child:
                 for c in self.layer_child[dc]:
@@ -84,7 +92,8 @@ class MissionMap(util.node.Node):
 
             screen.set_clip((0, 0, mypygame.screenwidth, mypygame.screenwidth))
 
-            screen.blit(self.background_side, (baseOffest + 6 + self.background.get_width() - self.offest - self.background_side.get_width(), 10))
+            screen.blit(self.background_side, (base_offest + 6 + self.background.get_width() - self.offest - self.background_side.get_width(), 10))
+
     def update(self):
         if gamestate.SenceLevel == gamestate.LEVEL_0:
             if self.offest < self.background.get_width() - 3:
@@ -92,8 +101,8 @@ class MissionMap(util.node.Node):
                 if self.offest > self.background.get_width():
                     self.offest = self.background.get_width() - 3
                 if self.offest > 136 - self.layer_child[LayerButton]["level_1"].draw_image.get_width():
-                    self.layer_child[LayerButton]["level_1"].rect[0] = baseOffest + self.background.get_width() + 5 + 2*self.layer_child[LayerButton]["level_1"].draw_image.get_width()/3 - self.offest
+                    self.layer_child[LayerButton]["level_1"].rect[0] = base_offest + self.background.get_width() + 5 + 2*self.layer_child[LayerButton]["level_1"].draw_image.get_width()/3 - self.offest
                 if self.offest > 290 - self.layer_child[LayerButton]["level_2"].draw_image.get_width():
-                    self.layer_child[LayerButton]["level_2"].rect[0] = baseOffest + 168 + self.background.get_width() + 5 + self.layer_child[LayerButton]["level_2"].draw_image.get_width() - self.offest
+                    self.layer_child[LayerButton]["level_2"].rect[0] = base_offest + 168 + self.background.get_width() + 5 + self.layer_child[LayerButton]["level_2"].draw_image.get_width() - self.offest
                 if self.offest > 21 - self.layer_child[LayerButton]["level_3"].draw_image.get_width():
-                    self.layer_child[LayerButton]["level_3"].rect[0] = baseOffest - 75 + self.background.get_width() + 5 + self.layer_child[LayerButton]["level_3"].draw_image.get_width() - self.offest
+                    self.layer_child[LayerButton]["level_3"].rect[0] = base_offest - 75 + self.background.get_width() + 5 + self.layer_child[LayerButton]["level_3"].draw_image.get_width() - self.offest

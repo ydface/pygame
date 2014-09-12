@@ -62,5 +62,5 @@ class UIMain(util.node.Node):
     def __init__(self):
         util.node.Node.__init__(self)
 
-        self.layer_child[LayerButton]["start"] = StartButton(Rect(350, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
-        self.layer_child[LayerButton]["exit"] = ExitButton(Rect(550, 440, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
+        self.layer_child[LayerButton]["start"] = StartButton(Rect(345, 420, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
+        self.layer_child[LayerButton]["exit"] = ExitButton(Rect(345, 500, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
