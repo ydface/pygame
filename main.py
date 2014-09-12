@@ -31,6 +31,7 @@ def hello_world():
     #循环，直到接收到窗口关闭事件
     while mypygame.running:
          #处理事件
+        screen.blit(resource.background[gamestate.SenceLevel], (0, 0))
         for event in pygame.event.get():
             #接收到窗口关闭事件
             if event.type == QUIT:

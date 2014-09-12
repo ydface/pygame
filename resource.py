@@ -13,6 +13,7 @@ pygame = mypygame.pygame
 screen = mypygame.screen
 
 game_sources = dict()
+background = []
 
 def getImage(key):
     global game_sources
@@ -75,10 +76,18 @@ def loadHeaderImage():
     hImage = pygame.transform.scale(hImage, (hImage.get_width(), hImage.get_height()))
     game_sources["header_line"] = hImage
 
+    game_sources["attribute"] = loadImage("resource/attributeUI.jpg")
+
 def init():
+    global background
     loadMainUIImage()
     loadBtnImage()
     loadBattleMapImage()
     loadHeaderImage()
     game_sources["start_normal"] = loadImage("resource/start_normal.jpg")
     game_sources["start_down"] = loadImage("resource/start_down.jpg")
+
+    background.append(pygame.transform.scale(pygame.image.load("resource/background.jpg").convert_alpha(), screen.get_size()))
+    background.append(pygame.transform.scale(pygame.image.load("resource/level_1_background.jpg").convert_alpha(), screen.get_size()))
+    background.append(pygame.transform.scale(pygame.image.load("resource/level_2_background.jpg").convert_alpha(), screen.get_size()))
+    background.append(pygame.transform.scale(pygame.image.load("resource/level_3_background.jpg").convert_alpha(), screen.get_size()))

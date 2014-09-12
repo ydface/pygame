@@ -41,6 +41,7 @@ class PlayerInfoButton(button.Button):
         button.Button.__init__(self, rect, normal_image, select_image, father)
 
     def clickUpEffect(self):
+        #screen.blit(resource.getImage("attribute"), (0, 0))
         gamestate.SenceLevel = gamestate.LEVEL_0
         self.father.battle = None
         self.father.labels.clear()
@@ -52,7 +53,7 @@ class UIGame(object):
         self.background.append(pygame.transform.scale(pygame.image.load("resource/background.jpg").convert_alpha(), screen.get_size()))
         self.background.append(pygame.transform.scale(pygame.image.load("resource/level_1_background.jpg").convert_alpha(), screen.get_size()))
         self.background.append(pygame.transform.scale(pygame.image.load("resource/level_2_background.jpg").convert_alpha(), screen.get_size()))
-        self.background.append(pygame.transform.scale(pygame.image.load("resource/level_2_background.jpg").convert_alpha(), screen.get_size()))
+        self.background.append(pygame.transform.scale(pygame.image.load("resource/level_3_background.jpg").convert_alpha(), screen.get_size()))
 
         self.playerBtnRect = Rect(mypygame.screenwidth - 100, mypygame.screenheight - 80, resource.getImage("player").get_width(), resource.getImage("player").get_height())
         self.playerBtn = PlayerInfoButton(self.playerBtnRect, resource.getImage("player"), None, self)
@@ -82,7 +83,7 @@ class UIGame(object):
         self.labels = dict()
     def drawSelf(self):
         #绘制内容
-        screen.blit(self.background[gamestate.SenceLevel], (0, 0))
+        #screen.blit(self.background[gamestate.SenceLevel], (0, 0))
         if gamestate.SenceLevel == gamestate.LEVEL_0:
             screen.blit(self.mapKey, (baseOffest + self.battleMap.get_width(), 10))
             screen.set_clip(baseOffest + 3 + self.battleMap.get_width() - self.mapOffest, 20, self.mapOffest, self.battleMap.get_height())
@@ -98,15 +99,13 @@ class UIGame(object):
 
         self.playerBtn.drawSelf()
 
-        #self.labels = filter(lambda x: x.viewState.view == label.ViewTimer and not x.viewState.isView, self.labels)
-
         if self.battle:
             self.battle.drawSelf()
 
         for lb in self.labels.keys():
             if self.labels[lb].viewState.view == label.ViewTimer and not self.labels[lb].viewState.isView:
                 del self.labels[lb]
-        #print len(self.labels)
+
         for lb in self.labels:
             self.labels[lb].drawSelf()
 

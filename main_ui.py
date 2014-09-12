@@ -67,7 +67,7 @@ class UIMain(object):
 
     def drawSelf(self):
         #绘制内容
-        screen.blit(self.background, (0, 0))
+        #screen.blit(self.background, (0, 0))
         for btn in self.btn:
             btn.drawSelf()
 
