@@ -50,6 +50,8 @@ def hello_world():
         #将Surface对象绘制在屏幕上
         pygame.display.update()
 
+    gamestate.current_ui = None
+
     pygame.quit()
     sys.exit()
 

@@ -21,8 +21,12 @@ LayerUI = gamestate.LayerUI
 
 #开始游戏按钮
 class StartButton(button.Button):
-    def __init__(self, rect, normal_image, select_image, father):
-        button.Button.__init__(self, rect, normal_image, select_image, father)
+    def __init__(self, father):
+        rect = Rect(345, 420, 100, 50)
+        image1 = resource.getImage("start_normal")
+        image0 = resource.getImage("start_down")
+
+        button.Button.__init__(self, rect, image1, image0, father)
 
     def mouse_hover_effect(self):
         if self.mouse_stance:
@@ -36,12 +40,15 @@ class StartButton(button.Button):
 
     def click_up_effect(self):
         gamestate.current_ui = game_ui.mission_ui.UIGame()
-        #gamestate.GameState = gamestate.GameUI
 
 #退出游戏按钮
 class ExitButton(button.Button):
-    def __init__(self, rect, normal_image, select_image, father):
-        button.Button.__init__(self, rect, normal_image, select_image, father)
+    def __init__(self, father):
+        rect = Rect(345, 500, 100, 50)
+        image1 = resource.getImage("start_normal")
+        image0 = resource.getImage("start_down")
+
+        button.Button.__init__(self, rect, image1, image0, father)
 
     def mouse_hover_effect(self):
         if self.mouse_stance:
@@ -52,7 +59,6 @@ class ExitButton(button.Button):
             self.father.layer_child[LayerLabel]["exit_tips"] = text1
         elif not self.mouse_stance and self.father.layer_child[LayerLabel].has_key("exit_tips"):
             del self.father.layer_child[LayerLabel]["exit_tips"]
-        #self.text1.drawSelf()
 
     def click_up_effect(self):
         mypygame.running = False
@@ -62,5 +68,5 @@ class UIMain(util.node.Node):
     def __init__(self):
         util.node.Node.__init__(self)
 
-        self.layer_child[LayerButton]["start"] = StartButton(Rect(345, 420, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
-        self.layer_child[LayerButton]["exit"] = ExitButton(Rect(345, 500, 100, 50), resource.getImage("start_normal"), resource.getImage("start_down"), self)
+        self.layer_child[LayerButton]["start"] = StartButton(self)
+        self.layer_child[LayerButton]["exit"] = ExitButton(self)
