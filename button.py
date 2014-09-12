@@ -17,58 +17,59 @@ class Button(util.node.Node):
         util.node.Node.__init__(self)
         #矩形 (x,y,w,h)
         self.rect = rect
-        
+
         self.father = father
         # 正常状态下图片
-        self.imageNormal = normal_image
+        self.image_normal = normal_image
 
         #鼠标点击下图片
-        self.imageSelected = select_image
-        self.drawImage = self.imageNormal
+        self.image_selected = select_image
+        self.draw_image = self.image_normal
 
-        self.moveAble = False
+        #鼠标悬停
+        self.mouse_stance = False
 
     def draw_self(self):
-        screen.blit(self.drawImage, (self.rect[0], self.rect[1]))
+        screen.blit(self.draw_image, (self.rect[0], self.rect[1]))
 
     def handle_event(self, event):
         #点击事件检测与处理
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
-                self.clickDown()
+                self.click_down()
         if event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
-                self.mouseStance = True
+                self.mouse_stance = True
             else:
-                self.mouseStance = False
-            self.MouseHoverEffect()
+                self.mouse_stance = False
+            self.mouse_hover_effect()
 
         elif event.type == MOUSEBUTTONUP:
-            self.clickUp()
+            self.click_up()
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 #点中影响
-                self.clickUpEffect()
+                self.click_up_effect()
 
-    def MouseHoverEffect(self):
+    def mouse_hover_effect(self):
         pass
 
-    def clickDownEffect(self):
+    def click_down_effect(self):
         pass
 
     #点击效果，默认无效果
-    def clickUpEffect(self):
+    def click_up_effect(self):
         pass
 
-    def clickDown(self):
+    def click_down(self):
         #如果有点中效果变化，则变化
-        if self.imageSelected:
-            self.drawImage = self.imageSelected
+        if self.image_selected:
+            self.draw_image = self.image_selected
             self.draw_self()
-        self.clickDownEffect()
+        self.click_down_effect()
 
-    def clickUp(self):
-        self.drawImage = self.imageNormal
+    def click_up(self):
+        self.draw_image = self.image_normal
         self.draw_self()

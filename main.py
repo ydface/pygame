@@ -7,8 +7,6 @@ import sys
 import pygame
 from pygame.locals import *
 from game_ui import main_ui
-from game_ui import mission_ui
-
 import mypygame
 import gamestate
 import resource
@@ -25,8 +23,7 @@ def draw_mouse():
 def hello_world():
     resource.init()
 
-    main = main_ui.UIMain()
-    game = mission_ui.UIGame()
+    gamestate.current_ui = main_ui.UIMain()
 
     #循环，直到接收到窗口关闭事件
     while mypygame.running:
@@ -37,17 +34,9 @@ def hello_world():
             if event.type == QUIT:
                 mypygame.running = False
             else:
-                if gamestate.GameState == gamestate.MainUI:
-                    main.handle_event(event)
-                elif gamestate.GameState == gamestate.GameUI:
-                    game.handle_event(event)
-        #绘制界面
-        if gamestate.GameState == gamestate.MainUI:
-            main.draw_self()
-            game.resetOffest()
-        elif gamestate.GameState == gamestate.GameUI:
-            game.update()
-            #game.drawSelf()
+                gamestate.current_ui.handle_event(event)
+        gamestate.current_ui.update()
+        gamestate.current_ui.draw_self()
 
         text = "FPS : " + str(1000.0 / clock.tick(60))
         view = label.LabelViewState(label.ViewForver)

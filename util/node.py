@@ -31,4 +31,6 @@ class Node(object):
                 self.layer_child[dc][c].draw_self()
 
     def update(self):
-        pass
+        for dc in self.layer_child:
+            for c in self.layer_child[dc]:
+                self.layer_child[dc][c].update()

@@ -7,6 +7,7 @@ import pygame, sys, pygame.mixer
 from pygame.locals import *
 import mypygame
 import util.node
+import game_ui.mission_ui
 import button
 import gamestate
 import resource
@@ -23,36 +24,37 @@ class StartButton(button.Button):
     def __init__(self, rect, normal_image, select_image, father):
         button.Button.__init__(self, rect, normal_image, select_image, father)
 
-    def MouseHoverEffect(self):
-        if self.mouseStance:
+    def mouse_hover_effect(self):
+        if self.mouse_stance:
             x, y = pygame.mouse.get_pos()
             rect = Rect(x + 30, y + 30, 100, 50)
             view = label.LabelViewState(label.ViewForver)
             text1 = label.FontLabel(rect, view, "resource/msyh.ttf", 16, u"点击开始游戏")
             self.father.layer_child[LayerLabel]["start_tips"] = text1
-        elif not self.mouseStance and self.father.layer_child[LayerLabel].has_key("start_tips"):
+        elif not self.mouse_stance and self.father.layer_child[LayerLabel].has_key("start_tips"):
             del self.father.layer_child[LayerLabel]["start_tips"]
 
-    def clickUpEffect(self):
-        gamestate.GameState = gamestate.GameUI
+    def click_up_effect(self):
+        gamestate.current_ui = game_ui.mission_ui.UIGame()
+        #gamestate.GameState = gamestate.GameUI
 
 #退出游戏按钮
 class ExitButton(button.Button):
     def __init__(self, rect, normal_image, select_image, father):
         button.Button.__init__(self, rect, normal_image, select_image, father)
 
-    def MouseHoverEffect(self):
-        if self.mouseStance:
+    def mouse_hover_effect(self):
+        if self.mouse_stance:
             x, y = pygame.mouse.get_pos()
             rect = Rect(x + 30, y + 30, 100, 50)
             view = label.LabelViewState(label.ViewForver)
             text1 = label.FontLabel(rect, view, "resource/msyh.ttf", 16, u"点击此处退出")
             self.father.layer_child[LayerLabel]["exit_tips"] = text1
-        elif not self.mouseStance and self.father.layer_child[LayerLabel].has_key("exit_tips"):
+        elif not self.mouse_stance and self.father.layer_child[LayerLabel].has_key("exit_tips"):
             del self.father.layer_child[LayerLabel]["exit_tips"]
         #self.text1.drawSelf()
 
-    def clickUpEffect(self):
+    def click_up_effect(self):
         mypygame.running = False
 
 #主界面
