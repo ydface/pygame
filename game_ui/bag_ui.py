@@ -21,6 +21,8 @@ class Item(util.node.Node):
 
         self.item_id = item_id
         self.image = resource.getImage("item_" + str(self.item_id))
+        self.index = pos
+
         x = pos % 6
         y = pos / 6
 

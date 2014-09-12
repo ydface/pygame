@@ -12,7 +12,6 @@ import gamestate
 import resource
 import label
 
-pygame = mypygame.pygame
 screen = mypygame.screen
 clock = mypygame.clock
 
@@ -38,11 +37,11 @@ def hello_world():
         gamestate.current_ui.update()
         gamestate.current_ui.draw_self()
 
-        text = "FPS : " + str(1000.0 / clock.tick(60))
+        frame = clock.tick(60)
+        text = "FPS : " + str(1000.0 / frame)
         view = label.LabelViewState(label.ViewForver)
-        fps_label = label.FontLabel(Rect(10, 600, 10, 10), view, "resource/msyh.ttf", 16, text)
+        fps_label = label.FontLabel(Rect(10, 600, 10, 10), view, 16, text)
         fps_label.draw_self()
-        del fps_label
 
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
         draw_mouse()

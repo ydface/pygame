@@ -29,12 +29,12 @@ class LabelViewState:
         self.isView = True
 
 class FontLabel(util.node.Node):
-    def __init__(self, rect, view_state, font, font_size, text="TEXT"):
+    def __init__(self, rect, view_state, font_size, text="TEXT"):
         util.node.Node.__init__(self)
 
         self.rect = rect
         self.viewState = view_state
-        self.font = font
+        self.font = "resource/msyh.ttf"
         self.fontSize = font_size
         self.text = text
 
