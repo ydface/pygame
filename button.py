@@ -38,7 +38,7 @@ class Button(util.node.Node):
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.click_down()
-        if event.type == MOUSEMOTION:
+        elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.mouse_stance = True
@@ -67,9 +67,7 @@ class Button(util.node.Node):
         #如果有点中效果变化，则变化
         if self.image_selected:
             self.draw_image = self.image_selected
-            self.draw_self()
         self.click_down_effect()
 
     def click_up(self):
         self.draw_image = self.image_normal
-        self.draw_self()

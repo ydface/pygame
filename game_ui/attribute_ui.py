@@ -22,4 +22,4 @@ class AttributeUI(util.node.Node):
         self.image = resource.getImage("attribute")
 
     def draw_self(self):
-        screen.blit(self.image, (400, 300))
+        screen.blit(self.image, (100, 300))
