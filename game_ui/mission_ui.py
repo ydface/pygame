@@ -41,7 +41,8 @@ class PlayerInfoButton(button.Button):
         else:
             del self.father.layer_child[LayerUI]["attribute"]
             self.ui_view = False
-            self.father.layer_child[LayerUI]["mission_map"].event_enable = True
+            if not self.father.layer_child[LayerUI].has_key("bag"):
+                self.father.layer_child[LayerUI]["mission_map"].event_enable = True
 
 class BagButton(button.Button):
     def __init__(self, father):
@@ -60,7 +61,8 @@ class BagButton(button.Button):
         else:
             del self.father.layer_child[LayerUI]["bag"]
             self.ui_view = False
-            self.father.layer_child[LayerUI]["mission_map"].event_enable = True
+            if not self.father.layer_child[LayerUI].has_key("attribute"):
+                self.father.layer_child[LayerUI]["mission_map"].event_enable = True
 
 class UIGame(util.node.Node):
     def __init__(self):

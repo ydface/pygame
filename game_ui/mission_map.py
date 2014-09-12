@@ -108,6 +108,8 @@ class MissionMapUI(util.node.Node):
             if self.offest < self.background.get_width() - 3:
                 self.event_enable = False
                 self.offest = self.offest + 3
+                if self.offest >= self.background.get_width() - 3:
+                    self.event_enable = True
                 if self.offest > self.background.get_width():
                     self.offest = self.background.get_width() - 3
                 if self.offest > 136 - self.layer_child[LayerButton]["level_1"].draw_image.get_width():
@@ -116,5 +118,3 @@ class MissionMapUI(util.node.Node):
                     self.layer_child[LayerButton]["level_2"].rect[0] = base_offest + 168 + self.background.get_width() + 5 + self.layer_child[LayerButton]["level_2"].draw_image.get_width() - self.offest
                 if self.offest > 21 - self.layer_child[LayerButton]["level_3"].draw_image.get_width():
                     self.layer_child[LayerButton]["level_3"].rect[0] = base_offest - 75 + self.background.get_width() + 5 + self.layer_child[LayerButton]["level_3"].draw_image.get_width() - self.offest
-            else:
-                self.event_enable = True

@@ -22,7 +22,7 @@ LayerUI = gamestate.LayerUI
 
 count = 0
 class BattleUnit(button.Button):
-    def __init__(self, level, image, rect, father):
+    def __init__(self, level, image, rect, father, target, type="monster"):
         button.Button.__init__(self, rect, image, resource.getImage("attribute"), father)
         self.hp = 1000 + level * 100
         self.maxHp = self.hp
@@ -35,6 +35,8 @@ class BattleUnit(button.Button):
         self.activeProcess = 0
         self.deadDraw = False
         self.attack_enable = False
+        self.target = target
+        self.type = type
 
     def draw_self(self):
         global count
@@ -65,28 +67,39 @@ class BattleUnit(button.Button):
             self.father.layer_child[LayerLabel][str(count)] = text1
             self.deadDraw = True
 
+    def click_up_effect(self):
+        if self.type == "monster":
+            player = self.father.layer_child[LayerButton]["player"]
+            player.target = self
+
     def update(self):
         self.activeProcess += 1
         if self.activeProcess > self.speed:
             self.activeProcess = 0
             self.attack_enable = True
 
-    def attack_target(self, other):
-            self.attack_enable = False
+    def attack_target(self):
+        if not self.target or self.target.dead:
+            for m in self.father.layer_child[LayerButton]:
+                monster = self.father.layer_child[LayerButton][m]
+                if monster.type == "monster" and not monster.dead:
+                    self.target = monster
 
-            global count
-            count += 1
-            other.hp -= self.attack
-            if other.hp <= 0:
-                other.hp = 0
-            rect = Rect(other.rect[0] + 200, other.rect[1] + 30, 100, 50)
-            view = label.LabelViewState(label.ViewTimer, 120, [0, -0.3])
-            text = str(-self.attack)
-            text1 = label.FontLabel(rect, view, 16, text)
-            self.father.layer_child[LayerLabel][str(count)] = text1
+        self.attack_enable = False
 
-            if other.hp <= 0:
-                other.dead = True
+        global count
+        count += 1
+        self.target.hp -= self.attack
+        if self.target.hp <= 0:
+            self.target.hp = 0
+        rect = Rect(self.target.rect[0] + 200, self.target.rect[1] + 30, 100, 50)
+        view = label.LabelViewState(label.ViewTimer, 120, [0, -0.3])
+        text = str(-self.attack)
+        text1 = label.FontLabel(rect, view, 16, text)
+        self.father.layer_child[LayerLabel][str(count)] = text1
+
+        if self.target.hp <= 0:
+            self.target.dead = True
 
 class Battle(util.node.Node):
     def __init__(self, level, father):
@@ -95,19 +108,18 @@ class Battle(util.node.Node):
 
         self.end = False
         self.playerWin = False
+        self.layer_child[LayerButton]["player"] = BattleUnit(5, resource.getImage("header_line"), Rect(100, 360, 100, 50), self, None, "player")
+        player = self.layer_child[LayerButton]["player"]
         for i in range(0, num):
-            self.layer_child[LayerButton][str(i)] = BattleUnit(1, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self)
-        self.layer_child[LayerButton]["player"] = BattleUnit(5, resource.getImage("header_line"), Rect(100, 360, 100, 50), self)
+            self.layer_child[LayerButton][str(i)] = BattleUnit(1, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, player)
 
         self.next_delay = 0
 
     def update(self):
-        targetIdx = random.randint(0, len(self.layer_child[LayerButton]) - 2)
-        target = self.layer_child[LayerButton][str(targetIdx)]
         player = self.layer_child[LayerButton]["player"]
         player.update()
-        if not target.dead and not player.dead and player.attack_enable:
-            player.attack_target(target)
+        if not player.dead and player.attack_enable:
+            player.attack_target()
             self.check_end()
 
         if not self.end:
@@ -115,7 +127,7 @@ class Battle(util.node.Node):
                 monster = self.layer_child[LayerButton][unit]
                 monster.update()
                 if not monster.dead and monster.attack_enable and unit != "player":
-                    monster.attack_target(player)
+                    monster.attack_target()
                     self.check_end()
                     if self.end:
                         break
@@ -134,6 +146,7 @@ class Battle(util.node.Node):
             else:
                 gamestate.current_ui = game_ui.mission_ui.UIGame()
 
+        #移除过期label显示
         for key in self.layer_child[LayerLabel].keys():
             view_state = self.layer_child[LayerLabel][key]
             if view_state.viewState.view == label.ViewTimer and not view_state.viewState.isView:
