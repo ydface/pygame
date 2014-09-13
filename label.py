@@ -25,8 +25,9 @@ COLOR_GREEN = (0, 128, 0)
 COLOR_WHITE = (255, 255, 255)
 
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
-class LabelViewState:
+class LabelViewState(object):
     def __init__(self, view, view_frame=0, move=[0, 0]):
+        super(LabelViewState, self).__init__()
         self.view = view
         self.viewFrame = view_frame
         self.move = move

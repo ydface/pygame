@@ -4,8 +4,9 @@
 __author__ = 'Ydface'
 
 import gamestate
+import pygame
 
-class Node(object):
+class Node(pygame.sprite.Sprite):
     def __init__(self, zorder = 1):
         super(Node, self).__init__()
 

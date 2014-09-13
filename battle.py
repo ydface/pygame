@@ -50,6 +50,7 @@ class ExitButton(button.Button):
 class BattleUnit(button.Button, attribute.Attribute):
     def __init__(self, level, image, rect, father, target, type="monster"):
         super(BattleUnit, self).__init__(rect, image, resource.getImage("attribute"), father)
+        attribute.Attribute.__init__(self)
         self.hp = 1000 + level * 100
         self.max_hp = self.hp
         self.attack = 100 + level * 20

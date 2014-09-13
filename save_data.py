@@ -11,7 +11,7 @@ save_obj = None
 
 class Save(object):
     def __init__(self):
-        pass
+        super(Save, self).__init__()
 
     @staticmethod
     def save():

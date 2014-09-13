@@ -36,6 +36,8 @@ COLOR_WHITE = (255, 255, 255)
 
 class SkillEffect(object):
     def __init__(self, skill, source, target, battle_inst):
+        super(SkillEffect, self).__init__()
+
         self.skill = skill
         self.effect_paras = skill_config[str(self.skill.skill_id)]["paras"]
         self.source = source
@@ -72,6 +74,8 @@ class SkillEffect(object):
 
 class Skill(object):
     def __init__(self, skill_id, level):
+        super(Skill, self).__init__()
+
         self.skill_id = skill_id
         self.level = level
         self.cool_down = 0

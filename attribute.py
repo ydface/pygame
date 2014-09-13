@@ -6,6 +6,7 @@ __author__ = 'Ydface'
 
 class Attribute(object):
     def __init__(self):
+        super(Attribute, self).__init__()
         self.level = 1
         self.attack = 1
         self.defense = 50
