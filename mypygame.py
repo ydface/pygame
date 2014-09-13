@@ -25,8 +25,8 @@ pygame.mixer.set_num_channels(32)
 #设置窗口标题
 pygame.display.set_caption("放置传奇")
 
-screenwidth=screen.get_width()
-screenheight=screen.get_height()
+screenwidth = screen.get_width()
+screenheight = screen.get_height()
 
 running = True
 

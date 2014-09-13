@@ -132,29 +132,33 @@ class BattleUnit(button.Button, attribute.Attribute):
         count += 1
         damage = 0
         if not self.skills:
-            damage = self.attack - self.target.defense
+            damage = -(self.attack - self.target.defense)
+            self.target.hp += damage
         else:
             if self.skills_index >= len(self.skills):
                 self.skills_index = 0
             cur_skill = self.skills[0]
             if not cur_skill.cool_down:
-                skill_effect = skill.SkillEffect(cur_skill.skill_id, cur_skill.level)
-                damage = skill_effect.damage_value()
+                effect = skill.SkillEffect(cur_skill.skill_id, cur_skill.level)
+                damage = effect.effect_active(self)
                 self.skills_index += 1
                 cur_skill.cool_down = random.randint(60, 180)
             else:
-                damage = self.attack - self.target.defense
+                damage = -(self.attack - self.target.defense)
+                self.target.hp += damage
 
-        self.target.hp -= damage
-        if self.target.hp <= 0:
-            self.target.hp = 0
         rect = Rect(self.target.rect[0] + 200, self.target.rect[1] + 30, 100, 50)
         view = label.LabelViewState(label.ViewTimer, 60, [0, -0.3])
-        text = str(-damage)
-        text1 = label.FontLabel(rect, view, 16, text)
+        text = str(damage)
+        if damage < 0:
+            text1 = label.FontLabel(rect, view, 16, text, label.COLOR_RED)
+        else:
+            text1 = label.FontLabel(rect, view, 16, text, label.COLOR_GREEN)
+
         self.father.layer_child[LayerLabel][str(count)] = text1
 
         if self.target.hp <= 0:
+            self.target.hp = 0
             self.target.dead = True
 
 

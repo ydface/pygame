@@ -20,6 +20,10 @@ ViewTimer = 2
 ViewInterval = 3
 
 
+COLOR_RED = (255, 0, 0)
+COLOR_GREEN = (0, 128, 0)
+COLOR_WHITE = (255, 255, 255)
+
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
 class LabelViewState:
     def __init__(self, view, view_frame=0, move=[0, 0]):
@@ -31,7 +35,7 @@ class LabelViewState:
 
 
 class FontLabel(util.node.Node):
-    def __init__(self, rect, view_state, font_size, text="TEXT"):
+    def __init__(self, rect, view_state, font_size, text="TEXT", color=COLOR_WHITE):
         util.node.Node.__init__(self)
 
         self.rect = rect
@@ -41,7 +45,7 @@ class FontLabel(util.node.Node):
         self.text = text
 
         self.my_font = pygame.font.Font(self.font, self.fontSize)
-        self.name_surface = self.my_font.render(self.text, True, (255, 255, 255))
+        self.name_surface = self.my_font.render(self.text, True, color)
 
     def update(self):
         self.rect[0] = self.rect[0] + self.viewState.move[0]
