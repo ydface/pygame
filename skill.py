@@ -3,37 +3,63 @@
 
 __author__ = 'Ydface'
 
+import random
+
 skill_config = {
     "1": {
-        "skill_effect": 1,
-        "effect_paras": [125, 25]
+        "paras": [125, 25]
     },
-    "2":{
-        "skill_effect": 2,
-        "effect_paras": [145, 25]
+    "2": {
+        "paras": [145, 25]
+    },
+    "3": {
+        "paras": [100, 25, 30]
     }
 }
 
+NORMAL = 1
+CRIT = 2
+MISS = 3
+
+COLOR_RED = (255, 0, 0)
+COLOR_GREEN = (0, 128, 0)
+COLOR_WHITE = (255, 255, 255)
+
 
 class SkillEffect(object):
-    def __init__(self, skill_id, level):
+    def __init__(self, skill_id, level, source, target, battle_inst):
         self.skill_id = skill_id
-        self.skill_effect = skill_config[str(self.skill_id)]["skill_effect"]
-        self.effect_paras = skill_config[str(self.skill_id)]["effect_paras"]
+        self.effect_paras = skill_config[str(self.skill_id)]["paras"]
         self.level = level
+        self.source = source
+        self.target = target
+        self.btl_instance = battle_inst
 
-    def effect_value(self, attack, defense):
-        return int(attack * (self.level * 5 + self.effect_paras[0]) / float(100) + self.effect_paras[1] - defense)
+    def effect_value(self):
+        return int(self.source.attack * (self.level * 5 + self.effect_paras[0]) // 100 + self.effect_paras[1] - self.target.defense)
 
-    def effect_active(self, source):
-        if 1 == self.skill_effect or 2 == self.skill_effect:
-            damage = self.effect_value(source.attack, source.target.defense)
-            source.target.hp -= damage
-            return -damage
-        elif 101 == self.skill_effect:
+    def effect_active(self):
+        if 1 == self.skill_id:
+            damage = self.effect_value()
+            self.target.hp -= damage
+
+            text = str(-damage)
+            self.btl_instance.add_hp_change_label(self.target, text, 16, COLOR_RED)
+        elif 3 == self.skill_id:
+            damage = self.effect_value()
+            ra = random.randint(1, 100)
+            text = str(-damage)
+            if ra <= self.effect_paras[2]:
+                damage = int(damage *1.5)
+                text += u"暴击 "
+            self.target.hp -= damage
+            self.btl_instance.add_hp_change_label(self.target, text, 16, COLOR_RED)
+        elif 2 == self.skill_id:
             cure = self.effect_value()
-            source.hp += cure
-            return cure
+            self.source.recover_hp(cure)
+
+            text = str(cure)
+            self.btl_instance.add_hp_change_label(self.source, text, 16, COLOR_GREEN)
 
 
 class Skill(object):

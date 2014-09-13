@@ -41,6 +41,7 @@ class Save(object):
 
         skill_obj = save_obj["skill"]
         skill_obj.append({"skill_id": 1, "level": 1})
+        skill_obj.append({"skill_id": 2, "level": 1})
 
     @staticmethod
     def load(module):

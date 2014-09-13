@@ -32,9 +32,9 @@ class AttributeUI(util.node.Node):
         level_surface = my_font.render(tx_level, True, (255, 255, 255))
         screen.blit(level_surface, (self.rect[0] + 75, self.rect[1] + 96))
 
-        tx_exp = str(gamestate.player.exp)
+        tx_exp = str(gamestate.player.exp) + " / " + str(gamestate.player.n_exp)
         exp_surface = my_font.render(tx_exp, True, (255, 255, 255))
-        screen.blit(exp_surface, (self.rect[0] + 105, self.rect[1] + 96))
+        screen.blit(exp_surface, (self.rect[0] + 165, self.rect[1] + 96))
 
     def handle_event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:

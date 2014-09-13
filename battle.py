@@ -64,8 +64,9 @@ class BattleUnit(button.Button, attribute.Attribute):
         self.attack_enable = False
         self.target = target
         self.type = type
+        self.skills = []
         if type == "monster":
-            self.skills = []
+            self.skills.append(skill.Skill(1, 1))
         else:
             self.skills = gamestate.player.skills
         self.skills_index = 0
@@ -128,34 +129,15 @@ class BattleUnit(button.Button, attribute.Attribute):
 
         self.attack_enable = False
 
-        global count
-        count += 1
-        damage = 0
-        if not self.skills:
-            damage = -(self.attack - self.target.defense)
-            self.target.hp += damage
-        else:
-            if self.skills_index >= len(self.skills):
-                self.skills_index = 0
-            cur_skill = self.skills[0]
-            if not cur_skill.cool_down:
-                effect = skill.SkillEffect(cur_skill.skill_id, cur_skill.level)
-                damage = effect.effect_active(self)
-                self.skills_index += 1
-                cur_skill.cool_down = random.randint(60, 180)
-            else:
-                damage = -(self.attack - self.target.defense)
-                self.target.hp += damage
+        if self.skills_index >= len(self.skills):
+            self.skills_index = 0
+        cur_skill = self.skills[self.skills_index]
+        if not cur_skill.cool_down:
+            effect = skill.SkillEffect(cur_skill.skill_id, cur_skill.level, self, self.target, self.father)
+            effect.effect_active()
+            self.skills_index += 1
+            cur_skill.cool_down = random.randint(60, 180)
 
-        rect = Rect(self.target.rect[0] + 200, self.target.rect[1] + 30, 100, 50)
-        view = label.LabelViewState(label.ViewTimer, 60, [0, -0.3])
-        text = str(damage)
-        if damage < 0:
-            text1 = label.FontLabel(rect, view, 16, text, label.COLOR_RED)
-        else:
-            text1 = label.FontLabel(rect, view, 16, text, label.COLOR_GREEN)
-
-        self.father.layer_child[LayerLabel][str(count)] = text1
 
         if self.target.hp <= 0:
             self.target.hp = 0
@@ -249,4 +231,11 @@ class Battle(util.node.Node):
             self.layer_child[LayerLabel]["result"] = text1
 
         return self.end
+
+    def add_hp_change_label(self, target, text, font_size, color):
+        global count
+        view = label.LabelViewState(label.ViewTimer, 60, [0, -0.3])
+        rect = Rect(target.rect[0] + 200, target.rect[1] + 30, 100, 50)
+        lb = label.FontLabel(rect, view, font_size, text, color)
+        self.layer_child[LayerLabel][str(count)] = lb
 

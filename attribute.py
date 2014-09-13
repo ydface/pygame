@@ -14,3 +14,9 @@ class Attribute(object):
         self.max_hp = 1
         self.crit = 0
         self.parry = 0
+
+    def recover_hp(self, val):
+        if self.hp + val > self.max_hp:
+            self.hp = self.max_hp
+        else:
+            self.hp += val

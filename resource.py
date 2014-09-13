@@ -52,8 +52,8 @@ def loadMainUIImage():
     image = loadImage("resource/2.png")
     game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
 
-    image = loadImage(("resource/2.jpg"))
-    game_sources["play_btn"] = image.subsurface((20, 160), (130, 200))
+    #image = loadImage(("resource/2.jpg"))
+    #game_sources["play_btn"] = image.subsurface((20, 160), (130, 200))
 
     image = loadImage("resource/bag.png")
     game_sources["bag_background"] = image.subsurface((6, 455), (412, 135))
