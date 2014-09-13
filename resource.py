@@ -42,6 +42,16 @@ def loadBtnImage():
             itemName = "item_" + str( max_width * i + (j + 1))
             game_sources[itemName] = image.subsurface((37.5 * i, 37.5 * j), (37.5, 37.5))
 
+    image = loadImage("resource/skills.png").subsurface((75, 325), (375, 650))
+    max_width = int(image.get_width() / 75)
+    max_height = int(image.get_height() / 75)
+    for i in range(max_width):
+        for j in range(max_height):
+            itemName = "skill_" + str( max_width * i + (j + 1))
+            himage = image.subsurface((75 * i, 75 * j), (59, 59))
+            himage = pygame.transform.scale(himage, (37, 37))
+            game_sources[itemName] = himage
+
 
 def loadMainUIImage():
     global game_sources

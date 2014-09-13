@@ -9,9 +9,9 @@ import skill
 
 level_exp_sequence = [100, 186, 368, 495, 602, 733, 901, 1186, 1423, 1765, 2132, 2598, 3065, 3656, 4645, 5243, 5923, 6885]
 skill_study = {
-    "14" : 3,
-    "25" : 4,
-    "35" : 5
+    "4" : 3,
+    "5" : 4,
+    "6" : 5
 }
 
 class Player(attribute.Attribute):

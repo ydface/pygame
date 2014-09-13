@@ -7,13 +7,17 @@ import random
 
 skill_config = {
     "1": {
-        "paras": [125, 25]
+        "paras": [125, 25],
+        "content": u"对当前目标造成(125 + 5 * 等级)% + 25点固定伤害",
+        "cool_down": 15
     },
     "2": {
-        "paras": [145, 25]
+        "paras": [145, 25],
+        "cool_down": 18
     },
     "3": {
-        "paras": [100, 25, 30]
+        "paras": [100, 25, 30],
+        "cool_down": 20
     }
 }
 
@@ -27,25 +31,25 @@ COLOR_WHITE = (255, 255, 255)
 
 
 class SkillEffect(object):
-    def __init__(self, skill_id, level, source, target, battle_inst):
-        self.skill_id = skill_id
-        self.effect_paras = skill_config[str(self.skill_id)]["paras"]
-        self.level = level
+    def __init__(self, skill, source, target, battle_inst):
+        self.skill = skill
+        self.effect_paras = skill_config[str(self.skill.skill_id)]["paras"]
         self.source = source
         self.target = target
         self.btl_instance = battle_inst
+        self.skill.cool_down = skill_config[str(self.skill.skill_id)]["cool_down"]
 
     def effect_value(self):
-        return int(self.source.attack * (self.level * 5 + self.effect_paras[0]) // 100 + self.effect_paras[1] - self.target.defense)
+        return int(self.source.attack * (self.skill.level * 5 + self.effect_paras[0]) // 100 + self.effect_paras[1] - self.target.defense)
 
     def effect_active(self):
-        if 1 == self.skill_id:
+        if 1 == self.skill.skill_id:
             damage = self.effect_value()
             self.target.hp -= damage
 
             text = str(-damage)
             self.btl_instance.add_hp_change_label(self.target, text, 16, COLOR_RED)
-        elif 3 == self.skill_id:
+        elif 3 == self.skill.skill_id:
             damage = self.effect_value()
             ra = random.randint(1, 100)
             text = str(-damage)
@@ -54,7 +58,7 @@ class SkillEffect(object):
                 text += u"暴击 "
             self.target.hp -= damage
             self.btl_instance.add_hp_change_label(self.target, text, 16, COLOR_RED)
-        elif 2 == self.skill_id:
+        elif 2 == self.skill.skill_id:
             cure = self.effect_value()
             self.source.recover_hp(cure)
 

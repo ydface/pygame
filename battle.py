@@ -67,6 +67,7 @@ class BattleUnit(button.Button, attribute.Attribute):
         self.skills = []
         if type == "monster":
             self.skills.append(skill.Skill(1, 1))
+            self.exp = random.randint(10, 100)
         else:
             self.skills = gamestate.player.skills
         self.skills_index = 0
@@ -93,10 +94,10 @@ class BattleUnit(button.Button, attribute.Attribute):
         if w:
             pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 24, w, 8))
 
-            my_font = pygame.font.Font("resource/msyh.ttf", 8)
-            tx_hp = str(self.hp) + " / " + str(self.max_hp)
-            hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
-            screen.blit(hp_surface, (self.rect[0] + 79, self.rect[1] + 23))
+        my_font = pygame.font.Font("resource/msyh.ttf", 8)
+        tx_hp = str(self.hp) + " / " + str(self.max_hp)
+        hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
+        screen.blit(hp_surface, (self.rect[0] + 79, self.rect[1] + 23))
 
         if self.dead and not self.deadDraw:
             rect = Rect(self.rect[0] + 77, self.rect[1] + 3, 100, 50)
@@ -133,21 +134,22 @@ class BattleUnit(button.Button, attribute.Attribute):
             self.skills_index = 0
         cur_skill = self.skills[self.skills_index]
         if not cur_skill.cool_down:
-            effect = skill.SkillEffect(cur_skill.skill_id, cur_skill.level, self, self.target, self.father)
+            effect = skill.SkillEffect(cur_skill, self, self.target, self.father)
             effect.effect_active()
             self.skills_index += 1
             cur_skill.cool_down = random.randint(60, 180)
 
-
         if self.target.hp <= 0:
             self.target.hp = 0
             self.target.dead = True
+            if self.type == "player":
+                gamestate.player.add_exp(self.target.exp)
 
 
 class Battle(util.node.Node):
     def __init__(self, level):
         util.node.Node.__init__(self)
-        num = random.randint(1, 2)
+        num = random.randint(1, 6)
 
         self.end = False
         self.playerWin = False
@@ -155,11 +157,10 @@ class Battle(util.node.Node):
         self.layer_child[LayerButton]["player"] = BattleUnit(gamestate.player.level, resource.getImage("header_line"), Rect(100, 360, 100, 50), self, None, "player")
         player = self.layer_child[LayerButton]["player"]
         for i in range(0, num):
-            self.layer_child[LayerButton][str(i)] = BattleUnit(1, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, player)
+            level = random.randint(1, gamestate.player.level)
+            self.layer_child[LayerButton][str(i)] = BattleUnit(level, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, player)
 
         self.next_delay = 0
-
-
         self.layer_child[LayerButton]["exit"] = ExitButton(self)
 
     def update(self):
@@ -200,7 +201,6 @@ class Battle(util.node.Node):
             view_state = self.layer_child[LayerLabel][key]
             if view_state.viewState.view == label.ViewTimer and not view_state.viewState.isView:
                 del self.layer_child[LayerLabel][key]
-
 
     def check_end(self):
         if self.end:
