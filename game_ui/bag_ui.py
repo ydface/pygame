@@ -18,7 +18,7 @@ screen = mypygame.screen
 
 class Item(util.node.Node):
     def __init__(self, father, item_id, pos):
-        util.node.Node.__init__(self)
+        super(Item, self).__init__()
 
         self.father = father
         self.item_id = item_id
@@ -35,7 +35,7 @@ class Item(util.node.Node):
 
 class BagUI(util.node.Node):
     def __init__(self, zorder):
-        util.node.Node.__init__(self, zorder)
+        super(BagUI, self).__init__(zorder)
 
         image = resource.getImage("bag_background")
         self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))

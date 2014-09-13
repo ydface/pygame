@@ -31,7 +31,7 @@ class LevelButton1(button.Button):
         image0 = pygame.transform.scale(image0,(image0.get_width() / 2, image0.get_height() / 2))
 
         rect = Rect(163, 111, image0.get_width(), image0.get_height())
-        button.Button.__init__(self, rect, image1, image0, father)
+        super(LevelButton1, self).__init__(rect, image1, image0, father)
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_1
@@ -48,7 +48,7 @@ class LevelButton2(button.Button):
 
         rect = Rect(100, 104, image0.get_width(), image0.get_height())
 
-        button.Button.__init__(self, rect, image1, image0, father)
+        super(LevelButton2, self).__init__(rect, image1, image0, father)
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_2
@@ -65,7 +65,7 @@ class LevelButton3(button.Button):
 
         rect = Rect(100, 160, image0.get_width(), image0.get_height())
 
-        button.Button.__init__(self, rect, image1, image0, father)
+        super(LevelButton3, self).__init__(rect, image1, image0, father)
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_3
@@ -76,7 +76,7 @@ base_offest = 200
 
 class MissionMapUI(util.node.Node):
     def __init__(self, father, zorder):
-        util.node.Node.__init__(self, zorder)
+        super(MissionMapUI, self).__init__(zorder)
 
         self.father = father
 

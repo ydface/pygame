@@ -7,6 +7,7 @@ import gamestate
 
 class Node(object):
     def __init__(self, zorder = 1):
+        super(Node, self).__init__()
 
         self.layer_child = dict()
 

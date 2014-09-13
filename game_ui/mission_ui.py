@@ -31,7 +31,7 @@ class PlayerInfoButton(button.Button):
         image = resource.getImage("player")
         rect = Rect(screenwidth - 100 - 60 - 60, screenheight - 80, image.get_width(), image.get_height())
 
-        button.Button.__init__(self, rect, image, None, father)
+        super(PlayerInfoButton, self).__init__(rect, image, None, father)
         self.ui_view = False
 
     def click_up_effect(self):
@@ -52,7 +52,7 @@ class BagButton(button.Button):
         image = resource.getImage("bag")
         rect = Rect(screenwidth - 100 - 60, screenheight - 80, image.get_width(), image.get_height())
 
-        button.Button.__init__(self, rect, image, None, father)
+        super(BagButton, self).__init__(rect, image, None, father)
         self.ui_view = False
 
     def click_up_effect(self):
@@ -72,7 +72,7 @@ class SkillButton(button.Button):
         image = resource.getImage("bag")
         rect = Rect(screenwidth - 100, screenheight - 80, image.get_width(), image.get_height())
 
-        button.Button.__init__(self, rect, image, None, father)
+        super(SkillButton, self).__init__(rect, image, None, father)
         self.ui_view = False
 
     def click_up_effect(self):
@@ -90,7 +90,7 @@ class SkillButton(button.Button):
 
 class UIGame(util.node.Node):
     def __init__(self):
-        util.node.Node.__init__(self)
+        super(UIGame, self).__init__()
 
         gamestate.SenceLevel = gamestate.LEVEL_0
 

@@ -31,7 +31,7 @@ class ExitButton(button.Button):
         image1 = resource.getImage("start_normal")
         image0 = resource.getImage("start_down")
 
-        button.Button.__init__(self, rect, image1, image0, father)
+        super(ExitButton, self).__init__(rect, image1, image0, father)
 
     def mouse_hover_effect(self):
         if self.mouse_stance:
@@ -49,8 +49,7 @@ class ExitButton(button.Button):
 
 class BattleUnit(button.Button, attribute.Attribute):
     def __init__(self, level, image, rect, father, target, type="monster"):
-        button.Button.__init__(self, rect, image, resource.getImage("attribute"), father)
-        attribute.Attribute.__init__(self)
+        super(BattleUnit, self).__init__(rect, image, resource.getImage("attribute"), father)
         self.hp = 1000 + level * 100
         self.max_hp = self.hp
         self.attack = 100 + level * 20
@@ -76,6 +75,7 @@ class BattleUnit(button.Button, attribute.Attribute):
         global count
         screen.blit(self.image, (self.rect[0], self.rect[1]))
 
+        print self.crit
         #绘制技能释放进度条
         if not self.dead and not self.father.end:
             pygame.draw.rect(screen, (255, 255, 0), (self.rect[0] + 69, self.rect[1] + 54, 100, 4))
@@ -148,7 +148,7 @@ class BattleUnit(button.Button, attribute.Attribute):
 
 class Battle(util.node.Node):
     def __init__(self, level):
-        util.node.Node.__init__(self)
+        super(Battle, self).__init__()
         num = random.randint(1, 6)
 
         self.end = False

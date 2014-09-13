@@ -27,7 +27,7 @@ class StartButton(button.Button):
         image1 = resource.getImage("start_normal")
         image0 = resource.getImage("start_down")
 
-        button.Button.__init__(self, rect, image1, image0, father)
+        super(StartButton, self).__init__(rect, image1, image0, father)
 
     def mouse_hover_effect(self):
         if self.mouse_stance:
@@ -50,7 +50,7 @@ class ExitButton(button.Button):
         image1 = resource.getImage("start_normal")
         image0 = resource.getImage("start_down")
 
-        button.Button.__init__(self, rect, image1, image0, father)
+        super(ExitButton, self).__init__(rect, image1, image0, father)
 
     def mouse_hover_effect(self):
         if self.mouse_stance:
@@ -69,7 +69,7 @@ class ExitButton(button.Button):
 #主界面
 class UIMain(util.node.Node):
     def __init__(self):
-        util.node.Node.__init__(self)
+        super(UIMain, self).__init__()
 
         self.layer_child[LayerButton]["start"] = StartButton(self)
         self.layer_child[LayerButton]["exit"] = ExitButton(self)

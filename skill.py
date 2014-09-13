@@ -18,6 +18,10 @@ skill_config = {
     "3": {
         "paras": [100, 25, 30],
         "cool_down": 20
+    },
+    "4": {
+        "paras": [100, 25, 30],
+        "cool_down": 20
     }
 }
 
@@ -49,7 +53,7 @@ class SkillEffect(object):
 
             text = str(-damage)
             self.btl_instance.add_hp_change_label(self.target, text, 16, COLOR_RED)
-        elif 3 == self.skill.skill_id:
+        elif 3 == self.skill.skill_id or 4 == self.skill.skill_id:
             damage = self.effect_value()
             ra = random.randint(1, 100)
             text = str(-damage)

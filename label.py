@@ -36,7 +36,7 @@ class LabelViewState:
 
 class FontLabel(util.node.Node):
     def __init__(self, rect, view_state, font_size, text="TEXT", color=COLOR_WHITE):
-        util.node.Node.__init__(self)
+        super(FontLabel, self).__init__()
 
         self.rect = rect
         self.viewState = view_state

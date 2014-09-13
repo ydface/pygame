@@ -15,7 +15,7 @@ screen = mypygame.screen
 
 class Button(util.node.Node):
     def __init__(self, rect, normal_image, select_image, father, zorder = 1):
-        util.node.Node.__init__(self, zorder)
+        super(Button, self).__init__(zorder)
         #矩形 (x,y,w,h)
         self.rect = rect
 

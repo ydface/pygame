@@ -18,7 +18,7 @@ screen = mypygame.screen
 
 class AttributeUI(util.node.Node):
     def __init__(self, zorder):
-        util.node.Node.__init__(self, zorder)
+        super(AttributeUI, self).__init__(zorder)
 
         self.image = resource.getImage("attribute")
         self.move_able = False

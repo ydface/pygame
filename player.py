@@ -16,7 +16,7 @@ skill_study = {
 
 class Player(attribute.Attribute):
     def __init__(self):
-        attribute.Attribute.__init__(self)
+        super(Player, self).__init__()
         self.exp = 0
         self.n_exp = 0
         self.skills = []
