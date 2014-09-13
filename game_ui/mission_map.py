@@ -35,7 +35,8 @@ class LevelButton1(button.Button):
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_1
-        gamestate.current_ui = battle.Battle(3,None)
+        gamestate.current_ui = battle.Battle(3)
+
 
 class LevelButton2(button.Button):
     def __init__(self, father):
@@ -51,7 +52,8 @@ class LevelButton2(button.Button):
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_2
-        gamestate.current_ui = battle.Battle(3,None)
+        gamestate.current_ui = battle.Battle(3)
+
 
 class LevelButton3(button.Button):
     def __init__(self, father):
@@ -67,9 +69,10 @@ class LevelButton3(button.Button):
 
     def click_up_effect(self):
         gamestate.SenceLevel = gamestate.LEVEL_3
-        gamestate.current_ui = battle.Battle(3,None)
+        gamestate.current_ui = battle.Battle(3)
 
 base_offest = 200
+
 
 class MissionMapUI(util.node.Node):
     def __init__(self, father, zorder):

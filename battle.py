@@ -13,6 +13,8 @@ import label
 import util.node
 import gamestate
 import button
+import attribute
+import skill
 
 screen = mypygame.screen
 
@@ -21,11 +23,36 @@ LayerLabel = gamestate.LayerLabel
 LayerUI = gamestate.LayerUI
 
 count = 0
-class BattleUnit(button.Button):
+
+
+class ExitButton(button.Button):
+    def __init__(self, father):
+        rect = Rect(345, 500, 100, 50)
+        image1 = resource.getImage("start_normal")
+        image0 = resource.getImage("start_down")
+
+        button.Button.__init__(self, rect, image1, image0, father)
+
+    def mouse_hover_effect(self):
+        if self.mouse_stance:
+            x, y = pygame.mouse.get_pos()
+            rect = Rect(x + 30, y + 30, 100, 50)
+            view = label.LabelViewState(label.ViewForver)
+            text1 = label.FontLabel(rect, view, 16, u"点击此处退出")
+            self.father.layer_child[LayerLabel]["exit_tips"] = text1
+        elif not self.mouse_stance and self.father.layer_child[LayerLabel].has_key("exit_tips"):
+            del self.father.layer_child[LayerLabel]["exit_tips"]
+
+    def click_up_effect(self):
+        gamestate.current_ui = game_ui.mission_ui.UIGame()
+
+
+class BattleUnit(button.Button, attribute.Attribute):
     def __init__(self, level, image, rect, father, target, type="monster"):
         button.Button.__init__(self, rect, image, resource.getImage("attribute"), father)
+        attribute.Attribute.__init__(self)
         self.hp = 1000 + level * 100
-        self.maxHp = self.hp
+        self.max_hp = self.hp
         self.attack = 100 + level * 20
         self.image = image
         self.rect = rect
@@ -37,6 +64,11 @@ class BattleUnit(button.Button):
         self.attack_enable = False
         self.target = target
         self.type = type
+        if type == "monster":
+            self.skills = []
+        else:
+            self.skills = gamestate.player.skills
+        self.skills_index = 0
 
     def draw_self(self):
         global count
@@ -55,10 +87,15 @@ class BattleUnit(button.Button):
             text1 = label.FontLabel(rect, view, 12, text)
             self.father.layer_child[LayerLabel][str(count)] = text1
 
-        #绘制血条
-        w = int(float(self.hp) / self.maxHp * 100)
+        #绘制血条,血值
+        w = int(float(self.hp) / self.max_hp * 100)
         if w:
             pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 24, w, 8))
+
+            my_font = pygame.font.Font("resource/msyh.ttf", 8)
+            tx_hp = str(self.hp) + " / " + str(self.max_hp)
+            hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
+            screen.blit(hp_surface, (self.rect[0] + 79, self.rect[1] + 23))
 
         if self.dead and not self.deadDraw:
             rect = Rect(self.rect[0] + 77, self.rect[1] + 3, 100, 50)
@@ -68,7 +105,7 @@ class BattleUnit(button.Button):
             self.deadDraw = True
 
     def click_up_effect(self):
-        if self.type == "monster":
+        if self.type == "monster" and not self.dead:
             player = self.father.layer_child[LayerButton]["player"]
             player.target = self
 
@@ -77,6 +114,10 @@ class BattleUnit(button.Button):
         if self.activeProcess > self.speed:
             self.activeProcess = 0
             self.attack_enable = True
+
+        for s in self.skills:
+            if s.cool_down > 0:
+                s.cool_down -= 1
 
     def attack_target(self):
         if not self.target or self.target.dead:
@@ -89,31 +130,51 @@ class BattleUnit(button.Button):
 
         global count
         count += 1
-        self.target.hp -= self.attack
+        damage = 0
+        if not self.skills:
+            damage = self.attack - self.target.defense
+        else:
+            if self.skills_index >= len(self.skills):
+                self.skills_index = 0
+            cur_skill = self.skills[0]
+            if not cur_skill.cool_down:
+                skill_effect = skill.SkillEffect(cur_skill.skill_id, cur_skill.level)
+                damage = skill_effect.damage_value()
+                self.skills_index += 1
+                cur_skill.cool_down = random.randint(60, 180)
+            else:
+                damage = self.attack - self.target.defense
+
+        self.target.hp -= damage
         if self.target.hp <= 0:
             self.target.hp = 0
         rect = Rect(self.target.rect[0] + 200, self.target.rect[1] + 30, 100, 50)
         view = label.LabelViewState(label.ViewTimer, 60, [0, -0.3])
-        text = str(-self.attack)
+        text = str(-damage)
         text1 = label.FontLabel(rect, view, 16, text)
         self.father.layer_child[LayerLabel][str(count)] = text1
 
         if self.target.hp <= 0:
             self.target.dead = True
 
+
 class Battle(util.node.Node):
-    def __init__(self, level, father):
+    def __init__(self, level):
         util.node.Node.__init__(self)
-        num = random.randint(2, 5)
+        num = random.randint(1, 2)
 
         self.end = False
         self.playerWin = False
-        self.layer_child[LayerButton]["player"] = BattleUnit(5, resource.getImage("header_line"), Rect(100, 360, 100, 50), self, None, "player")
+
+        self.layer_child[LayerButton]["player"] = BattleUnit(gamestate.player.level, resource.getImage("header_line"), Rect(100, 360, 100, 50), self, None, "player")
         player = self.layer_child[LayerButton]["player"]
         for i in range(0, num):
             self.layer_child[LayerButton][str(i)] = BattleUnit(1, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, player)
 
         self.next_delay = 0
+
+
+        self.layer_child[LayerButton]["exit"] = ExitButton(self)
 
     def update(self):
         player = self.layer_child[LayerButton]["player"]
@@ -144,9 +205,9 @@ class Battle(util.node.Node):
 
         if self.next_delay > 60:
             if self.playerWin:
-                gamestate.current_ui = Battle(3,None)
+                gamestate.current_ui = Battle(3)
             else:
-                gamestate.current_ui = game_ui.mission_ui.UIGame()
+                gamestate.current_ui = Battle(3) #game_ui.mission_ui.UIGame()
 
         #移除过期label显示
         for key in self.layer_child[LayerLabel].keys():
@@ -159,8 +220,8 @@ class Battle(util.node.Node):
         if self.end:
             return self.end
 
-        player = self.layer_child[LayerButton]["player"]
-        if player.hp <= 0:
+        player_unit = self.layer_child[LayerButton]["player"]
+        if player_unit.hp <= 0:
             self.end = True
 
             rect = Rect(40, 30, 100, 50)
@@ -171,10 +232,12 @@ class Battle(util.node.Node):
         else:
             for unit in self.layer_child[LayerButton]:
                 monster = self.layer_child[LayerButton][unit]
-                if not monster.dead and unit != "player":
+                if isinstance(monster, BattleUnit) and not monster.dead and unit != "player":
                     return False
             self.end = True
             self.playerWin = True
+
+            gamestate.player.add_exp(1)
 
             rect = Rect(40, 30, 100, 50)
             view = label.LabelViewState(label.ViewForver)

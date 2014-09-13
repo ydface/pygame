@@ -15,6 +15,7 @@ import label
 
 screen = mypygame.screen
 
+
 class Item(util.node.Node):
     def __init__(self, father, item_id, pos):
         util.node.Node.__init__(self)

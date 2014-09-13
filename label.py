@@ -19,6 +19,7 @@ ViewTimer = 2
 #间隔显示
 ViewInterval = 3
 
+
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
 class LabelViewState:
     def __init__(self, view, view_frame=0, move=[0, 0]):
@@ -27,6 +28,7 @@ class LabelViewState:
         self.move = move
         self.curFrame = 0
         self.isView = True
+
 
 class FontLabel(util.node.Node):
     def __init__(self, rect, view_state, font_size, text="TEXT"):
@@ -54,6 +56,7 @@ class FontLabel(util.node.Node):
             if self.viewState.viewFrame == self.viewState.curFrame:
                 self.viewState.isView = not self.viewState.isView
                 self.viewState.curFrame = 0
+
     def draw_self(self):
         self.update()
         if self.viewState.isView:

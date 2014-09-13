@@ -16,9 +16,11 @@ screen = mypygame.screen
 game_sources = dict()
 background = []
 
+
 def getImage(key):
     global game_sources
     return game_sources[key]
+
 
 def loadImage(path):
     try:
@@ -27,6 +29,7 @@ def loadImage(path):
         print "can't load the image from", path
         raise SystemExit
     return image
+
 
 def loadBtnImage():
     global game_sources
@@ -38,6 +41,7 @@ def loadBtnImage():
         for j in range(max_height):
             itemName = "item_" + str( max_width * i + (j + 1))
             game_sources[itemName] = image.subsurface((37.5 * i, 37.5 * j), (37.5, 37.5))
+
 
 def loadMainUIImage():
     global game_sources
@@ -53,6 +57,7 @@ def loadMainUIImage():
 
     image = loadImage("resource/bag.png")
     game_sources["bag_background"] = image.subsurface((6, 455), (412, 135))
+
 
 def loadBattleMapImage():
     global game_sources
@@ -73,6 +78,7 @@ def loadBattleMapImage():
     game_sources["level_3_1"] = image2.subsurface((240, 475), (185, 150))
     game_sources["level_3_0"] = image2.subsurface((556, 537), (185, 150))
 
+
 def loadHeaderImage():
     global game_sources
     image = loadImage("resource/header1.png")
@@ -82,6 +88,7 @@ def loadHeaderImage():
     game_sources["header_line"] = hImage
 
     game_sources["attribute"] = loadImage("resource/attributeUI.jpg")
+
 
 def init():
     global background

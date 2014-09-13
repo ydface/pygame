@@ -15,6 +15,7 @@ import label
 
 screen = mypygame.screen
 
+
 class AttributeUI(util.node.Node):
     def __init__(self, zorder):
         util.node.Node.__init__(self, zorder)
@@ -25,6 +26,15 @@ class AttributeUI(util.node.Node):
 
     def draw_self(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
+
+        my_font = pygame.font.Font("resource/msyh.ttf", 8)
+        tx_level = str(gamestate.player.level)
+        level_surface = my_font.render(tx_level, True, (255, 255, 255))
+        screen.blit(level_surface, (self.rect[0] + 75, self.rect[1] + 96))
+
+        tx_exp = str(gamestate.player.exp)
+        exp_surface = my_font.render(tx_exp, True, (255, 255, 255))
+        screen.blit(exp_surface, (self.rect[0] + 105, self.rect[1] + 96))
 
     def handle_event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:

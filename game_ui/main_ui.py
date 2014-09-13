@@ -19,6 +19,7 @@ LayerButton = gamestate.LayerButton
 LayerLabel = gamestate.LayerLabel
 LayerUI = gamestate.LayerUI
 
+
 #开始游戏按钮
 class StartButton(button.Button):
     def __init__(self, father):
@@ -41,6 +42,7 @@ class StartButton(button.Button):
     def click_up_effect(self):
         gamestate.current_ui = game_ui.mission_ui.UIGame()
 
+
 #退出游戏按钮
 class ExitButton(button.Button):
     def __init__(self, father):
@@ -62,6 +64,7 @@ class ExitButton(button.Button):
 
     def click_up_effect(self):
         mypygame.running = False
+
 
 #主界面
 class UIMain(util.node.Node):

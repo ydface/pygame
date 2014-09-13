@@ -3,10 +3,7 @@
 
 __author__ = 'Ydface'
 
-MainUI = 1
-GameUI = 2
-GameState = MainUI
-
+import player
 
 LEVEL_0 = 0
 LEVEL_1 = 1
@@ -22,3 +19,5 @@ LayerButton = "1"
 LayerLabel = "2"
 
 current_ui = None
+
+player = player.Player()

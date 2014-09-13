@@ -11,13 +11,16 @@ import mypygame
 import gamestate
 import resource
 import label
+import save_data
 
 screen = mypygame.screen
 clock = mypygame.clock
 
+
 def draw_mouse():
     pos = pygame.mouse.get_pos()
     screen.blit(resource.getImage("mouse"), (pos[0], pos[1]))
+
 
 def hello_world():
     resource.init()
@@ -50,6 +53,8 @@ def hello_world():
         pygame.display.update()
 
     gamestate.current_ui = None
+
+    save_data.Save.save()
 
     pygame.quit()
     sys.exit()
