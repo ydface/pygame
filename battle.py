@@ -45,10 +45,11 @@ class BattleUnit(button.Button, attribute.Attribute):
         self.skills = kwargs.get('skill', [skill.Skill(1, 1)])
         self.exp = random.randint(10, 100)
         self.next_skill = self.skills[0]
+        self.anger = 0
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
-         #绘制血条,血值
+         #绘制血条
         hp_label = int(float(self.hp) / self.max_hp * 100)
         if hp_label:
             pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 24, hp_label, 8))
@@ -56,6 +57,15 @@ class BattleUnit(button.Button, attribute.Attribute):
         tx_hp = str(self.hp) + " / " + str(self.max_hp)
         hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
         screen.blit(hp_surface, (self.rect[0] + 79, self.rect[1] + 23))
+
+        ##绘制怒气条
+        anger_label = int(float(self.anger) / 100 * 100)
+        if anger_label:
+            pygame.draw.rect(screen, (0, 0, 255), (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
+        my_font = pygame.font.Font("resource/msyh.ttf", 8)
+        tx_anger = str(self.anger) + " / " + str(100)
+        anger_surface = my_font.render(tx_anger, True, (255, 255, 255))
+        screen.blit(anger_surface, (self.rect[0] + 83, self.rect[1] + 33))
 
         if self.dead:
             self.child = []
@@ -74,11 +84,34 @@ class BattleUnit(button.Button, attribute.Attribute):
     def update(self, **kwargs):
         time = kwargs['time']
 
-        for s in self.skills:
-            s.cd_update(**kwargs)
+        if not self.dead:
+            for s in self.skills:
+                s.cd_update(**kwargs)
+            self.next_skill.release_update(**kwargs)
 
         for child in self.child:
             child.update(**kwargs)
+
+    def recover(self):
+        self.hp = self.max_hp
+        self.dead = True
+        self.target = None
+
+        for s in self.skills:
+            s.go_cd()
+
+    def damaged(self, damage):
+        if self.hp <= damage:
+            self.hp = 0
+        else:
+            self.hp -= damage
+
+    def anger_change(self, val):
+        self.anger -= val
+        if self.anger > 100:
+            self.anger = 100
+        elif self.anger < 0:
+            self.anger = 0
 
     def active(self):
         if self.dead:
@@ -89,7 +122,7 @@ class BattleUnit(button.Button, attribute.Attribute):
                     self.target = monster
 
         if self.next_skill.available:
-            effect = skill.SkillEffect(self.next_skill, self, self.target, self.father)
+            effect = skill.SkillEffect(self.next_skill, self, self.target)
             effect.effect_active()
             self.skill_available()
 
@@ -108,6 +141,8 @@ class BattleUnit(button.Button, attribute.Attribute):
     def skill_available(self):
         self.next_skill = self.skills[0]
         for s in self.skills:
+            if self.anger < s.anger:
+                continue
             if s.cool_down <= 0:
                 self.next_skill = s
             elif s.cool_down < self.next_skill.cool_down:
@@ -116,27 +151,20 @@ class BattleUnit(button.Button, attribute.Attribute):
 class Battle(util.node.Node):
     def __init__(self, level):
         super(Battle, self).__init__()
-        num = random.randint(1, 6)
 
-        self.end = False
-        self.playerWin = False
-
+        self.end = True
         self.player = BattleUnit(gamestate.player.level, resource.getImage("header_line"), Rect(100, 360, 100, 50), self, None, skill=gamestate.player.skills)
+        self.player.dead = True
         self.add(self.player)
-
         self.monsters = []
-        for i in range(0, num):
-            level = random.randint(1, gamestate.player.level)
-            monster = BattleUnit(level, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, self.player)
-            self.monsters.append(monster)
-            self.add(monster)
 
-        self.next_delay = 0
+        self.next_delay = random.randint(3, 5)
         self.add(ExitButton(self))
 
     def update(self, **kwargs):
+        time = kwargs['time']
+        self.player.update(**kwargs)
         if not self.end:
-            self.player.update(**kwargs)
             self.player.active()
 
             if not self.check_end():
@@ -150,12 +178,20 @@ class Battle(util.node.Node):
             for child in self.child:
                 child.update(**kwargs)
         else:
-            self.next_delay += 1
-            if self.next_delay > 60:
-                if self.playerWin:
-                    gamestate.current_ui = Battle(3)
-                else:
-                    gamestate.current_ui = Battle(3) #game_ui.mission_ui.UIGame()
+            self.next_delay -= time
+            if self.next_delay <= 0:
+                self.new_battle()
+                self.next_delay = random.randint(3, 6)
+
+    def new_battle(self):
+        self.end = False
+        self.player.dead = False
+        num = random.randint(1, 6)
+        for i in range(0, num):
+            level = random.randint(1, gamestate.player.level)
+            monster = BattleUnit(level, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, self.player)
+            self.monsters.append(monster)
+            self.add(monster)
 
     def check_end(self):
         if self.end:
@@ -163,12 +199,20 @@ class Battle(util.node.Node):
 
         if self.player.hp <= 0:
             self.end = True
+            self.player.recover()
+            for monster in self.monsters:
+                self.remove(monster)
+            self.monsters = []
         else:
             for monster in self.monsters:
                 if not monster.dead:
                     return False
             self.end = True
-            self.playerWin = True
+            self.player.recover()
+
+            for monster in self.monsters:
+                self.remove(monster)
+            self.monsters = []
 
             gamestate.player.add_exp(1)
 

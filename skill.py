@@ -14,27 +14,32 @@ skill_config = {
         "paras": [125, 25],
         "content": u"对当前目标造成(125 + 5 * 等级)% + 25点固定伤害",
         "cool_down": 0.0,
-        "release_time": 1.0
+        "release_time": 2.0,
+        "anger": -8
     },
     "2": {
         "paras": [145, 25],
         "cool_down": 3,
-        "release_time": 1.2
+        "release_time": 2.5,
+        "anger": 25
     },
     "3": {
         "paras": [100, 25, 30],
         "cool_down": 20,
-        "release_time": 1.5
+        "release_time": 1.5,
+        "anger": 20
     },
     "4": {
         "paras": [100, 25, 30],
-        "cool_down": 20,
-        "release_time": 1.1
+        "cool_down": 30,
+        "release_time": 3,
+        "anger": 20
     },
     "5": {
         "paras": [175, 55],
         "cool_down": 35,
-        "release_time": 1.8
+        "release_time": 5,
+        "anger": 35
     }
 }
 
@@ -50,24 +55,23 @@ screen = mypygame.screen
 
 
 class SkillEffect(object):
-    def __init__(self, skill, source, target, battle_inst):
+    def __init__(self, skill, source, target):
         super(SkillEffect, self).__init__()
 
         self.skill = skill
         self.effect_paras = skill_config[str(self.skill.skill_id)]["paras"]
         self.source = source
         self.target = target
-        self.btl_instance = battle_inst
-        self.skill.go_cd(skill_config[str(self.skill.skill_id)]["cool_down"], skill_config[str(self.skill.skill_id)]["release_time"])
+        self.skill.go_cd()
 
     def effect_value(self):
         return int(self.source.attack * (self.skill.level * 5 + self.effect_paras[0]) // 100 + self.effect_paras[1] - self.target.defense)
 
     def effect_active(self):
+        self.source.anger_change(self.skill.anger)
         if 1 == self.skill.skill_id or 5 == self.skill.skill_id:
             damage = self.effect_value()
-            self.target.hp -= damage
-
+            self.target.damaged(damage)
             text = str(-damage)
             self.target.add_hp_change_label(text, 16, COLOR_RED)
 
@@ -78,7 +82,8 @@ class SkillEffect(object):
             if ra <= self.effect_paras[2]:
                 damage = int(damage *1.5)
                 text += u"暴击 "
-            self.target.hp -= damage
+            self.target.damaged(damage)
+
             self.target.add_hp_change_label(text, 16, COLOR_RED)
         elif 2 == self.skill.skill_id:
             cure = self.effect_value()
@@ -97,7 +102,10 @@ class Skill(object):
         self.max_cool_down = 0.1
         self.cool_down = 0.1
         self.release_time = 1
-        self.available = True
+        self.max_release_time = 1
+        self.available = False
+        self.anger = skill_config[str(self.skill_id)]["anger"]
+        self.init_cd(skill_config[str(self.skill_id)]["cool_down"], skill_config[str(self.skill_id)]["release_time"])
 
     def cd_update(self, **kwargs):
         time = kwargs['time']
@@ -105,22 +113,28 @@ class Skill(object):
         if self.cool_down > 0:
             self.cool_down -= time
 
-        if self.cool_down <= 0 and self.release_time > 0:
+    def release_update(self, **kwargs):
+        time = kwargs['time']
+        if self.release_time > 0:
             self.release_time -= time
-
         if self.release_time <= 0:
             self.available = True
 
-    def go_cd(self, cd_time, release_time):
-        self.available = False
+    def init_cd(self, cd_time, release_time):
         self.cool_down = cd_time
         self.max_cool_down = cd_time
         self.release_time = release_time
+        self.max_release_time = release_time
+
+    def go_cd(self):
+        self.available = False
+        self.cool_down = self.max_cool_down
+        self.release_time = self.max_release_time
 
     def draw_process(self, father):
-        #pygame.draw.rect(screen, (255, 255, 0), (father.rect[0] + 69, father.rect[1] + 54, 100, 4))
-        #w = float(self.release_time) /self.max_cool_down
-        #pygame.draw.rect(screen, (255, 0, 0), (father.rect[0] + 69, father.rect[1] + 54, w, 4))
+        #pygame.draw.rect(screen, (255, 255, 0), (father.rect[0] + 69, father.rect[1] + 45, 71, 4))
+        w = 71 - float(self.release_time) * 71 / self.max_release_time
+        pygame.draw.rect(screen, (0, 128, 0), (father.rect[0] + 69, father.rect[1] + 45, w, 4))
 
         rect = Rect(father.rect[0] + 69 + 35, father.rect[1] + 48, 100, 4)
         view = label.LabelViewState(label.ViewForver)

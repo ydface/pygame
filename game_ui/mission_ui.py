@@ -91,7 +91,7 @@ class UIGame(util.node.Node):
         self.add(self.skill_btn)
         #self.layer_child[LayerButton]["skill"] = skill_btn
 
-        self.mission_map = game_ui.mission_map.MissionMapUI(self, layer=1)
+        self.mission_map = game_ui.mission_map.MissionMapUI(self, layer=3)
         self.add(self.mission_map)
         #self.layer_child[LayerUI]["mission_map"] = mission_map
 
