@@ -17,14 +17,14 @@ screen = mypygame.screen
 
 
 class AttributeUI(util.node.Node):
-    def __init__(self, zorder):
-        super(AttributeUI, self).__init__(zorder)
+    def __init__(self, **kwargs):
+        super(AttributeUI, self).__init__(**kwargs)
 
         self.image = resource.getImage("attribute")
         self.move_able = False
         self.rect = Rect(100, 300, self.image.get_width(), self.image.get_height())
 
-    def draw_self(self):
+    def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
 
         my_font = pygame.font.Font("resource/msyh.ttf", 8)
@@ -36,11 +36,12 @@ class AttributeUI(util.node.Node):
         exp_surface = my_font.render(tx_exp, True, (255, 255, 255))
         screen.blit(exp_surface, (self.rect[0] + 165, self.rect[1] + 96))
 
-    def handle_event(self, event):
+    def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.move_able = True
+                self.top_layer()
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
@@ -51,3 +52,4 @@ class AttributeUI(util.node.Node):
 
         elif event.type == MOUSEBUTTONUP:
             self.move_able = False
+            self.back_layer()

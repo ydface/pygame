@@ -21,30 +21,21 @@ screen = mypygame.screen
 screenwidth = mypygame.screenwidth
 screenheight = mypygame.screenheight
 
-LayerButton = gamestate.LayerButton
-LayerLabel = gamestate.LayerLabel
-LayerUI = gamestate.LayerUI
-
-
 class PlayerInfoButton(button.Button):
     def __init__(self, father):
         image = resource.getImage("player")
         rect = Rect(screenwidth - 100 - 60 - 60, screenheight - 80, image.get_width(), image.get_height())
 
         super(PlayerInfoButton, self).__init__(rect, image, None, father)
-        self.ui_view = False
+        self.attribute = None
 
     def click_up_effect(self):
-        if not self.ui_view:
-            attribute = game_ui.attribute_ui.AttributeUI(2)
-            self.father.layer_child[LayerUI]["attribute"] = attribute
-            self.ui_view = True
-            self.father.layer_child[LayerUI]["mission_map"].event_enable = False
+        if not self.attribute:
+            self.attribute = game_ui.attribute_ui.AttributeUI(layer=2)
+            self.father.add(self.attribute)
         else:
-            del self.father.layer_child[LayerUI]["attribute"]
-            self.ui_view = False
-            if len(self.father.layer_child[LayerUI]) == 1:
-                self.father.layer_child[LayerUI]["mission_map"].event_enable = True
+            self.father.remove(self.attribute)
+            self.attribute = None
 
 
 class BagButton(button.Button):
@@ -53,19 +44,15 @@ class BagButton(button.Button):
         rect = Rect(screenwidth - 100 - 60, screenheight - 80, image.get_width(), image.get_height())
 
         super(BagButton, self).__init__(rect, image, None, father)
-        self.ui_view = False
+        self.bag = None
 
     def click_up_effect(self):
-        if not self.ui_view:
-            bag = game_ui.bag_ui.BagUI(2)
-            self.father.layer_child[LayerUI]["bag"] = bag
-            self.ui_view = True
-            self.father.layer_child[LayerUI]["mission_map"].event_enable = False
+        if not self.bag:
+            self.bag = game_ui.bag_ui.BagUI(layer=2)
+            self.father.add(self.bag)
         else:
-            del self.father.layer_child[LayerUI]["bag"]
-            self.ui_view = False
-            if len(self.father.layer_child[LayerUI]) == 1:
-                self.father.layer_child[LayerUI]["mission_map"].event_enable = True
+            self.father.remove(self.bag)
+            self.bag = None
 
 class SkillButton(button.Button):
     def __init__(self, father):
@@ -73,19 +60,15 @@ class SkillButton(button.Button):
         rect = Rect(screenwidth - 100, screenheight - 80, image.get_width(), image.get_height())
 
         super(SkillButton, self).__init__(rect, image, None, father)
-        self.ui_view = False
+        self.skill = None
 
     def click_up_effect(self):
-        if not self.ui_view:
-            skill = game_ui.skill_ui.SkillUI(2)
-            self.father.layer_child[LayerUI]["skill"] = skill
-            self.ui_view = True
-            self.father.layer_child[LayerUI]["mission_map"].event_enable = False
+        if not self.skill:
+            self.skill = game_ui.skill_ui.SkillUI(layer=2)
+            self.father.add(self.skill)
         else:
-            del self.father.layer_child[LayerUI]["skill"]
-            self.ui_view = False
-            if len(self.father.layer_child[LayerUI]) == 1:
-                self.father.layer_child[LayerUI]["mission_map"].event_enable = True
+            self.father.remove(self.skill)
+            self.skill = None
 
 
 class UIGame(util.node.Node):
@@ -96,15 +79,19 @@ class UIGame(util.node.Node):
 
         self.battle = None
 
-        player_btn = PlayerInfoButton(self)
-        self.layer_child[LayerButton]["user_info"] = player_btn
+        self.player_btn = PlayerInfoButton(self)
+        self.add(self.player_btn)
+        #self.layer_child[LayerButton]["user_info"] = player_btn
 
-        bag_btn = BagButton(self)
-        self.layer_child[LayerButton]["bag"] = bag_btn
+        self.bag_btn = BagButton(self)
+        self.add(self.bag_btn)
+        #self.layer_child[LayerButton]["bag"] = bag_btn
 
-        skill_btn = SkillButton(self)
-        self.layer_child[LayerButton]["skill"] = skill_btn
+        self.skill_btn = SkillButton(self)
+        self.add(self.skill_btn)
+        #self.layer_child[LayerButton]["skill"] = skill_btn
 
-        mission_map = game_ui.mission_map.MissionMapUI(self, 1)
-        self.layer_child[LayerUI]["mission_map"] = mission_map
+        self.mission_map = game_ui.mission_map.MissionMapUI(self, layer=1)
+        self.add(self.mission_map)
+        #self.layer_child[LayerUI]["mission_map"] = mission_map
 

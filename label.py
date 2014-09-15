@@ -24,45 +24,48 @@ COLOR_RED = (255, 0, 0)
 COLOR_GREEN = (0, 128, 0)
 COLOR_WHITE = (255, 255, 255)
 
+
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
 class LabelViewState(object):
-    def __init__(self, view, view_frame=0, move=[0, 0]):
+    def __init__(self, view, last_time=1, move=[0, 0]):
         super(LabelViewState, self).__init__()
         self.view = view
-        self.viewFrame = view_frame
         self.move = move
-        self.curFrame = 0
+        self.last_time = last_time
         self.isView = True
 
 
 class FontLabel(util.node.Node):
-    def __init__(self, rect, view_state, font_size, text="TEXT", color=COLOR_WHITE):
-        super(FontLabel, self).__init__()
+    def __init__(self, rect, view_state, font_size, **kwargs):
+        super(FontLabel, self).__init__(**kwargs)
 
         self.rect = rect
         self.viewState = view_state
         self.font = "resource/msyh.ttf"
         self.fontSize = font_size
-        self.text = text
+        self.text = kwargs['text']
+        self.father = kwargs.get('father', None)
+
+        color = kwargs.get('color', COLOR_WHITE)
 
         self.my_font = pygame.font.Font(self.font, self.fontSize)
         self.name_surface = self.my_font.render(self.text, True, color)
 
-    def update(self):
+    def update(self, **kwargs):
         self.rect[0] = self.rect[0] + self.viewState.move[0]
         self.rect[1] = self.rect[1] + self.viewState.move[1]
         if self.viewState.view == ViewTimer:
-            if self.viewState.viewFrame > 0:
-                self.viewState.viewFrame -= 1
-                if self.viewState.viewFrame <= 0:
-                    self.viewState.isView = False
+            time = kwargs['time']
+            self.viewState.last_time -= time
+            if self.viewState.last_time <= 0:
+                self.viewState.isView = False
+                self.father.remove(self)
         elif self.viewState.view == ViewInterval:
             self.viewState.curFrame += + 1
             if self.viewState.viewFrame == self.viewState.curFrame:
                 self.viewState.isView = not self.viewState.isView
                 self.viewState.curFrame = 0
 
-    def draw_self(self):
-        self.update()
+    def draw(self):
         if self.viewState.isView:
             screen.blit(self.name_surface, (self.rect[0], self.rect[1]))

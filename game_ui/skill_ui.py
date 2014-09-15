@@ -30,7 +30,7 @@ class SkillCell(util.node.Node):
         self.x = pos % 6
         self.y = pos / 6
 
-    def draw_self(self):
+    def draw(self):
         pos = (self.father.rect[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect[1] + 37.5 * self.y + 15 + 15 * self.y)
         screen.blit(self.image, pos)
 
@@ -41,8 +41,8 @@ class SkillCell(util.node.Node):
 
 
 class SkillUI(util.node.Node):
-    def __init__(self, zorder):
-        super(SkillUI, self).__init__(zorder)
+    def __init__(self, **kwargs):
+        super(SkillUI, self).__init__(**kwargs)
 
         image = resource.getImage("bag_background")
         self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))
@@ -52,7 +52,7 @@ class SkillUI(util.node.Node):
 
         self.skills = dict()
 
-    def draw_self(self):
+    def draw(self):
         self.skills.clear()
         screen.blit(self.image, (self.rect[0], self.rect[1]))
         for i in range(len(gamestate.player.skills)):
@@ -60,13 +60,14 @@ class SkillUI(util.node.Node):
             level = gamestate.player.skills[i].level
             self.skills[str(skill_id)] = SkillCell(self, skill_id, i, level)
         for cell in self.skills:
-            self.skills[cell].draw_self()
+            self.skills[cell].draw()
 
-    def handle_event(self, event):
+    def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.move_able = True
+                self.top_layer()
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
@@ -76,3 +77,4 @@ class SkillUI(util.node.Node):
                     self.rect[1] += rel[1]
         elif event.type == MOUSEBUTTONUP:
             self.move_able = False
+            self.back_layer()

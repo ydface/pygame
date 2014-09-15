@@ -3,48 +3,55 @@
 
 __author__ = 'Ydface'
 
-import gamestate
 import pygame
+import pygame.mixer
+from pygame.locals import *
 
-class Node(pygame.sprite.Sprite):
-    def __init__(self, zorder = 1):
+class Node(object):
+    def __init__(self, **kwargs):
         super(Node, self).__init__()
 
-        self.layer_child = dict()
+        self._zorder = kwargs.get('layer', 1)
+        self._old_zorder = self._zorder
 
-        #初始化 三层UI
-        ui_dict = dict()
-        self.layer_child[gamestate.LayerUI] = ui_dict
-
-        button_dict = dict()
-        self.layer_child[gamestate.LayerButton] = button_dict
-
-        label_dict = dict()
-        self.layer_child[gamestate.LayerLabel] = label_dict
+        self.child = []
 
         self.event_enable = True
 
-        self.zorder = zorder
-
     def __lt__(self, other):
-        if self.zorder < other.zorder:
+        if self._zorder < other._zorder:
             return True
         return False
 
-    def handle_event(self, event):
+    def add(self, sprite):
+        self.child.append(sprite)
+        #self.child = sorted(self.child)
+
+    def has_child(self, sprite):
+        if sprite in self.child:
+            return True
+        return False
+
+    def remove(self, sprite):
+        self.child.remove(sprite)
+
+    def event(self, event):
         if self.event_enable:
-            for dc in self.layer_child.keys():
-                for c in self.layer_child[dc].keys():
-                    self.layer_child[dc][c].handle_event(event)
+            self.child = sorted(self.child)
+            for child in self.child:
+                child.event(event)
 
-    def draw_self(self):
-        #每次重新排序后绘制
-        for dc in self.layer_child:
-            result = sorted(self.layer_child[dc].items(), key=lambda d: d[1])
-            for s in result:
-                s[1].draw_self()
+    def draw(self):
+        self.child.sort(reverse=True)
+        for child in self.child:
+            child.draw()
 
-    def update(self):
-        for dc in self.layer_child.keys():
-            for c in self.layer_child[dc].keys():
-                self.layer_child[dc][c].update()
+    def update(self, **kwargs):
+        for child in self.child:
+            child.update(**kwargs)
+
+    def top_layer(self):
+        self._zorder = 0
+
+    def back_layer(self):
+        self._zorder = self._old_zorder

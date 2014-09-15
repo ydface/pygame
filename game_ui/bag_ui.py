@@ -34,8 +34,8 @@ class Item(util.node.Node):
 
 
 class BagUI(util.node.Node):
-    def __init__(self, zorder):
-        super(BagUI, self).__init__(zorder)
+    def __init__(self, **kwargs):
+        super(BagUI, self).__init__(**kwargs)
 
         image = resource.getImage("bag_background")
         self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))
@@ -47,16 +47,17 @@ class BagUI(util.node.Node):
         for i in range(0, 30):
             self.items[str(i)] = Item( self, i + 1, i)
 
-    def draw_self(self):
+    def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
         for i in self.items:
             self.items[i].draw_self()
 
-    def handle_event(self, event):
+    def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.move_able = True
+                self.top_layer()
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
@@ -67,3 +68,4 @@ class BagUI(util.node.Node):
 
         elif event.type == MOUSEBUTTONUP:
             self.move_able = False
+            self.back_layer()

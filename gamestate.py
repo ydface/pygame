@@ -14,10 +14,6 @@ LEVEL_5 = 5
 LEVEL_6 = 6
 SenceLevel = LEVEL_0
 
-LayerUI = "0"
-LayerButton = "1"
-LayerLabel = "2"
-
 current_ui = None
 
 player = player.Player()

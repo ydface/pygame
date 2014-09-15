@@ -77,16 +77,14 @@ def loadBattleMapImage():
     game_sources["big_map"] = image1.subsurface((0, 0), (850, 570))
     game_sources["map_key"] = image1.subsurface((890, 2), (40, 620))
 
-    game_sources["level_1_0"] = image1.subsurface((0, 575), (185, 100))
-    game_sources["level_1_1"] = image1.subsurface((185, 575), (185, 100))
-    game_sources["level_1_1"] = image1.subsurface((185, 575), (185, 100))
-    game_sources["level_1_1"] = image1.subsurface((185, 575), (185, 100))
+    game_sources["level_1_0"] = image1.subsurface((185, 575), (185, 100))
+    game_sources["level_1_1"] = image1.subsurface((0, 575), (185, 100))
 
-    game_sources["level_2_0"] = image2.subsurface((2, 180), (240, 150))
-    game_sources["level_2_1"] = image2.subsurface((245, 180), (240, 150))
+    game_sources["level_2_0"] = image2.subsurface((245, 180), (240, 150))
+    game_sources["level_2_1"] = image2.subsurface((2, 180), (240, 150))
 
-    game_sources["level_3_1"] = image2.subsurface((240, 475), (185, 150))
-    game_sources["level_3_0"] = image2.subsurface((556, 537), (185, 150))
+    game_sources["level_3_0"] = image2.subsurface((240, 475), (185, 150))
+    game_sources["level_3_1"] = image2.subsurface((556, 537), (185, 150))
 
 
 def loadHeaderImage():

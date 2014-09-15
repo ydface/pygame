@@ -14,26 +14,27 @@ screen = mypygame.screen
 
 
 class Button(util.node.Node):
-    def __init__(self, rect, normal_image, select_image, father, zorder = 1):
-        super(Button, self).__init__(zorder)
-        #矩形 (x,y,w,h)
-        self.rect = rect
+    def __init__(self, rect, image0, image1, father, **kwargs):
+        super(Button, self).__init__(**kwargs)
 
         self.father = father
         # 正常状态下图片
-        self.image_normal = normal_image
+        self.image0 = image0
 
         #鼠标点击下图片
-        self.image_selected = select_image
-        self.draw_image = self.image_normal
+        self.image1 = image1
+        self.image = self.image0
+
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (rect[0], rect[1])
 
         #鼠标悬停
         self.mouse_stance = False
 
-    def draw_self(self):
-        screen.blit(self.draw_image, (self.rect[0], self.rect[1]))
+    def draw(self):
+        screen.blit(self.image, (self.rect[0], self.rect[1]))
 
-    def handle_event(self, event):
+    def event(self, event):
         #点击事件检测与处理
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
@@ -66,9 +67,9 @@ class Button(util.node.Node):
 
     def click_down(self):
         #如果有点中效果变化，则变化
-        if self.image_selected:
-            self.draw_image = self.image_selected
+        if self.image1:
+            self.image = self.image1
         self.click_down_effect()
 
     def click_up(self):
-        self.draw_image = self.image_normal
+        self.image = self.image0

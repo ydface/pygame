@@ -36,15 +36,16 @@ def hello_world():
             if event.type == QUIT:
                 mypygame.running = False
             else:
-                gamestate.current_ui.handle_event(event)
-        gamestate.current_ui.update()
-        gamestate.current_ui.draw_self()
+                gamestate.current_ui.event(event)
 
-        frame = clock.tick(60)
-        text = "FPS : " + str(1000.0 / frame)
+        frame = clock.tick(60) / 1000.0
+        gamestate.current_ui.update(time=frame)
+        gamestate.current_ui.draw()
+
+        text = "FPS : " + str(1 / frame)
         view = label.LabelViewState(label.ViewForver)
-        fps_label = label.FontLabel(Rect(10, 600, 10, 10), view, 16, text)
-        fps_label.draw_self()
+        fps_label = label.FontLabel(Rect(10, 600, 10, 10), view, 16, text=text, father=None)
+        fps_label.draw()
 
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
         draw_mouse()
