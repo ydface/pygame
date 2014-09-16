@@ -14,6 +14,7 @@ skill_study = {
     "6" : 5
 }
 
+attribute_ddd = [37, 2, 1, 6, 4]
 class Player(attribute.Attribute):
     def __init__(self):
         super(Player, self).__init__()
@@ -87,6 +88,12 @@ class Player(attribute.Attribute):
     def level_up_event(self):
         global skill_study
         if skill_study.has_key(str(self.level)):
-            self.skills.append(skill.Skill(skill_study[str(self.level)], 1))
+            self.skills.append(skill.Skill(skill_study[str(self.level)], 1, self))
+
+        self.max_hp += attribute_ddd[0]
+        self.speed1 += attribute_ddd[1]
+        self.speed2 += attribute_ddd[2]
+        self.attack += attribute_ddd[3]
+        self.defense += attribute_ddd[4]
 
 

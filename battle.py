@@ -16,6 +16,7 @@ import gamestate
 import button
 import skill
 import monster
+import player
 
 screen = mypygame.screen
 
@@ -40,6 +41,7 @@ class BattleUnit(button.Button):
         self.target = target
         self.skills = kwargs.get('skill', [skill.Skill(101, 1, self.unit), skill.Skill(102, 1, self.unit)])
         self.next_skill = self.skills[0]
+        self.recover_time = 0.1
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
@@ -67,13 +69,11 @@ class BattleUnit(button.Button):
         anger_surface = my_font.render(tx_anger, True, (255, 255, 255))
         screen.blit(anger_surface, (self.rect[0] + 83, self.rect[1] + 33))
 
-        if self.dead:
-            self.child = []
-            return
-
-        #绘制技能释放进度条
-        self.next_skill.draw_process(self)
-
+        if not self.dead:
+            self.next_skill.draw_process(self)
+        else:
+            if isinstance(self.unit, player.Player):
+                pass
         for child in self.child:
             child.draw()
 
@@ -84,21 +84,29 @@ class BattleUnit(button.Button):
     def update(self, **kwargs):
         time = kwargs['time']
 
-        if not self.dead:
+        if not self.dead and not self.father.end:
             for s in self.skills:
                 s.cd_update(**kwargs)
             self.next_skill.release_update(**kwargs)
+        if self.father.end:
+            self.recover(time)
 
         for child in self.child:
             child.update(**kwargs)
 
-    def recover(self):
-        self.unit.hp = self.unit.max_hp
-        self.dead = True
-        self.target = None
+    def recover(self, time):
+        self.recover_time -= time
+        if self.recover_time <= 0:
+            self.recover_time = 0.1
+            self.unit.hp += self.unit.max_hp / 30
+            if self.unit.hp >= self.unit.max_hp:
+                self.unit.hp = self.unit.max_hp
+                self.dead = False
+                self.target = None
 
-        for s in self.skills:
-            s.go_cd()
+                for s in self.skills:
+                    s.go_cd()
+                self.father.new_battle()
 
     def damaged(self, damage):
         self.unit.hp -= damage
@@ -107,7 +115,6 @@ class BattleUnit(button.Button):
     def anger_change(self, val):
         self.unit.anger -= val
         self.unit.anger = min([max([self.unit.anger, 0]), 100])
-
 
     def recover_hp(self, val):
         self.unit.hp += val
@@ -131,6 +138,11 @@ class BattleUnit(button.Button):
             self.target.dead = True
             if self.target in self.father.monsters:
                 gamestate.player.add_exp(self.target.unit.exp)
+
+                view = label.LabelViewState(label.ViewTimer, 0.6, [0, -0.4])
+                rect = [self.rect[0] + 13, self.rect[1] - 3]
+                lb = label.FontLabel(rect, view, 12, text="exp " + str(self.target.unit.exp), color=label.COLOR_GREEN, father=self)
+                self.add(lb)
 
     def add_hp_change_label(self, text, font_size, color):
         view = label.LabelViewState(label.ViewTimer, 0.6, [0, -0.4])
@@ -178,11 +190,6 @@ class Battle(util.node.Node):
                         break
             for child in self.child:
                 child.update(**kwargs)
-        else:
-            self.next_delay -= time
-            if self.next_delay <= 0:
-                self.new_battle()
-                self.next_delay = random.randint(3, 6)
 
     def new_battle(self):
         self.end = False
@@ -201,7 +208,6 @@ class Battle(util.node.Node):
 
         if self.player.unit.hp <= 0:
             self.end = True
-            self.player.recover()
             for m in self.monsters:
                 self.remove(m)
             self.monsters = []
@@ -210,7 +216,6 @@ class Battle(util.node.Node):
                 if not m.dead:
                     return False
             self.end = True
-            self.player.recover()
 
             for m in self.monsters:
                 self.remove(m)

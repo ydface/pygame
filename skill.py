@@ -84,7 +84,7 @@ class SkillEffect(object):
 
     def effect_active(self):
         self.source.anger_change(self.skill.anger)
-        if self.skill.skill_id in [1, 2, 101, 102]:
+        if self.skill.skill_id in [1, 5, 101, 102]:
             damage = self.effect_value()
             self.target.damaged(damage)
             text = str(-damage)
@@ -115,10 +115,6 @@ class Skill(object):
         self.skill_id = skill_id
         self.level = level
         self.father = father
-        #self.max_cool_down = 0.1
-        #self.cool_down = 0.1
-        #self.release_time = 1
-        #self.max_release_time = 1
         self.available = False
         self.anger = skill_config[str(self.skill_id)]["anger"]
         self.init_cd(skill_config[str(self.skill_id)]["cool_down"], skill_config[str(self.skill_id)]["release_time"])
@@ -138,13 +134,13 @@ class Skill(object):
 
     def init_cd(self, cd_time, release_time):
         cdr = 1 - float(self.father.speed1) / math.exp(self.father.level / 5)
-        cdr = min([max([0.0, cdr]), 1.0])
+        cdr = min([max([0.5, cdr]), 1.0])
         cd_time *= cdr
         self.cool_down = cd_time
         self.max_cool_down = cd_time
 
         rtr = 1 - float(self.father.speed2) / math.exp(self.father.level / 5)
-        cdr = min([max([0.0, rtr]), 1.0])
+        rtr = min([max([0.5, rtr]), 1.0])
         release_time *= rtr
         self.release_time = release_time
         self.max_release_time = release_time
