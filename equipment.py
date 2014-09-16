@@ -13,7 +13,6 @@ Quality_Blue = 2
 Quality_Purple = 3
 Quality_Red = 4
 Quality_Gold = 5
-Quality_None = 6
 
 Equip_Hat = 0
 Equip_Necklace = 1
