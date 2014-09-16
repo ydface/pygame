@@ -56,7 +56,7 @@ class BattleUnit(button.Button):
         #绘制血条
         hp_label = int(float(self.unit.attribute_value(Attribute_Hp)) / self.unit.attribute_value(Attribute_Max_Hp) * 100)
         if hp_label:
-            pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 24, hp_label, 8))
+            pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 25, hp_label, 8))
         my_font = pygame.font.Font("resource/msyh.ttf", 8)
         tx_hp = self.unit.attribute_value_str(Attribute_Hp) + " / " + self.unit.attribute_value_str(Attribute_Max_Hp)
         hp_surface = my_font.render(tx_hp, True, (255, 255, 255))

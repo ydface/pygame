@@ -5,18 +5,22 @@ __author__ = 'Ydface'
 
 
 Attribute_Hp = 0
-Attribute_Max_Hp = 1
-Attribute_Attack = 2
-Attribute_Defense = 3
-Attribute_Speed1 = 4
-Attribute_Speed2 = 5
-Attribute_Hit = 6
-Attribute_Dodge = 7
-Attribute_Crit = 8
-Attribute_Crit_Seal = 9
-Attribute_Wreck = 10
-Attribute_Parry = 11
-Attribute_None = 12
+Attribute_Max_Hp = Attribute_Hp + 1
+Attribute_Attack = Attribute_Max_Hp + 1
+Attribute_Defense = Attribute_Attack + 1
+Attribute_Speed1 = Attribute_Defense + 1
+Attribute_Speed2 = Attribute_Speed1 + 1
+Attribute_Hit = Attribute_Speed2 + 1
+Attribute_Dodge = Attribute_Hit + 1
+Attribute_Crit = Attribute_Dodge + 1
+Attribute_Crit_Seal = Attribute_Crit + 1
+Attribute_Wreck = Attribute_Crit_Seal + 1
+Attribute_Parry = Attribute_Wreck + 1
+Attribute_None = Attribute_Parry + 1
+
+Attribute_Name = [u"血量", u"最大血量", u"攻击", u"防御", u"冷却加速", u"施法加速", u"命中", u"闪避", u"暴击",
+                  u"抗暴", u"破击", u"格挡"]
+
 
 class Attribute(object):
     def __init__(self):
@@ -28,7 +32,7 @@ class Attribute(object):
         return self.attribute[attribute]
 
     def attribute_value_str(self, attribute):
-        return str(int(self.attribute_value(attribute)))
+        return Attribute_Name[attribute] + ": " + str(int(self.attribute_value(attribute)))
 
     def attribute_inc(self, attribute, val):
         self.attribute[attribute] += val

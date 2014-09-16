@@ -8,22 +8,22 @@ import attribute
 from attribute import *
 
 Quality_White = 0
-Quality_Greed = 1
-Quality_Blue = 2
-Quality_Purple = 3
-Quality_Red = 4
-Quality_Gold = 5
+Quality_Greed = Quality_White + 1
+Quality_Blue = Quality_Greed + 1
+Quality_Purple = Quality_Blue + 1
+Quality_Red = Quality_Purple + 1
+Quality_Gold =  Quality_Red + 1
 
 Equip_Hat = 0
-Equip_Necklace = 1
-Equip_Clothes = 2
-Equip_Left_Weapon = 3
-Equip_Right_Weapon = 4
-Equip_Gaiter = 5
-Equip_Shoes = 6
-Equip_Left_Ring = 7
-Equip_Right_Ring = 8
-Equip_Talisman = 9
+Equip_Necklace = Equip_Hat + 1
+Equip_Clothes = Equip_Necklace + 1
+Equip_Left_Weapon = Equip_Clothes + 1
+Equip_Right_Weapon = Equip_Left_Weapon + 1
+Equip_Gaiter = Equip_Right_Weapon + 1
+Equip_Shoes = Equip_Gaiter + 1
+Equip_Left_Ring = Equip_Shoes + 1
+Equip_Right_Ring = Equip_Left_Ring + 1
+Equip_Talisman = Equip_Right_Ring + 1
 
 equipment_template = {
     "1": {
