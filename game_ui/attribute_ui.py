@@ -7,7 +7,7 @@ import mypygame
 import util.node
 from attribute import *
 from bag_ui import *
-
+from equipment import *
 screen = mypygame.screen
 
 
@@ -34,6 +34,11 @@ class EquipCell(util.node.Node):
         self.rect.topleft = (pos[0], pos[1])
         pygame.draw.rect(screen, item_background[self.quality], (pos[0] -2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
         screen.blit(self.image, pos)
+
+        my_font = pygame.font.Font("resource/msyh.ttf", 10)
+        tx_level = Equip_Name[self.part]
+        level_surface = my_font.render(tx_level, True, (255, 255, 255))
+        screen.blit(level_surface, (pos[0] + 12, pos[1] + 38))
 
 
 class AttributeUI(util.node.Node):

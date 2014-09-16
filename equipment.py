@@ -25,6 +25,10 @@ Equip_Left_Ring = Equip_Shoes + 1
 Equip_Right_Ring = Equip_Left_Ring + 1
 Equip_Talisman = Equip_Right_Ring + 1
 
+Equip_Name = [u"头盔", u"项链", u"护甲", u"主手武器", u"副手", u"护腿", u"鞋子",
+                  u"左手戒指", u"右手戒指", u"护符"]
+
+
 equipment_template = {
     "1": {
         "attribute": [121, 121, 7, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],

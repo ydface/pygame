@@ -48,7 +48,8 @@ class SkillUI(util.node.Node):
         self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))
 
         self.move_able = False
-        self.rect = Rect(580, 300, self.image.get_width(), self.image.get_height())
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (580, 300)
 
         self.skills = dict()
 

@@ -137,17 +137,22 @@ class Skill(object):
             self.available = True
 
     def init_cd(self, cd_time, release_time):
-        cdr = 1 - float(self.father.attribute_value(Attribute_Speed1)) / math.exp(self.father.level / 5)
+        q1 = math.exp(self.father.level % 3) * self.level
+        q2 = math.exp(self.father.level * 1.1)
+        q = q1 * q2
+        #cdr = round(q / (1300 + 0.01), 4)
+        cdr = round(q / (self.father.attribute_value(Attribute_Speed1) + 0.01), 4)
         cdr = min([max([0.5, cdr]), 1.0])
         cd_time *= cdr
         self.cool_down = cd_time
         self.max_cool_down = cd_time
 
-        rtr = 1 - float(self.father.attribute_value(Attribute_Speed2)) / math.exp(self.father.level / 5)
+        rtr = round(q / (self.father.attribute_value(Attribute_Speed2) + 0.01), 4)
         rtr = min([max([0.5, rtr]), 1.0])
         release_time *= rtr
         self.release_time = release_time
         self.max_release_time = release_time
+        #print q, cdr, rtr, self.father.attribute_value(Attribute_Speed1)
 
     def go_cd(self):
         self.available = False

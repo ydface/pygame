@@ -13,6 +13,7 @@ import resource
 import battle
 import label
 import game_ui.attribute_ui
+from equipment import *
 
 screen = mypygame.screen
 
@@ -20,18 +21,17 @@ item_background = [(255, 255, 255), (0, 255, 0), (65, 105, 225), (160, 32, 240),
 
 
 class ItemCell(util.node.Node):
-    def __init__(self, father, item_id, pos, quality):
+    def __init__(self, father, equip, idx):
         super(ItemCell, self).__init__()
 
         self.father = father
-        self.item_id = item_id
-        self.image = resource.getImage("item_" + str(self.item_id))
-        self.index = pos
-        self.quality = quality
+        self.equip = equip
+        self.image = resource.getImage("item_" + str(self.equip.template))
+        self.index = idx
         self.clicked = False
 
-        self.x = pos % 6
-        self.y = pos / 6
+        self.x = idx % 6
+        self.y = idx / 6
 
         self.rect = self.image.get_rect()
         pos = (self.father.rect[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect[1] + 37.5 * self.y + 15 + 15 * self.y)
@@ -40,8 +40,13 @@ class ItemCell(util.node.Node):
     def draw(self):
         pos = (self.father.rect[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect[1] + 37.5 * self.y + 15 + 15 * self.y)
         self.rect.topleft = (pos[0], pos[1])
-        pygame.draw.rect(screen, item_background[self.quality], (pos[0] -2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
+        pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] -2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
         screen.blit(self.image, pos)
+
+        my_font = pygame.font.Font("resource/msyh.ttf", 10)
+        tx_level = Equip_Name[self.equip.part]
+        level_surface = my_font.render(tx_level, True, (255, 255, 255))
+        screen.blit(level_surface, (pos[0] + 12, pos[1] + 38))
 
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
@@ -84,7 +89,7 @@ class BagUI(util.node.Node):
         equips = gamestate.player.equips
         for i in range(len(equips)):
             if equips[i] is not None:
-                self.add(ItemCell( self, equips[i].template + 1, i, equips[i].quality))
+                self.add(ItemCell( self, equips[i], i))
 
         #for i in self.items:
             #self.items[i].draw()
