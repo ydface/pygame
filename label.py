@@ -36,10 +36,10 @@ class LabelViewState(object):
 
 
 class FontLabel(util.node.Node):
-    def __init__(self, rect, view_state, font_size, **kwargs):
+    def __init__(self, pos, view_state, font_size, **kwargs):
         super(FontLabel, self).__init__(**kwargs)
 
-        self.rect = rect
+        self.pos = pos
         self.viewState = view_state
         self.font = "resource/msyh.ttf"
         self.fontSize = font_size
@@ -52,8 +52,8 @@ class FontLabel(util.node.Node):
         self.name_surface = self.my_font.render(self.text, True, color)
 
     def update(self, **kwargs):
-        self.rect[0] = self.rect[0] + self.viewState.move[0]
-        self.rect[1] = self.rect[1] + self.viewState.move[1]
+        self.pos[0] = self.pos[0] + self.viewState.move[0]
+        self.pos[1] = self.pos[1] + self.viewState.move[1]
         if self.viewState.view == ViewTimer:
             time = kwargs['time']
             self.viewState.last_time -= time
@@ -68,4 +68,4 @@ class FontLabel(util.node.Node):
 
     def draw(self):
         if self.viewState.isView:
-            screen.blit(self.name_surface, (self.rect[0], self.rect[1]))
+            screen.blit(self.name_surface, (self.pos[0], self.pos[1]))

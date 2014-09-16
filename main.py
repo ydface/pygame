@@ -44,7 +44,7 @@ def hello_world():
 
         text = "FPS : " + str(1 / frame)
         view = label.LabelViewState(label.ViewForver)
-        fps_label = label.FontLabel(Rect(10, 600, 10, 10), view, 16, text=text, father=None)
+        fps_label = label.FontLabel([10, 600], view, 16, text=text, father=None)
         fps_label.draw()
 
         #先绘制场景界面，再绘制鼠标，鼠标在最上层

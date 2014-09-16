@@ -14,7 +14,7 @@ screen = mypygame.screen
 
 
 class Button(util.node.Node):
-    def __init__(self, rect, image0, image1, father, **kwargs):
+    def __init__(self, pos, image0, image1, father, **kwargs):
         super(Button, self).__init__(**kwargs)
 
         self.father = father
@@ -26,7 +26,7 @@ class Button(util.node.Node):
         self.image = self.image0
 
         self.rect = self.image.get_rect()
-        self.rect.topleft = (rect[0], rect[1])
+        self.rect.topleft = (pos[0], pos[1])
 
         #鼠标悬停
         self.mouse_stance = False

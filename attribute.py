@@ -8,16 +8,16 @@ class Attribute(object):
     def __init__(self):
         super(Attribute, self).__init__()
         self.level = 1
-        self.attack = 1
-        self.defense = 50
-        self.speed = 1
         self.hp = 1
         self.max_hp = 1
+        self.attack = 1
+        self.defense = 0
+        self.speed1 = 0
+        self.speed2 = 0
+        self.hit = 0
+        self.dodge = 0
         self.crit = 0
+        self.crit_seal = 0
         self.parry = 0
-
-    def recover_hp(self, val):
-        if self.hp + val > self.max_hp:
-            self.hp = self.max_hp
-        else:
-            self.hp += val
+        self.wreck = 0
+        self.anger = 0

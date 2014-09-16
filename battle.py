@@ -14,56 +14,56 @@ import label
 import util.node
 import gamestate
 import button
-import attribute
 import skill
+import monster
 
 screen = mypygame.screen
 
 class ExitButton(button.Button):
     def __init__(self, father):
-        rect = Rect(345, 500, 100, 50)
+        pos = [345, 500]
         image1 = resource.getImage("start_normal")
         image0 = resource.getImage("start_down")
 
-        super(ExitButton, self).__init__(rect, image1, image0, father)
+        super(ExitButton, self).__init__(pos, image1, image0, father)
 
     def click_up_effect(self):
         gamestate.current_ui = game_ui.mission_ui.UIGame()
 
 
-class BattleUnit(button.Button, attribute.Attribute):
-    def __init__(self, level, image, rect, father, target, **kwargs):
-        super(BattleUnit, self).__init__(rect, image, resource.getImage("header_line"), father)
-        attribute.Attribute.__init__(self)
-        self.hp = 1000 + level * 100
-        self.max_hp = self.hp
-        self.attack = 100 + level * 20
+class BattleUnit(button.Button):
+    def __init__(self, unit, image, pos, father, target, **kwargs):
+        super(BattleUnit, self).__init__(pos, image, resource.getImage("header_line"), father)
+        self.unit = unit
         self.dead = False
         self.father = father
-        self.speed = random.randint(30, 90)
         self.target = target
-        self.skills = kwargs.get('skill', [skill.Skill(1, 1)])
-        self.exp = random.randint(10, 100)
+        self.skills = kwargs.get('skill', [skill.Skill(101, 1, self.unit), skill.Skill(102, 1, self.unit)])
         self.next_skill = self.skills[0]
-        self.anger = 0
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
-         #绘制血条
-        hp_label = int(float(self.hp) / self.max_hp * 100)
+
+        my_font = pygame.font.Font("resource/msyh.ttf", 10)
+        #绘制等级
+        tx_lv = str(self.unit.level)
+        lv_surface = my_font.render(tx_lv, True, (255, 255, 255))
+        screen.blit(lv_surface, (self.rect[0] + 60, self.rect[1] + 6))
+        #绘制血条
+        hp_label = int(float(self.unit.hp) / self.unit.max_hp * 100)
         if hp_label:
             pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 24, hp_label, 8))
         my_font = pygame.font.Font("resource/msyh.ttf", 8)
-        tx_hp = str(self.hp) + " / " + str(self.max_hp)
+        tx_hp = str(self.unit.hp) + " / " + str(self.unit.max_hp)
         hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
-        screen.blit(hp_surface, (self.rect[0] + 79, self.rect[1] + 23))
+        screen.blit(hp_surface, (self.rect[0] + 71, self.rect[1] + 23))
 
         ##绘制怒气条
-        anger_label = int(float(self.anger) / 100 * 100)
+        anger_label = int(float(self.unit.anger) / 100 * 100)
         if anger_label:
             pygame.draw.rect(screen, (0, 0, 255), (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
-        my_font = pygame.font.Font("resource/msyh.ttf", 8)
-        tx_anger = str(self.anger) + " / " + str(100)
+        #my_font = pygame.font.Font("resource/msyh.ttf", 8)
+        tx_anger = str(self.unit.anger) + " / " + str(100)
         anger_surface = my_font.render(tx_anger, True, (255, 255, 255))
         screen.blit(anger_surface, (self.rect[0] + 83, self.rect[1] + 33))
 
@@ -93,7 +93,7 @@ class BattleUnit(button.Button, attribute.Attribute):
             child.update(**kwargs)
 
     def recover(self):
-        self.hp = self.max_hp
+        self.unit.hp = self.unit.max_hp
         self.dead = True
         self.target = None
 
@@ -101,17 +101,17 @@ class BattleUnit(button.Button, attribute.Attribute):
             s.go_cd()
 
     def damaged(self, damage):
-        if self.hp <= damage:
-            self.hp = 0
-        else:
-            self.hp -= damage
+        self.unit.hp -= damage
+        self.unit.hp = int(max([0, self.unit.hp]))
 
     def anger_change(self, val):
-        self.anger -= val
-        if self.anger > 100:
-            self.anger = 100
-        elif self.anger < 0:
-            self.anger = 0
+        self.unit.anger -= val
+        self.unit.anger = min([max([self.unit.anger, 0]), 100])
+
+
+    def recover_hp(self, val):
+        self.unit.hp += val
+        self.unit.hp = min([self.unit.max_hp, self.unit.hp])
 
     def active(self):
         if self.dead:
@@ -126,34 +126,35 @@ class BattleUnit(button.Button, attribute.Attribute):
             effect.effect_active()
             self.skill_available()
 
-        if self.target.hp <= 0:
-            self.target.hp = 0
+        if self.target.unit.hp <= 0:
+            self.target.unit.hp = 0
             self.target.dead = True
-            if self in self.father.monsters:
-                gamestate.player.add_exp(self.target.exp)
+            if self.target in self.father.monsters:
+                gamestate.player.add_exp(self.target.unit.exp)
 
     def add_hp_change_label(self, text, font_size, color):
-        view = label.LabelViewState(label.ViewTimer, 0.8, [0, -0.3])
-        rect = Rect(self.rect[0] + 200, self.rect[1] + 30, 100, 50)
+        view = label.LabelViewState(label.ViewTimer, 0.6, [0, -0.4])
+        rect = [self.rect[0] + 200, self.rect[1] + 30]
         lb = label.FontLabel(rect, view, font_size, text=text, color=color, father=self)
         self.add(lb)
 
     def skill_available(self):
         self.next_skill = self.skills[0]
         for s in self.skills:
-            if self.anger < s.anger:
+            if self.unit.anger < s.anger:
                 continue
             if s.cool_down <= 0:
                 self.next_skill = s
             elif s.cool_down < self.next_skill.cool_down:
                 self.next_skill = s
 
+
 class Battle(util.node.Node):
     def __init__(self, level):
         super(Battle, self).__init__()
 
         self.end = True
-        self.player = BattleUnit(gamestate.player.level, resource.getImage("header_line"), Rect(100, 360, 100, 50), self, None, skill=gamestate.player.skills)
+        self.player = BattleUnit(gamestate.player, resource.getImage("header_line"), [100, 360], self, None, skill=gamestate.player.skills)
         self.player.dead = True
         self.add(self.player)
         self.monsters = []
@@ -188,33 +189,31 @@ class Battle(util.node.Node):
         self.player.dead = False
         num = random.randint(1, 6)
         for i in range(0, num):
-            level = random.randint(1, gamestate.player.level)
-            monster = BattleUnit(level, resource.getImage("header_line"), Rect(400, 20 + 80 * i, 100, 50), self, self.player)
-            self.monsters.append(monster)
-            self.add(monster)
+            level = random.randint(max([1, gamestate.player.level - 3]), gamestate.player.level)
+            mid = random.randint(1, 5)
+            m = BattleUnit(monster.Monster(mid, level), resource.getImage("header_line"), [400, 20 + 80 * i], self, self.player)
+            self.monsters.append(m)
+            self.add(m)
 
     def check_end(self):
         if self.end:
             return self.end
 
-        if self.player.hp <= 0:
+        if self.player.unit.hp <= 0:
             self.end = True
             self.player.recover()
-            for monster in self.monsters:
-                self.remove(monster)
+            for m in self.monsters:
+                self.remove(m)
             self.monsters = []
         else:
-            for monster in self.monsters:
-                if not monster.dead:
+            for m in self.monsters:
+                if not m.dead:
                     return False
             self.end = True
             self.player.recover()
 
-            for monster in self.monsters:
-                self.remove(monster)
+            for m in self.monsters:
+                self.remove(m)
             self.monsters = []
-
-            gamestate.player.add_exp(1)
-
         return self.end
 

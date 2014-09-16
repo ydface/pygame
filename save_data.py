@@ -37,7 +37,19 @@ class Save(object):
 
         user_obj = save_obj["user"]
         user_obj["level"] = 1
-        user_obj["exp"] = 1
+        user_obj["exp"] = 0
+        user_obj["hp"] = 378
+        user_obj["max_hp"] = 378
+        user_obj["speed1"] = 0
+        user_obj["speed2"] = 0
+        user_obj["attack"] = 126
+        user_obj["defense"] = 63
+        user_obj["hit"] = 50
+        user_obj["dodge"] = 27
+        user_obj["crit"] = 34
+        user_obj["crit_seal"] = 29
+        user_obj["wreck"] = 18
+        user_obj["parry"] = 18
 
         skill_obj = save_obj["skill"]
         skill_obj.append({"skill_id": 1, "level": 1})
