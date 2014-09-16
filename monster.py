@@ -15,17 +15,17 @@ a = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
 monster_config = {
     "1": {
         "attribute": [165, 165, 86, 23, 0.0, 0.0, 0, 0, 0, 0, 0],
-        "lvadd": 1.2,
+        "lvadd": 0.2,
         "exp": 3
     },
     "2": {
         "attribute": [86, 86, 103, 15, 0.0, 0.0, 0, 0, 0, 0, 0],
-        "lvadd": 1.3,
+        "lvadd": 0.3,
         "exp": 5
     },
     "3": {
         "attribute": [234, 234, 46, 41, 0.0, 0.0, 0, 0, 0, 0, 0],
-        "lvadd": 1.2,
+        "lvadd": 0.2,
         "exp": 8
     },
     "4": {
@@ -35,7 +35,7 @@ monster_config = {
     },
     "5": {
         "attribute": [386, 386, 112, 95, 0.0, 0.0, 0, 0, 0, 0, 0],
-        "lvadd": 1.2,
+        "lvadd": 0.2,
         "exp": 14
     }
 }
@@ -49,7 +49,7 @@ class Monster(attribute.Attribute):
 
         m_attribute = monster_config[str(mid)]
 
-        lv_addition = m_attribute["lvadd"] * level
+        lv_addition = 1 + m_attribute["lvadd"] * level
 
         self.attribute = m_attribute["attribute"]
         self.attribute = [attr * lv_addition for attr in self.attribute]
