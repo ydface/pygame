@@ -24,6 +24,8 @@ class Save(object):
 
         sav_obj["user"] = player.user_serialize_save()
         sav_obj["skill"] = player.skill_serialize_save()
+        sav_obj["item"] = player.item_serialize_save()
+        sav_obj["equiped"] = player.equiped_serialize_save()
 
         cPickle.dump(sav_obj, open("save.sav", "wb"), 1)
 
@@ -42,6 +44,9 @@ class Save(object):
         skill_obj = save_obj["skill"]
         skill_obj.append({"skill_id": 1, "level": 1})
         skill_obj.append({"skill_id": 2, "level": 1})
+
+        save_obj["item"] = [None] * 90
+        save_obj["equiped"] = [None] * 10
 
     @staticmethod
     def load(module):

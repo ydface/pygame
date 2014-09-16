@@ -25,12 +25,10 @@ class Attribute(object):
         self.attribute = [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     def attribute_value(self, attribute):
-        if attribute in [Attribute_Hp, Attribute_Max_Hp]:
-            return int(self.attribute[attribute])
         return self.attribute[attribute]
 
     def attribute_value_str(self, attribute):
-        return str(self.attribute_value(attribute))
+        return str(int(self.attribute_value(attribute)))
 
     def attribute_inc(self, attribute, val):
         self.attribute[attribute] += val

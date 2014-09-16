@@ -108,7 +108,7 @@ class MissionMapUI(util.node.Node):
         if gamestate.SenceLevel == gamestate.LEVEL_0:
             if self.offest < self.background.get_width() - 3:
                 self.event_enable = False
-                self.offest = self.offest + 3
+                self.offest = self.offest + 5
                 if self.offest >= self.background.get_width() - 3:
                     self.event_enable = True
                 if self.offest > self.background.get_width():

@@ -9,6 +9,7 @@ import random
 import mypygame
 import label
 import attribute
+import equipment
 
 a = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
 monster_config = {
@@ -54,5 +55,12 @@ class Monster(attribute.Attribute):
         self.attribute = [attr * lv_addition for attr in self.attribute]
 
         self.exp = int(m_attribute["exp"] * lv_addition)
+
+        self.equip = None
+        ra = random.randint(0, 100)
+        if ra < 15:
+            eid = random.randint(1, 3)
+            quality = random.randint(equipment.Quality_White, equipment.Quality_None)
+            self.equip = equipment.Equipment.create_equipment(self.level, eid, quality)
 
 

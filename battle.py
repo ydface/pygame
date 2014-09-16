@@ -112,7 +112,6 @@ class BattleUnit(button.Button):
     def damaged(self, damage):
         self.unit.hp_dec(damage)
 
-
     def anger_change(self, val):
         self.anger -= val
         self.anger = min([max([self.anger, 0]), 100])
@@ -124,9 +123,9 @@ class BattleUnit(button.Button):
         if self.dead:
             return
         if not self.target or self.target.dead:
-            for monster in self.father.monsters:
-                if not monster.dead:
-                    self.target = monster
+            for m in self.father.monsters:
+                if not m.dead:
+                    self.target = m
 
         if self.next_skill.available:
             effect = skill.SkillEffect(self.next_skill, self, self.target)
@@ -135,8 +134,9 @@ class BattleUnit(button.Button):
 
         if self.target.unit.attribute_value(Attribute_Hp) == 0:
             self.target.dead = True
-            if self.target in self.father.monsters:
+            if isinstance(self.target.unit, monster.Monster):
                 gamestate.player.add_exp(self.target.unit.exp)
+                gamestate.player.get_equipment(self.target.unit.equip)
 
                 view = label.LabelViewState(label.ViewTimer, 0.6, [0, -0.4])
                 rect = [self.rect[0] + 13, self.rect[1] - 3]
