@@ -11,6 +11,7 @@ class Node(object):
     def __init__(self, **kwargs):
         super(Node, self).__init__()
 
+        self.father = None
         self._zorder = kwargs.get('layer', 1)
         self._old_zorder = self._zorder
 
@@ -24,6 +25,7 @@ class Node(object):
         return False
 
     def add(self, sprite):
+        sprite.father = self
         self.child.append(sprite)
         #self.child = sorted(self.child)
 

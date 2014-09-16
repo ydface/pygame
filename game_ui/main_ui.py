@@ -18,11 +18,11 @@ screen = mypygame.screen
 #开始游戏按钮
 class StartButton(button.Button):
     def __init__(self, father):
-        rect = Rect(345, 420, 100, 50)
+        pos = (345, 420)
         image1 = resource.getImage("start_normal")
         image0 = resource.getImage("start_down")
 
-        super(StartButton, self).__init__(rect, image1, image0, father)
+        super(StartButton, self).__init__(pos, image1, image0, father)
 
     def click_up_effect(self):
         gamestate.current_ui = game_ui.mission_ui.UIGame()
@@ -31,11 +31,11 @@ class StartButton(button.Button):
 #退出游戏按钮
 class ExitButton(button.Button):
     def __init__(self, father):
-        rect = Rect(345, 500, 100, 50)
+        pos = (345, 500)
         image1 = resource.getImage("start_normal")
         image0 = resource.getImage("start_down")
 
-        super(ExitButton, self).__init__(rect, image1, image0, father)
+        super(ExitButton, self).__init__(pos, image1, image0, father)
 
     def click_up_effect(self):
         mypygame.running = False

@@ -95,3 +95,9 @@ class UIGame(util.node.Node):
         self.add(self.mission_map)
         #self.layer_child[LayerUI]["mission_map"] = mission_map
 
+    def has_ui(self, ctype):
+        for child in self.child:
+            if isinstance(child, ctype):
+                return child
+        return None
+

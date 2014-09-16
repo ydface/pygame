@@ -31,6 +31,8 @@ class Button(util.node.Node):
         #鼠标悬停
         self.mouse_stance = False
 
+        self.clicked = False
+
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
 
@@ -46,14 +48,18 @@ class Button(util.node.Node):
                 self.mouse_stance = True
             else:
                 self.mouse_stance = False
+                self.clicked = False
             self.mouse_hover_effect()
 
         elif event.type == MOUSEBUTTONUP:
             self.click_up()
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
-                #点中影响
-                self.click_up_effect()
+                if self.clicked:
+                    #点中影响
+                    self.click_up_effect()
+            else:
+                self.clicked = False
 
     def mouse_hover_effect(self):
         pass
@@ -69,6 +75,7 @@ class Button(util.node.Node):
         #如果有点中效果变化，则变化
         if self.image1:
             self.image = self.image1
+        self.clicked = True
         self.click_down_effect()
 
     def click_up(self):

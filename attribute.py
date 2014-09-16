@@ -18,8 +18,8 @@ Attribute_Wreck = Attribute_Crit_Seal + 1
 Attribute_Parry = Attribute_Wreck + 1
 Attribute_None = Attribute_Parry + 1
 
-Attribute_Name = [u"血量", u"最大血量", u"攻击", u"防御", u"冷却加速", u"施法加速", u"命中", u"闪避", u"暴击",
-                  u"抗暴", u"破击", u"格挡"]
+Attribute_Name = [u"血       量", u"最大血量", u"攻       击", u"防       御", u"冷却加速", u"施法加速", u"命      中",
+                  u"闪      避", u"暴      击", u"抗      暴", u"破      击", u"格      挡"]
 
 
 class Attribute(object):
@@ -29,10 +29,10 @@ class Attribute(object):
         self.attribute = [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     def attribute_value(self, attribute):
-        return self.attribute[attribute]
+        return int(self.attribute[attribute])
 
     def attribute_value_str(self, attribute):
-        return Attribute_Name[attribute] + ": " + str(int(self.attribute_value(attribute)))
+        return Attribute_Name[attribute] + ":   " + str(int(self.attribute_value(attribute)))
 
     def attribute_inc(self, attribute, val):
         self.attribute[attribute] += val

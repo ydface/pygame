@@ -12,10 +12,13 @@ import gamestate
 import resource
 import battle
 import label
+import game_ui.attribute_ui
 
 screen = mypygame.screen
 
 item_background = [(255, 255, 255), (0, 255, 0), (65, 105, 225), (160, 32, 240), (255, 0, 0), (255, 255, 0)]
+
+
 class ItemCell(util.node.Node):
     def __init__(self, father, item_id, pos, quality):
         super(ItemCell, self).__init__()
@@ -54,7 +57,9 @@ class ItemCell(util.node.Node):
                 gamestate.player.put_on_equipment(self.index)
                 self.clicked = False
                 self.father.rebuild()
-
+                attr_ui = self.father.father.has_ui(game_ui.attribute_ui.AttributeUI)
+                if attr_ui is not None:
+                    attr_ui.rebuild()
 
 class BagUI(util.node.Node):
     def __init__(self, **kwargs):
