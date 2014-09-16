@@ -9,6 +9,7 @@ import random
 import mypygame
 import label
 import math
+from attribute import *
 
 skill_config = {
     "1": {
@@ -43,8 +44,8 @@ skill_config = {
         "anger": 35
     },
     "101": {
-        "paras": [65, 10],
-        "content": u"对当前目标造成(65 + 5 * 等级)% + 25点固定伤害",
+        "paras": [85, 10],
+        "content": u"对当前目标造成(85 + 5 * 等级)% + 25点固定伤害",
         "cool_down": 0.0,
         "release_time": 2.0,
         "anger": -3
@@ -80,7 +81,10 @@ class SkillEffect(object):
         self.skill.go_cd()
 
     def effect_value(self):
-        return max([1, int(self.source.unit.attack * (self.skill.level * 5 + self.effect_paras[0]) // 100 + self.effect_paras[1] - self.target.unit.defense)])
+        s_atk = self.source.unit.attribute_value(Attribute_Attack)
+        t_def = self.target.unit.attribute_value(Attribute_Defense)
+
+        return max([1, int(s_atk * (self.skill.level * 5 + self.effect_paras[0]) // 100 + self.effect_paras[1] - t_def)])
 
     def effect_active(self):
         self.source.anger_change(self.skill.anger)
@@ -133,13 +137,13 @@ class Skill(object):
             self.available = True
 
     def init_cd(self, cd_time, release_time):
-        cdr = 1 - float(self.father.speed1) / math.exp(self.father.level / 5)
+        cdr = 1 - float(self.father.attribute_value(Attribute_Speed1)) / math.exp(self.father.level / 5)
         cdr = min([max([0.5, cdr]), 1.0])
         cd_time *= cdr
         self.cool_down = cd_time
         self.max_cool_down = cd_time
 
-        rtr = 1 - float(self.father.speed2) / math.exp(self.father.level / 5)
+        rtr = 1 - float(self.father.attribute_value(Attribute_Speed2)) / math.exp(self.father.level / 5)
         rtr = min([max([0.5, rtr]), 1.0])
         release_time *= rtr
         self.release_time = release_time

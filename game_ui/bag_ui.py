@@ -16,9 +16,9 @@ import label
 screen = mypygame.screen
 
 
-class Item(util.node.Node):
+class ItemCell(util.node.Node):
     def __init__(self, father, item_id, pos):
-        super(Item, self).__init__()
+        super(ItemCell, self).__init__()
 
         self.father = father
         self.item_id = item_id
@@ -45,7 +45,7 @@ class BagUI(util.node.Node):
 
         self.items = dict()
         for i in range(0, 30):
-            self.items[str(i)] = Item( self, i + 1, i)
+            self.items[str(i)] = ItemCell( self, i + 1, i)
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))

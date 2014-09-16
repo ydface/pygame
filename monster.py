@@ -10,53 +10,35 @@ import mypygame
 import label
 import attribute
 
+a = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
 monster_config = {
     "1": {
-        "hp": 165,
-        "attack": 86,
-        "defense": 23,
-        "speed1": 0.0,
-        "speed2": 0.0,
+        "attribute": [165, 165, 86, 23, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 1.2,
         "exp": 3
     },
     "2": {
-        "hp": 86,
-        "attack": 103,
-        "defense": 15,
-        "speed1": 0.0,
-        "speed2": 0.0,
+        "attribute": [86, 86, 103, 15, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 1.3,
         "exp": 5
     },
     "3": {
-        "hp": 234,
-        "attack": 46,
-        "defense": 41,
-        "speed1": 0.0,
-        "speed2": 0.0,
+        "attribute": [234, 234, 46, 41, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 1.2,
         "exp": 8
     },
     "4": {
-        "hp": 115,
-        "attack": 38,
-        "defense": 69,
-        "speed1": 0.0,
-        "speed2": 0.0,
+        "attribute": [115, 115, 38, 69, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 1.2,
         "exp": 9
     },
     "5": {
-        "hp": 386,
-        "attack": 112,
-        "defense": 95,
-        "speed1": 0.0,
-        "speed2": 0.0,
+        "attribute": [386, 386, 112, 95, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 1.2,
         "exp": 14
     }
 }
+
 
 class Monster(attribute.Attribute):
     def __init__(self, mid, level):
@@ -67,12 +49,10 @@ class Monster(attribute.Attribute):
         m_attribute = monster_config[str(mid)]
 
         lv_addition = m_attribute["lvadd"] * level
-        self.hp = int(m_attribute["hp"] * lv_addition)
-        self.max_hp = self.hp
-        self.attack = m_attribute["attack"] * lv_addition
-        self.defense = m_attribute["defense"] * lv_addition
-        self.speed1 = m_attribute["speed1"] * lv_addition
-        self.speed2 = m_attribute["speed2"] * lv_addition
+
+        self.attribute = m_attribute["attribute"]
+        self.attribute = [attr * lv_addition for attr in self.attribute]
+
         self.exp = int(m_attribute["exp"] * lv_addition)
 
 

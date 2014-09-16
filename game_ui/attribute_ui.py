@@ -12,6 +12,7 @@ import gamestate
 import resource
 import battle
 import label
+from attribute import *
 
 screen = mypygame.screen
 
@@ -36,13 +37,12 @@ class AttributeUI(util.node.Node):
         exp_surface = my_font.render(tx_exp, True, (255, 255, 255))
         screen.blit(exp_surface, (self.rect[0] + 165, self.rect[1] + 96))
 
-        tx1 = str(gamestate.player.attack)
-        tx1_surface = my_font.render(tx1, True, (255, 255, 255))
-        screen.blit(tx1_surface, (self.rect[0] + 73, self.rect[1] + 114))
-
-        tx2 = str(gamestate.player.defense)
-        tx2_surface = my_font.render(tx2, True, (255, 255, 255))
-        screen.blit(tx2_surface, (self.rect[0] + 170, self.rect[1] + 114))
+        for attr in range(Attribute_Hp, Attribute_None):
+            x_idx = attr % 2
+            y_idx = attr // 2
+            tx1 = gamestate.player.attribute_value_str(attr)
+            tx1_surface = my_font.render(tx1, True, (255, 255, 255))
+            screen.blit(tx1_surface, (self.rect[0] + 75 + 96 * x_idx, self.rect[1] + 114 + 18 * y_idx))
 
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:

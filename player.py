@@ -6,6 +6,7 @@ __author__ = 'Ydface'
 import attribute
 import save_data
 import skill
+from attribute import *
 
 level_exp_sequence = [100, 186, 368, 495, 602, 733, 901, 1186, 1423, 1765, 2132, 2598, 3065, 3656, 4645, 5243, 5923, 6885]
 skill_study = {
@@ -14,7 +15,10 @@ skill_study = {
     "6" : 5
 }
 
-attribute_ddd = [37, 2, 1, 6, 4]
+attribute_ddd = [37, 37, 6, 4, 2, 1, 0, 0, 0, 0, 0, 0]
+init_attribute = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
+
+
 class Player(attribute.Attribute):
     def __init__(self):
         super(Player, self).__init__()
@@ -29,18 +33,8 @@ class Player(attribute.Attribute):
         self.level = user_obj["level"]
         self.exp = user_obj["exp"]
         self.n_exp = self.level_up_exp()
-        self.hp = user_obj["hp"]
-        self.max_hp = user_obj["max_hp"]
-        self.speed1 = user_obj["speed1"]
-        self.speed2 = user_obj["speed2"]
-        self.attack = user_obj["attack"]
-        self.defense = user_obj["defense"]
-        self.hit = user_obj["hit"]
-        self.dodge = user_obj["dodge"]
-        self.crit = user_obj["crit"]
-        self.crit_seal = user_obj["crit_seal"]
-        self.wreck = user_obj["wreck"]
-        self.parry = user_obj["parry"]
+
+        self.attribute = [init_attribute[attr] + self.level * attribute_ddd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
         skill_obj = save_data.Save.load("skill")
         for s in skill_obj:
@@ -65,18 +59,6 @@ class Player(attribute.Attribute):
         user_obj = dict()
         user_obj["level"] = self.level
         user_obj["exp"] = self.exp
-        user_obj["hp"] = self.hp
-        user_obj["speed1"] = self.speed1
-        user_obj["speed2"] = self.speed2
-        user_obj["attack"] = self.attack
-        user_obj["defense"] = self.defense
-        user_obj["hit"] = self.hit
-        user_obj["dodge"] = self.dodge
-        user_obj["crit"] = self.crit
-        user_obj["crit_seal"] = self.crit_seal
-        user_obj["wreck"] = self.wreck
-        user_obj["parry"] = self.parry
-        user_obj["max_hp"] = self.max_hp
         return user_obj
 
     def skill_serialize_save(self):
@@ -90,10 +72,4 @@ class Player(attribute.Attribute):
         if skill_study.has_key(str(self.level)):
             self.skills.append(skill.Skill(skill_study[str(self.level)], 1, self))
 
-        self.max_hp += attribute_ddd[0]
-        self.speed1 += attribute_ddd[1]
-        self.speed2 += attribute_ddd[2]
-        self.attack += attribute_ddd[3]
-        self.defense += attribute_ddd[4]
-
-
+        self.attribute = [self.attribute[attr] + attribute_ddd[attr] for attr in range(min([len(self.attribute), len(attribute_ddd)]))]

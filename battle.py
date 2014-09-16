@@ -17,6 +17,7 @@ import button
 import skill
 import monster
 import player
+from attribute import *
 
 screen = mypygame.screen
 
@@ -42,6 +43,7 @@ class BattleUnit(button.Button):
         self.skills = kwargs.get('skill', [skill.Skill(101, 1, self.unit), skill.Skill(102, 1, self.unit)])
         self.next_skill = self.skills[0]
         self.recover_time = 0.1
+        self.anger = 0
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
@@ -52,20 +54,20 @@ class BattleUnit(button.Button):
         lv_surface = my_font.render(tx_lv, True, (255, 255, 255))
         screen.blit(lv_surface, (self.rect[0] + 60, self.rect[1] + 6))
         #绘制血条
-        hp_label = int(float(self.unit.hp) / self.unit.max_hp * 100)
+        hp_label = int(float(self.unit.attribute_value(Attribute_Hp)) / self.unit.attribute_value(Attribute_Max_Hp) * 100)
         if hp_label:
             pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 24, hp_label, 8))
         my_font = pygame.font.Font("resource/msyh.ttf", 8)
-        tx_hp = str(self.unit.hp) + " / " + str(self.unit.max_hp)
+        tx_hp = self.unit.attribute_value_str(Attribute_Hp) + " / " + self.unit.attribute_value_str(Attribute_Max_Hp)
         hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
         screen.blit(hp_surface, (self.rect[0] + 71, self.rect[1] + 23))
 
         ##绘制怒气条
-        anger_label = int(float(self.unit.anger) / 100 * 100)
+        anger_label = int(float(self.anger) / 100 * 100)
         if anger_label:
             pygame.draw.rect(screen, (0, 0, 255), (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
         #my_font = pygame.font.Font("resource/msyh.ttf", 8)
-        tx_anger = str(self.unit.anger) + " / " + str(100)
+        tx_anger = str(self.anger) + " / " + str(100)
         anger_surface = my_font.render(tx_anger, True, (255, 255, 255))
         screen.blit(anger_surface, (self.rect[0] + 83, self.rect[1] + 33))
 
@@ -98,9 +100,8 @@ class BattleUnit(button.Button):
         self.recover_time -= time
         if self.recover_time <= 0:
             self.recover_time = 0.1
-            self.unit.hp += self.unit.max_hp / 30
-            if self.unit.hp >= self.unit.max_hp:
-                self.unit.hp = self.unit.max_hp
+            hpr = self.unit.attribute_value(Attribute_Max_Hp) / 30
+            if self.unit.hp_inc(hpr):
                 self.dead = False
                 self.target = None
 
@@ -109,16 +110,15 @@ class BattleUnit(button.Button):
                 self.father.new_battle()
 
     def damaged(self, damage):
-        self.unit.hp -= damage
-        self.unit.hp = int(max([0, self.unit.hp]))
+        self.unit.hp_dec(damage)
+
 
     def anger_change(self, val):
-        self.unit.anger -= val
-        self.unit.anger = min([max([self.unit.anger, 0]), 100])
+        self.anger -= val
+        self.anger = min([max([self.anger, 0]), 100])
 
     def recover_hp(self, val):
-        self.unit.hp += val
-        self.unit.hp = min([self.unit.max_hp, self.unit.hp])
+        self.unit.hp_inc(val)
 
     def active(self):
         if self.dead:
@@ -133,8 +133,7 @@ class BattleUnit(button.Button):
             effect.effect_active()
             self.skill_available()
 
-        if self.target.unit.hp <= 0:
-            self.target.unit.hp = 0
+        if self.target.unit.attribute_value(Attribute_Hp) == 0:
             self.target.dead = True
             if self.target in self.father.monsters:
                 gamestate.player.add_exp(self.target.unit.exp)
@@ -153,7 +152,7 @@ class BattleUnit(button.Button):
     def skill_available(self):
         self.next_skill = self.skills[0]
         for s in self.skills:
-            if self.unit.anger < s.anger:
+            if self.anger < s.anger:
                 continue
             if s.cool_down <= 0:
                 self.next_skill = s
@@ -206,7 +205,7 @@ class Battle(util.node.Node):
         if self.end:
             return self.end
 
-        if self.player.unit.hp <= 0:
+        if self.player.unit.attribute_value(Attribute_Hp) == 0:
             self.end = True
             for m in self.monsters:
                 self.remove(m)
