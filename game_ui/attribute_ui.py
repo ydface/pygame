@@ -37,8 +37,7 @@ class EquipCell(util.node.Node):
         self.rect.topleft = (pos[0], pos[1])
 
     def draw(self):
-        pos = (self.father.rect[0] + Equip_Cell_Offest[self.equip.part][0], self.father.rect[1] + Equip_Cell_Offest[self.equip.part][1])
-        self.rect.topleft = (pos[0], pos[1])
+        pos = self.rect.topleft
         pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] - 2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
         screen.blit(self.image, pos)
 
