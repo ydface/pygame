@@ -27,7 +27,9 @@ class Save(object):
         sav_obj["item"] = player.item_serialize_save()
         sav_obj["equiped"] = player.equiped_serialize_save()
 
-        cPickle.dump(sav_obj, open("save.sav", "wb"), 1)
+        out = open("save.sav", "wb")
+        cPickle.dump(sav_obj, out)
+        out.close()
 
     @staticmethod
     def init_save():
