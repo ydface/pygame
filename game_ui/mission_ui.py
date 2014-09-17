@@ -78,16 +78,9 @@ class UIGame(util.node.Node):
 
         gamestate.SenceLevel = gamestate.LEVEL_0
 
-        self.battle = None
-
-        self.player_btn = PlayerInfoButton(self)
-        self.add(self.player_btn)
-
-        self.bag_btn = BagButton(self)
-        self.add(self.bag_btn)
-
-        self.skill_btn = SkillButton(self)
-        self.add(self.skill_btn)
+        self.add(PlayerInfoButton(self))
+        self.add(BagButton(self))
+        self.add(SkillButton(self))
 
         self.mission_map = game_ui.mission_map.MissionMapUI(self, layer=3)
         self.add(self.mission_map)

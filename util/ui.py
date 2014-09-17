@@ -38,7 +38,7 @@ class BaseUI(util.node.Node):
                         child.rect[1] += rel[1]
                 return True
         elif event.type == MOUSEBUTTONUP:
-            self.move_able = False
             if self.move_able:
+                self.move_able = False
                 return True
-            return False
+        return False

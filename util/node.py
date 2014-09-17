@@ -28,19 +28,39 @@ class Node(object):
             return True
         return False
 
+    #插入子节点到所有子节点的最上层
     def add(self, sprite):
         sprite.father = self
         self.child.append(sprite)
         sprite.top()
 
+    #是否有某个具体子节点
     def has_child(self, sprite):
         if sprite in self.child:
             return True
         return False
 
+    #是否有某Class的实例子节点，返回该子节点
+    def has_ctype_child(self, ctype):
+        for child in self.child:
+            if isinstance(child, ctype):
+                return child
+        return None
+
+    #移除子节点
     def remove(self, sprite):
         self.child.remove(sprite)
 
+    #删除由某class实例的子节点 all_remove表示是否全部删除
+    def remove_ctype_child(self, ctype, all_remove=False):
+        if all_remove:
+            self.child = [child for child in self.child if not isinstance(child, ctype)]
+        else:
+            child = self.has_ctype_child(ctype)
+            if child:
+                self.remove(child)
+
+    #事件处理
     def event(self, event):
         event_end = False
         if self.event_enable:
@@ -66,23 +86,21 @@ class Node(object):
                     self.child[clen].event(event)
                 return False
 
+    #绘制
     def draw(self):
         for child in self.child:
             child.draw()
 
+    #update
     def update(self, **kwargs):
         for child in self.child:
             child.update(**kwargs)
 
-    def has_child(self, ctype):
-        for child in self.child:
-            if isinstance(child, ctype):
-                return child
-        return None
-
+    #自身事件处理
     def self_event(self, event):
         pass
 
+    #自身置为最上层
     def top(self):
         self._zorder = 99
         count = 2

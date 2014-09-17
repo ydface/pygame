@@ -57,17 +57,16 @@ class ItemCell(util.node.Node):
             position = pygame.mouse.get_pos()
             if not self.rect.collidepoint(position):
                 self.clicked = False
-                return False
         elif event.type == MOUSEBUTTONUP:
             if self.clicked:
                 gamestate.player.put_on_equipment(self.index)
                 self.clicked = False
                 self.father.rebuild()
-                attr_ui = self.father.father.has_child(game_ui.attribute_ui.AttributeUI)
+                attr_ui = self.father.father.has_ctype_child(game_ui.attribute_ui.AttributeUI)
                 if attr_ui is not None:
                     attr_ui.rebuild()
                 return True
-            return False
+        return False
 
 
 class BagUI(util.ui.BaseUI):
