@@ -12,7 +12,7 @@ import math
 from attribute import *
 from util.color import *
 
-skill_config = {
+SC = {
     "1": {
         "paras": [125, 25],
         "name": u"普通攻击",
@@ -79,7 +79,7 @@ class SkillEffect(object):
         super(SkillEffect, self).__init__()
 
         self.skill = skill
-        self.effect_paras = skill_config[str(self.skill.skill_id)]["paras"]
+        self.effect_paras = SC[str(self.skill.skill_id)]["paras"]
         self.source = source
         self.target = target
         self.skill.go_cd()
@@ -124,8 +124,8 @@ class Skill(object):
         self.level = level
         self.father = father
         self.available = False
-        self.anger = skill_config[str(self.skill_id)]["anger"]
-        self.init_cd(skill_config[str(self.skill_id)]["cool_down"], skill_config[str(self.skill_id)]["release_time"])
+        self.anger = SC[str(self.skill_id)]["anger"]
+        self.init_cd(SC[str(self.skill_id)]["cool_down"], SC[str(self.skill_id)]["release_time"])
 
     def cd_update(self, **kwargs):
         time = kwargs['time']
