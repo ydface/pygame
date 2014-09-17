@@ -74,7 +74,6 @@ class Node(object):
             elif self.event_type == Event_Type_Child:
                 while clen >= 0:
                     event_end = self.child[clen].event(event)
-                    print self.child[clen], event_end
                     if not event_end:
                         clen -= 1
                         continue
