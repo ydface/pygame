@@ -14,7 +14,7 @@ import resource
 import battle
 import label
 import skill
-
+from skill import *
 screen = mypygame.screen
 
 
@@ -26,15 +26,16 @@ class SkillCell(util.node.Node):
         self.skill = skill
         self.image = resource.getImage("skill_" + str(self.skill.skill_id))
         self.index = pos
-
-        self.x = pos % 6
-        self.y = pos / 6
+        self.rect = self.image.get_rect()
+        x = pos % 6
+        y = pos / 6
+        self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + 37.5 * y + 15 * (y + 1))
 
     def draw(self):
-        pos = (self.father.rect[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect[1] + 37.5 * self.y + 15 + 15 * self.y)
+        pos = (self.rect[0], self.rect[1])
         screen.blit(self.image, pos)
 
-        text = skill.skill_config[str(self.skill.skill_id)]["name"] + u" 等级: " + str(self.skill.level)
+        text = SC[str(self.skill.skill_id)]["name"] + u" 等级: " + str(self.skill.level)
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 24.5))
 
         text = "CD: " + str(round(self.skill.cool_down, 1))
