@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import *
 import mypygame
 import util.node
+import util.ui
 import button
 import gamestate
 import resource
@@ -38,9 +39,9 @@ class SkillCell(util.node.Node):
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 24.5))
 
 
-class SkillUI(util.node.Node):
+class SkillUI(util.ui.BaseUI):
     def __init__(self, **kwargs):
-        super(SkillUI, self).__init__(**kwargs)
+        super(SkillUI, self).__init__()
 
         image = resource.getImage("bag_background")
         self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))
@@ -60,20 +61,3 @@ class SkillUI(util.node.Node):
             self.skills[str(skill_id)] = SkillCell(self, skill_id, i, level)
         for cell in self.skills:
             self.skills[cell].draw()
-
-    def event(self, event):
-        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-            position = pygame.mouse.get_pos()
-            if self.rect.collidepoint(position):
-                self.move_able = True
-                self.top_layer()
-        elif event.type == MOUSEMOTION:
-            position = pygame.mouse.get_pos()
-            if self.rect.collidepoint(position):
-                rel = pygame.mouse.get_rel()
-                if self.move_able:
-                    self.rect[0] += rel[0]
-                    self.rect[1] += rel[1]
-        elif event.type == MOUSEBUTTONUP:
-            self.move_able = False
-            self.back_layer()

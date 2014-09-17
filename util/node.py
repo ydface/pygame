@@ -3,19 +3,23 @@
 
 __author__ = 'Ydface'
 
-import pygame
-import pygame.mixer
-from pygame.locals import *
+from pygame import *
+
+Event_Type_Child = 1
+Event_Type_Self = 2
+Event_Type_All = 3
+
 
 class Node(object):
     def __init__(self, **kwargs):
         super(Node, self).__init__()
 
-        self.father = None
+        self.father = kwargs.get('father', None)
         self._zorder = kwargs.get('layer', 1)
-        self._old_zorder = self._zorder
 
         self.child = []
+
+        self.event_type = kwargs.get('event', Event_Type_Self)
 
         self.event_enable = True
 
@@ -27,7 +31,7 @@ class Node(object):
     def add(self, sprite):
         sprite.father = self
         self.child.append(sprite)
-        #self.child = sorted(self.child)
+        sprite.top()
 
     def has_child(self, sprite):
         if sprite in self.child:
@@ -38,13 +42,31 @@ class Node(object):
         self.child.remove(sprite)
 
     def event(self, event):
+        event_end = False
         if self.event_enable:
-            self.child = sorted(self.child)
-            for child in self.child:
-                child.event(event)
+            clen = len(self.child) - 1
+            if self.event_type == Event_Type_Self:
+                if self.self_event(event):
+                    return True
+                while clen >= 0:
+                    self.child[clen].event(event)
+                    clen -= 1
+            elif self.event_type == Event_Type_Child:
+                while clen >= 0:
+                    event_end = self.child[clen].event(event)
+                    if not event_end:
+                        clen -= 1
+                        continue
+                    else:
+                        return event_end
+                self.self_event(event)
+            elif self.event_type == Event_Type_All:
+                self.self_event(event)
+                while clen >= 0:
+                    self.child[clen].event(event)
+                return False
 
     def draw(self):
-        self.child.sort(reverse=True)
         for child in self.child:
             child.draw()
 
@@ -52,8 +74,20 @@ class Node(object):
         for child in self.child:
             child.update(**kwargs)
 
-    def top_layer(self):
-        self._zorder = 0
+    def has_child(self, ctype):
+        for child in self.child:
+            if isinstance(child, ctype):
+                return child
+        return None
 
-    def back_layer(self):
-        self._zorder = self._old_zorder
+    def self_event(self, event):
+        pass
+
+    def top(self):
+        self._zorder = 99
+        count = 2
+        for child in self.father.child:
+            if child != self:
+                child._zorder = count
+                count += 1
+        self.father.child.sort()

@@ -7,6 +7,8 @@ import pygame
 from pygame.locals import *
 import mypygame
 import util.node
+from util.node import *
+import util.ui
 import button
 import gamestate
 import resource
@@ -50,22 +52,29 @@ class ItemCell(util.node.Node):
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
                 self.clicked = True
+                return True
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if not self.rect.collidepoint(position):
                 self.clicked = False
+                return False
         elif event.type == MOUSEBUTTONUP:
             if self.clicked:
                 gamestate.player.put_on_equipment(self.index)
                 self.clicked = False
                 self.father.rebuild()
-                attr_ui = self.father.father.has_ui(game_ui.attribute_ui.AttributeUI)
+                attr_ui = self.father.father.has_child(game_ui.attribute_ui.AttributeUI)
                 if attr_ui is not None:
                     attr_ui.rebuild()
+                return True
+            return False
 
-class BagUI(util.node.Node):
+
+class BagUI(util.ui.BaseUI):
     def __init__(self, **kwargs):
-        super(BagUI, self).__init__(**kwargs)
+        super(BagUI, self).__init__()
+
+        self.event_type = Event_Type_Child
 
         image = resource.getImage("bag_background")
         self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))
@@ -90,25 +99,3 @@ class BagUI(util.node.Node):
         for i in range(len(equips)):
             if equips[i] is not None:
                 self.add(ItemCell( self, equips[i], i))
-
-        #for i in self.items:
-            #self.items[i].draw()
-    '''
-    def event(self, event):
-        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-            position = pygame.mouse.get_pos()
-            if self.rect.collidepoint(position):
-                self.move_able = True
-                self.top_layer()
-        elif event.type == MOUSEMOTION:
-            position = pygame.mouse.get_pos()
-            if self.rect.collidepoint(position):
-                rel = pygame.mouse.get_rel()
-                if self.move_able:
-                    self.rect[0] += rel[0]
-                    self.rect[1] += rel[1]
-
-        elif event.type == MOUSEBUTTONUP:
-            self.move_able = False
-            self.back_layer()
-    '''

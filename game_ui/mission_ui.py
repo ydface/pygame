@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import *
 import mypygame
 import util.node
+from util.node import *
 import button
 import gamestate
 import resource
@@ -73,7 +74,7 @@ class SkillButton(button.Button):
 
 class UIGame(util.node.Node):
     def __init__(self):
-        super(UIGame, self).__init__()
+        super(UIGame, self).__init__(event=Event_Type_Child)
 
         gamestate.SenceLevel = gamestate.LEVEL_0
 
@@ -90,10 +91,4 @@ class UIGame(util.node.Node):
 
         self.mission_map = game_ui.mission_map.MissionMapUI(self, layer=3)
         self.add(self.mission_map)
-
-    def has_ui(self, ctype):
-        for child in self.child:
-            if isinstance(child, ctype):
-                return child
-        return None
 
