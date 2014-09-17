@@ -10,33 +10,39 @@ from bag_ui import *
 from equipment import *
 screen = mypygame.screen
 
+Equip_Cell_Offest = [
+            [100, 10],
+    [20, 60],
+            [100, 110],
+    [20, 160],      [180, 160],
+    [20, 210],      [180, 210],
+            [100, 260],
+            [100, 310],
+            [180, 60]
+]
 
 class EquipCell(util.node.Node):
-    def __init__(self, father, item_id, part, quality):
+    def __init__(self, father, equip):
         super(EquipCell, self).__init__()
 
         self.father = father
-        self.item_id = item_id
-        self.image = resource.getImage("item_" + str(self.item_id))
-        self.part = part
-        self.quality = quality
+        self.equip = equip
+        self.image = resource.getImage("item_" + str(self.equip.template))
         self.clicked = False
 
-        self.x = part % 5
-        self.y = part / 5
-
         self.rect = self.image.get_rect()
-        pos = (self.father.rect1[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect1[1] + 37.5 * self.y + 15 + 15 * self.y)
+        pos = (self.father.rect1[0] + Equip_Cell_Offest[self.equip.part][0], self.father.rect1[1] + Equip_Cell_Offest[self.equip.part][1])
         self.rect.topleft = (pos[0], pos[1])
 
+        print self.equip.part
     def draw(self):
-        pos = (self.father.rect1[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect1[1] + 37.5 * self.y + 15 + 15 * self.y)
+        pos = (self.father.rect1[0] + Equip_Cell_Offest[self.equip.part][0], self.father.rect1[1] + Equip_Cell_Offest[self.equip.part][1])
         self.rect.topleft = (pos[0], pos[1])
-        pygame.draw.rect(screen, item_background[self.quality], (pos[0] -2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
+        pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] - 2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
         screen.blit(self.image, pos)
 
         my_font = pygame.font.Font("resource/msyh.ttf", 10)
-        tx_level = Equip_Name[self.part]
+        tx_level = Equip_Name[self.equip.part]
         level_surface = my_font.render(tx_level, True, (255, 255, 255))
         screen.blit(level_surface, (pos[0] + 12, pos[1] + 38))
 
@@ -57,7 +63,6 @@ class AttributeUI(util.node.Node):
         self.rect2.topleft = self.rect1.topleft
         self.rect2[0] = self.rect1[0] + self.rect1[2]
 
-        self.equips = []
         self.rebuild()
 
     def draw(self):
@@ -82,11 +87,11 @@ class AttributeUI(util.node.Node):
             child.draw()
 
     def rebuild(self):
-        self.equips = []
+        self.child = []
         equips = gamestate.player.e_equips
         for i in range(len(equips)):
             if equips[i] is not None:
-                self.add(EquipCell( self, equips[i].template + 1, i, equips[i].quality))
+                self.add(EquipCell(self, equips[i]))
 
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:

@@ -19,14 +19,13 @@ Equip_Necklace = Equip_Hat + 1
 Equip_Clothes = Equip_Necklace + 1
 Equip_Left_Weapon = Equip_Clothes + 1
 Equip_Right_Weapon = Equip_Left_Weapon + 1
-Equip_Gaiter = Equip_Right_Weapon + 1
-Equip_Shoes = Equip_Gaiter + 1
-Equip_Left_Ring = Equip_Shoes + 1
+Equip_Left_Ring = Equip_Right_Weapon + 1
 Equip_Right_Ring = Equip_Left_Ring + 1
+Equip_Gaiter = Equip_Right_Ring + 1
+Equip_Shoes = Equip_Gaiter + 1
 Equip_Talisman = Equip_Right_Ring + 1
 
-Equip_Name = [u"头盔", u"项链", u"护甲", u"主手武器", u"副手", u"护腿", u"鞋子",
-                  u"左手戒指", u"右手戒指", u"护符"]
+Equip_Name = [u"头盔", u"项链", u"护甲", u"主手武器", u"副手", u"左手戒指", u"右手戒指", u"护腿", u"鞋子", u"护符"]
 
 
 equipment_template = {
@@ -43,7 +42,42 @@ equipment_template = {
     "3": {
         "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Necklace
+    },
+    "4": {
+        "attribute": [3, 3, 18, 2, 1.2, 0.8, 4, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Left_Weapon
+    },
+    "5": {
+        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Right_Weapon
+    },
+    "6": {
+        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Left_Weapon
+    },
+    "7": {
+        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Right_Ring
+    },
+    "8": {
+        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Gaiter
+    },
+    "9": {
+        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Shoes
+    },
+    "10": {
+        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Talisman
     },
 }
 

@@ -59,7 +59,7 @@ class Monster(attribute.Attribute):
         self.equip = None
         ra = random.randint(0, 100)
         if ra < 15:
-            eid = random.randint(1, 3)
+            eid = random.randint(1, 10)
             quality = random.randint(equipment.Quality_White, equipment.Quality_Gold)
             self.equip = equipment.Equipment.create_equipment(self.level, eid, quality)
 

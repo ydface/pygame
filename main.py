@@ -42,7 +42,7 @@ def hello_world():
         gamestate.current_ui.update(time=frame)
         gamestate.current_ui.draw()
 
-        text = "FPS : " + str(1 / frame)
+        text = "FPS : " + str(int(1 / frame))
         view = label.LabelViewState(label.ViewForver)
         fps_label = label.FontLabel([10, 600], view, 16, text=text, father=None)
         fps_label.draw()
