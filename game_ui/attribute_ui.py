@@ -34,17 +34,13 @@ class EquipCell(util.node.Node):
         pos = (self.father.rect1[0] + Equip_Cell_Offest[self.equip.part][0], self.father.rect1[1] + Equip_Cell_Offest[self.equip.part][1])
         self.rect.topleft = (pos[0], pos[1])
 
-        print self.equip.part
     def draw(self):
         pos = (self.father.rect1[0] + Equip_Cell_Offest[self.equip.part][0], self.father.rect1[1] + Equip_Cell_Offest[self.equip.part][1])
         self.rect.topleft = (pos[0], pos[1])
         pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] - 2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
         screen.blit(self.image, pos)
 
-        my_font = pygame.font.Font("resource/msyh.ttf", 10)
-        tx_level = Equip_Name[self.equip.part]
-        level_surface = my_font.render(tx_level, True, (255, 255, 255))
-        screen.blit(level_surface, (pos[0] + 12, pos[1] + 38))
+        label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))
 
 
 class AttributeUI(util.node.Node):
@@ -69,19 +65,15 @@ class AttributeUI(util.node.Node):
         screen.blit(self.image1, self.rect1.topleft)
         screen.blit(self.image2, self.rect2.topleft)
 
-        my_font = pygame.font.Font("resource/msyh.ttf", 10)
-        tx_level = u"等       级:   " + str(gamestate.player.level)
-        level_surface = my_font.render(tx_level, True, (255, 255, 255))
-        screen.blit(level_surface, (self.rect2[0] + 15, self.rect2[1] + 36))
+        text = u"等       级:   " + str(gamestate.player.level)
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (self.rect2[0] + 15, self.rect2[1] + 36))
 
-        tx_exp = u"经       验:   " + str(gamestate.player.exp) + " / " + str(gamestate.player.n_exp)
-        exp_surface = my_font.render(tx_exp, True, (255, 255, 255))
-        screen.blit(exp_surface, (self.rect2[0] + 15, self.rect2[1] + 56))
+        text = u"经       验:   " + str(gamestate.player.exp) + " / " + str(gamestate.player.n_exp)
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (self.rect2[0] + 15, self.rect2[1] + 56))
 
         for attr in range(Attribute_Hp, Attribute_None):
-            tx1 = gamestate.player.attribute_value_str(attr)
-            tx1_surface = my_font.render(tx1, True, (255, 255, 255))
-            screen.blit(tx1_surface, (self.rect2[0] + 15, self.rect2[1] + 56 + 20 + 20 * attr))
+            text = gamestate.player.attribute_value_str(attr)
+            label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (self.rect2[0] + 15, self.rect2[1] + 56 + 20 + 20 * attr))
 
         for child in self.child:
             child.draw()

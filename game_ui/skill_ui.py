@@ -34,10 +34,8 @@ class SkillCell(util.node.Node):
         pos = (self.father.rect[0] + 37.5 * self.x + 5 + 6 * (self.x + 1), self.father.rect[1] + 37.5 * self.y + 15 + 15 * self.y)
         screen.blit(self.image, pos)
 
-        my_font = pygame.font.Font("resource/msyh.ttf", 10)
-        tx_level = str(self.level)
-        level_surface = my_font.render(tx_level, True, (255, 255, 255))
-        screen.blit(level_surface, (pos[0] + 28, pos[1] + 24.5))
+        text = skill.skill_config[str(self.skill_id)]["name"] + u" 等级: " + str(self.level)
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 24.5))
 
 
 class SkillUI(util.node.Node):

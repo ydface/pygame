@@ -48,28 +48,24 @@ class BattleUnit(button.Button):
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
 
-        my_font = pygame.font.Font("resource/msyh.ttf", 10)
         #绘制等级
-        tx_lv = str(self.unit.level)
-        lv_surface = my_font.render(tx_lv, True, (255, 255, 255))
-        screen.blit(lv_surface, (self.rect[0] + 60, self.rect[1] + 6))
+        text = str(self.unit.level)
+        label.FontLabel.draw_label(8, text, label.COLOR_WHITE, (self.rect[0] + 60, self.rect[1] + 6))
+
         #绘制血条
         hp_label = int(float(self.unit.attribute_value(Attribute_Hp)) / self.unit.attribute_value(Attribute_Max_Hp) * 100)
         if hp_label:
             pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 25, hp_label, 8))
-        my_font = pygame.font.Font("resource/msyh.ttf", 8)
-        tx_hp = str(self.unit.attribute_value(Attribute_Hp)) + " / " + str(self.unit.attribute_value(Attribute_Max_Hp))
-        hp_surface = my_font.render(tx_hp, True, (255, 255, 255))
-        screen.blit(hp_surface, (self.rect[0] + 71, self.rect[1] + 23))
+
+        text = str(self.unit.attribute_value(Attribute_Hp)) + " / " + str(self.unit.attribute_value(Attribute_Max_Hp))
+        label.FontLabel.draw_label(8, text, label.COLOR_WHITE, (self.rect[0] + 71, self.rect[1] + 23))
 
         ##绘制怒气条
         anger_label = int(float(self.anger) / 100 * 100)
         if anger_label:
             pygame.draw.rect(screen, (0, 0, 255), (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
-        #my_font = pygame.font.Font("resource/msyh.ttf", 8)
-        tx_anger = str(self.anger) + " / " + str(100)
-        anger_surface = my_font.render(tx_anger, True, (255, 255, 255))
-        screen.blit(anger_surface, (self.rect[0] + 83, self.rect[1] + 33))
+        text = str(self.anger) + " / " + str(100)
+        label.FontLabel.draw_label(8, text, label.COLOR_WHITE, (self.rect[0] + 83, self.rect[1] + 33))
 
         if not self.dead:
             self.next_skill.draw_process(self)

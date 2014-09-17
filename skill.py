@@ -14,6 +14,7 @@ from attribute import *
 skill_config = {
     "1": {
         "paras": [125, 25],
+        "name": u"普通攻击",
         "content": u"对当前目标造成(125 + 5 * 等级)% + 25点固定伤害",
         "cool_down": 0.0,
         "release_time": 2.0,
@@ -21,30 +22,35 @@ skill_config = {
     },
     "2": {
         "paras": [145, 25],
+        "name": u"普通攻击",
         "cool_down": 3,
         "release_time": 2.5,
         "anger": 25
     },
     "3": {
         "paras": [100, 25, 30],
+        "name": u"普通攻击",
         "cool_down": 20,
         "release_time": 1.5,
         "anger": 20
     },
     "4": {
         "paras": [100, 25, 30],
+        "name": u"普通攻击",
         "cool_down": 30,
         "release_time": 3,
         "anger": 20
     },
     "5": {
         "paras": [175, 55],
+        "name": u"普通攻击",
         "cool_down": 35,
         "release_time": 5,
         "anger": 35
     },
     "101": {
         "paras": [85, 10],
+        "name": u"普通攻击",
         "content": u"对当前目标造成(85 + 5 * 等级)% + 25点固定伤害",
         "cool_down": 0.0,
         "release_time": 2.0,
@@ -52,6 +58,7 @@ skill_config = {
     },
     "102": {
         "paras": [100, 25],
+        "name": u"普通攻击",
         "content": u"对当前目标造成(100 + 5 * 等级)% + 25点固定伤害",
         "cool_down": 3.0,
         "release_time": 2.0,
@@ -140,7 +147,7 @@ class Skill(object):
         q1 = math.exp(self.father.level % 3) * self.level
         q2 = math.exp(self.father.level * 1.1)
         q = q1 * q2
-        #cdr = round(q / (1300 + 0.01), 4)
+
         cdr = round(q / (self.father.attribute_value(Attribute_Speed1) + 0.01), 4)
         cdr = min([max([0.5, cdr]), 1.0])
         cd_time *= cdr
@@ -152,7 +159,6 @@ class Skill(object):
         release_time *= rtr
         self.release_time = release_time
         self.max_release_time = release_time
-        #print q, cdr, rtr, self.father.attribute_value(Attribute_Speed1)
 
     def go_cd(self):
         self.available = False
@@ -160,13 +166,10 @@ class Skill(object):
         self.release_time = self.max_release_time
 
     def draw_process(self, father):
-        #pygame.draw.rect(screen, (255, 255, 0), (father.rect[0] + 69, father.rect[1] + 45, 71, 4))
         w = 71 - float(self.release_time) * 71 / self.max_release_time
         pygame.draw.rect(screen, (0, 128, 0), (father.rect[0] + 69, father.rect[1] + 45, w, 4))
 
-        pos = [father.rect[0] + 69 + 35, father.rect[1] + 48]
-        view = label.LabelViewState(label.ViewForver)
         text = str(round(float(self.release_time), 2))
-        text1 = label.FontLabel(pos, view, 12, text=text, father=self)
-        text1.draw()
+        pos = [father.rect[0] + 69 + 35, father.rect[1] + 48]
+        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, pos)
 

@@ -43,9 +43,7 @@ def hello_world():
         gamestate.current_ui.draw()
 
         text = "FPS : " + str(int(1 / frame))
-        view = label.LabelViewState(label.ViewForver)
-        fps_label = label.FontLabel([10, 600], view, 16, text=text, father=None)
-        fps_label.draw()
+        label.FontLabel.draw_label(16, text, label.COLOR_WHITE, (10, 600))
 
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
         draw_mouse()

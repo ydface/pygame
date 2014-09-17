@@ -43,10 +43,7 @@ class ItemCell(util.node.Node):
         pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] -2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
         screen.blit(self.image, pos)
 
-        my_font = pygame.font.Font("resource/msyh.ttf", 10)
-        tx_level = Equip_Name[self.equip.part]
-        level_surface = my_font.render(tx_level, True, (255, 255, 255))
-        screen.blit(level_surface, (pos[0] + 12, pos[1] + 38))
+        label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))
 
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
@@ -80,9 +77,12 @@ class BagUI(util.node.Node):
         self.rebuild()
 
     def draw(self):
+        screen.set_clip(self.rect[0], self.rect[1], self.image.get_width(), self.image.get_height())
         screen.blit(self.image, (self.rect[0], self.rect[1]))
         for child in self.child:
             child.draw()
+
+        screen.set_clip((0, 0, mypygame.screenwidth, mypygame.screenwidth))
 
     def rebuild(self):
         self.child = []
