@@ -26,6 +26,7 @@ class BaseUI(util.node.Node):
                 self.move_able = True
                 self.top()
                 return True
+            return False
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
@@ -37,8 +38,11 @@ class BaseUI(util.node.Node):
                         child.rect[0] += rel[0]
                         child.rect[1] += rel[1]
                 return True
+            return False
         elif event.type == MOUSEBUTTONUP:
             if self.move_able:
                 self.move_able = False
                 return True
-        return False
+            return False
+        else:
+            return False

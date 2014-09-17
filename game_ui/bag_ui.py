@@ -52,6 +52,7 @@ class ItemCell(util.node.Node):
             if self.rect.collidepoint(position):
                 self.clicked = True
                 return True
+            return False
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if not self.rect.collidepoint(position):
@@ -65,6 +66,7 @@ class ItemCell(util.node.Node):
                 if attr_ui is not None:
                     attr_ui.rebuild()
                 return True
+            return False
         return False
 
 
