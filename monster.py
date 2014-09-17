@@ -11,8 +11,7 @@ import label
 import attribute
 import equipment
 
-a = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
-monster_config = {
+MC = {
     "1": {
         "attribute": [165, 165, 86, 23, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 0.2,
@@ -47,7 +46,7 @@ class Monster(attribute.Attribute):
 
         self.level = level
 
-        m_attribute = monster_config[str(mid)]
+        m_attribute = MC[str(mid)]
 
         lv_addition = 1 + m_attribute["lvadd"] * level
 

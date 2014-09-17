@@ -11,7 +11,8 @@ from bag_ui import *
 from equipment import *
 screen = mypygame.screen
 
-Equip_Cell_Offest = [
+#装备栏各装备格的偏移
+ECO = [
             [100, 10],
     [20, 60],
             [100, 110],
@@ -21,6 +22,9 @@ Equip_Cell_Offest = [
             [100, 310],
             [180, 60]
 ]
+
+#道具品质边框宽
+IEW = 2
 
 
 class EquipCell(util.node.Node):
@@ -33,12 +37,13 @@ class EquipCell(util.node.Node):
         self.clicked = False
 
         self.rect = self.image.get_rect()
-        pos = (self.father.rect[0] + Equip_Cell_Offest[self.equip.part][0], self.father.rect[1] + Equip_Cell_Offest[self.equip.part][1])
+        pos = (self.father.rect[0] + ECO[self.equip.part][0], self.father.rect[1] + ECO[self.equip.part][1])
         self.rect.topleft = (pos[0], pos[1])
 
     def draw(self):
         pos = self.rect.topleft
-        pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] - 2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
+        e_rect = (pos[0] - IEW, pos[1] - IEW, self.rect[2] + IEW * 2, self.rect[3] + IEW * 2)
+        pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
         screen.blit(self.image, pos)
 
         label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))

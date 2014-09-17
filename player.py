@@ -16,8 +16,8 @@ skill_study = {
     "6" : 5
 }
 
-attribute_ddd = [37, 37, 6, 4, 2, 1, 0, 0, 0, 0, 0, 0]
-init_attribute = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
+AttrAdd = [37, 37, 6, 4, 2, 1, 0, 0, 0, 0, 0, 0]
+InitAttr = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
 
 
 class Player(attribute.Attribute):
@@ -37,7 +37,7 @@ class Player(attribute.Attribute):
         self.exp = user_obj["exp"]
         self.n_exp = self.level_up_exp()
 
-        self.attribute = [init_attribute[attr] + self.level * attribute_ddd[attr] for attr in range(Attribute_Hp, Attribute_None)]
+        self.attribute = [InitAttr[attr] + self.level * AttrAdd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
         skill_obj = save_data.Save.load("skill")
         for s in skill_obj:
@@ -118,7 +118,7 @@ class Player(attribute.Attribute):
         if skill_study.has_key(str(self.level)):
             self.skills.append(skill.Skill(skill_study[str(self.level)], 1, self))
 
-        self.attribute = [self.attribute[attr] + attribute_ddd[attr] for attr in range(Attribute_Hp, Attribute_None)]
+        self.attribute = [self.attribute[attr] + AttrAdd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
     def put_on_equipment(self, idx):
         if idx >= len(self.equips):

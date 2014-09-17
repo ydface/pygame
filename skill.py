@@ -10,6 +10,7 @@ import mypygame
 import label
 import math
 from attribute import *
+from util.color import *
 
 skill_config = {
     "1": {
@@ -69,10 +70,6 @@ skill_config = {
 NORMAL = 1
 CRIT = 2
 MISS = 3
-
-COLOR_RED = (255, 0, 0)
-COLOR_GREEN = (0, 128, 0)
-COLOR_WHITE = (255, 255, 255)
 
 screen = mypygame.screen
 
@@ -167,9 +164,9 @@ class Skill(object):
 
     def draw_process(self, father):
         w = 71 - float(self.release_time) * 71 / self.max_release_time
-        pygame.draw.rect(screen, (0, 128, 0), (father.rect[0] + 69, father.rect[1] + 45, w, 4))
+        pygame.draw.rect(screen, COLOR_GREEN, (father.rect[0] + 69, father.rect[1] + 45, w, 4))
 
         text = str(round(float(self.release_time), 2))
         pos = [father.rect[0] + 69 + 35, father.rect[1] + 48]
-        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, pos)
+        label.FontLabel.draw_label(12, text, COLOR_WHITE, pos)
 

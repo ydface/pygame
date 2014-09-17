@@ -18,6 +18,7 @@ import skill
 import monster
 import player
 from attribute import *
+from util.color import *
 
 screen = mypygame.screen
 
@@ -50,22 +51,22 @@ class BattleUnit(button.Button):
 
         #绘制等级
         text = str(self.unit.level)
-        label.FontLabel.draw_label(8, text, label.COLOR_WHITE, (self.rect[0] + 60, self.rect[1] + 6))
+        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 60, self.rect[1] + 6))
 
         #绘制血条
         hp_label = int(float(self.unit.attribute_value(Attribute_Hp)) / self.unit.attribute_value(Attribute_Max_Hp) * 100)
         if hp_label:
-            pygame.draw.rect(screen, (255, 0, 0), (self.rect[0] + 69, self.rect[1] + 25, hp_label, 8))
+            pygame.draw.rect(screen, COLOR_RED, (self.rect[0] + 69, self.rect[1] + 25, hp_label, 8))
 
         text = str(self.unit.attribute_value(Attribute_Hp)) + " / " + str(self.unit.attribute_value(Attribute_Max_Hp))
-        label.FontLabel.draw_label(8, text, label.COLOR_WHITE, (self.rect[0] + 71, self.rect[1] + 23))
+        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 71, self.rect[1] + 23))
 
         ##绘制怒气条
         anger_label = int(float(self.anger) / 100 * 100)
         if anger_label:
-            pygame.draw.rect(screen, (0, 0, 255), (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
+            pygame.draw.rect(screen, COLOR_BLUE, (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
         text = str(self.anger) + " / " + str(100)
-        label.FontLabel.draw_label(8, text, label.COLOR_WHITE, (self.rect[0] + 83, self.rect[1] + 33))
+        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 83, self.rect[1] + 33))
 
         if not self.dead:
             self.next_skill.draw_process(self)

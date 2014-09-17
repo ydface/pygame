@@ -7,6 +7,7 @@ import pygame, sys, pygame.mixer
 from pygame.locals import *
 import mypygame
 import util.node
+from util.color import *
 
 screen = mypygame.screen
 
@@ -18,12 +19,6 @@ ViewTimer = 2
 
 #间隔显示
 ViewInterval = 3
-
-
-COLOR_RED = (255, 0, 0)
-COLOR_GREEN = (0, 128, 0)
-COLOR_WHITE = (255, 255, 255)
-
 
 #[0][0] 第一位表示上下方向位移,第二位表示左右方向位移
 class LabelViewState(object):

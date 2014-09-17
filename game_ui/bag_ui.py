@@ -16,10 +16,13 @@ import battle
 import label
 import game_ui.attribute_ui
 from equipment import *
-
+from util.color import *
 screen = mypygame.screen
 
-item_background = [(255, 255, 255), (0, 255, 0), (65, 105, 225), (160, 32, 240), (255, 0, 0), (255, 255, 0)]
+#道具品质颜色
+IBC = [COLOR_WHITE, COLOR_GREEN, COLOR_BLUE, COLOR_Purple, COLOR_RED, COLOR_GOLD]
+
+IEW = 2
 
 
 class ItemCell(util.node.Node):
@@ -41,7 +44,8 @@ class ItemCell(util.node.Node):
 
     def draw(self):
         pos = self.rect.topleft
-        pygame.draw.rect(screen, item_background[self.equip.quality], (pos[0] -2, pos[1] - 2, self.image.get_width() + 4, self.image.get_height() + 4))
+        e_rect = (pos[0] - IEW, pos[1] - IEW, self.rect[2] + IEW * 2, self.rect[3] + IEW * 2)
+        pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
         screen.blit(self.image, pos)
 
         label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))

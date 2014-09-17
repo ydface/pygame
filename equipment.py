@@ -25,7 +25,7 @@ Equip_Gaiter = Equip_Right_Ring + 1
 Equip_Shoes = Equip_Gaiter + 1
 Equip_Talisman = Equip_Right_Ring + 1
 
-Equip_Name = [u"头盔", u"项链", u"护甲", u"主手武器", u"副手", u"左手戒指", u"右手戒指", u"护腿", u"鞋子", u"护符"]
+Equip_Name = [u"头盔", u"项链", u"护甲", u"主手", u"副手", u"左手戒指", u"右手戒指", u"护腿", u"鞋子", u"护符"]
 
 
 equipment_template = {
