@@ -8,8 +8,8 @@ import pygame
 from pygame.locals import *
 from game_ui import main_ui
 import mypygame
-import gamestate
 import resource
+import gamestate
 import label
 import save_data
 
@@ -23,7 +23,7 @@ def draw_mouse():
 
 
 def hello_world():
-    resource.init()
+    #resource.init()
 
     gamestate.current_ui = main_ui.UIMain()
 

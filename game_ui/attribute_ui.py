@@ -49,6 +49,39 @@ class EquipCell(util.node.Node):
         label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))
 
 
+    def event(self, event):
+        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+            position = pygame.mouse.get_pos()
+            if self.rect.collidepoint(position):
+                self.clicked = True
+                return True
+            return False
+        elif event.type == MOUSEMOTION:
+            position = pygame.mouse.get_pos()
+            if not self.rect.collidepoint(position):
+                self.clicked = False
+                i_detail = self.father.has_ctype_child(ItemDetail)
+                if i_detail and i_detail.item == self:
+                    self.father.remove_ctype_child(ItemDetail)
+                return False
+            else:
+                if not self.father.has_ctype_child(ItemDetail):
+                    self.father.add(ItemDetail(self, self, None))
+                    return True
+            return False
+        elif event.type == MOUSEBUTTONUP:
+            if self.clicked:
+                gamestate.player.put_on_equipment(self.index)
+                self.clicked = False
+                self.father.rebuild()
+                attr_ui = self.father.father.has_ctype_child(game_ui.attribute_ui.AttributeUI)
+                if attr_ui is not None:
+                    attr_ui.rebuild()
+                return True
+            return False
+        return False
+
+
 class AttributeLabel(util.node.Node):
     def __init__(self, father):
         super(AttributeLabel, self).__init__(father=father)
@@ -76,6 +109,8 @@ class AttributeLabel(util.node.Node):
 class AttributeUI(util.ui.BaseUI):
     def __init__(self, **kwargs):
         super(AttributeUI, self).__init__()
+
+        self.event_type = Event_Type_Child
 
         image = resource.getImage("bag_background")
         self.image = pygame.transform.scale(image, (image.get_width() * 4 / 7, image.get_height() * 5 / 2))

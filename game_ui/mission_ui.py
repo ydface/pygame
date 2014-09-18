@@ -61,15 +61,15 @@ class SkillButton(button.Button):
         pos = (screenwidth - 100, screenheight - 80)
 
         super(SkillButton, self).__init__(pos, image, None, father)
-        self.skill = None
+        #self.skill = None
 
     def click_up_effect(self):
-        if not self.skill:
-            self.skill = game_ui.skill_ui.SkillUI(layer=2)
-            self.father.add(self.skill)
+        if not self.father.has_ctype_child(game_ui.skill_ui.SkillUI):
+            skill = game_ui.skill_ui.SkillUI(layer=2)
+            self.father.add(skill)
         else:
-            self.father.remove(self.skill)
-            self.skill = None
+            self.father.remove_ctype_child(game_ui.skill_ui.SkillUI)
+            #self.skill = None
 
 
 class UIGame(util.node.Node):

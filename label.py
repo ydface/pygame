@@ -38,7 +38,8 @@ class FontLabel(util.node.Node):
         "10": pygame.font.Font(TTF_Font, 10),
         "12": pygame.font.Font(TTF_Font, 12),
         "14": pygame.font.Font(TTF_Font, 14),
-        "16": pygame.font.Font(TTF_Font, 16)
+        "16": pygame.font.Font(TTF_Font, 16),
+        "20": pygame.font.Font(TTF_Font, 20)
     }
 
     def __init__(self, pos, view_state, font_size, **kwargs):

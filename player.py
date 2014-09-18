@@ -134,3 +134,6 @@ class Player(attribute.Attribute):
             self.equips[idx] = o_equip
         self.e_equips[part] = equip
         self.attribute = [self.attribute[attr] + equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
+
+    def part_equipment(self, part):
+        return self.e_equips[part]

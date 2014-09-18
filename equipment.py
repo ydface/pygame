@@ -4,6 +4,7 @@
 __author__ = 'Ydface'
 
 import math
+import resource
 import attribute
 from attribute import *
 
@@ -26,7 +27,7 @@ Equip_Shoes = Equip_Gaiter + 1
 Equip_Talisman = Equip_Right_Ring + 1
 
 Equip_Name = [u"头盔", u"项链", u"护甲", u"主手", u"副手", u"左手戒指", u"右手戒指", u"护腿", u"鞋子", u"护符"]
-
+QName = [u"粗糙", u"精致", u"无暇", u"完美", u"神器", u"传奇"]
 
 equipment_template = {
     "1": {
@@ -104,5 +105,6 @@ class Equipment(attribute.Attribute):
         equip.attribute = e_attr["attribute"]
         equip.attribute = [equip.attribute[attr] * addition for attr in range(Attribute_Hp, Attribute_None)]
 
+        equip.image = resource.getImage("item_" + str(equip.template))
         return equip
 
