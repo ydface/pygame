@@ -113,7 +113,7 @@ class AttributeUI(util.ui.BaseUI):
         self.event_type = Event_Type_Child
 
         self.image = resource.getUIImage("equip_ui", 2.6, 3, u"人物装备")
-
+        self.p_image = resource.getImage("player")
         self.move_able = False
         self.rect = self.image.get_rect()
         self.rect.topleft = (100, 300)
@@ -121,6 +121,7 @@ class AttributeUI(util.ui.BaseUI):
 
     def draw(self):
         screen.blit(self.image, self.rect.topleft)
+        screen.blit(self.p_image, (self.rect[0] + 5, self.rect[1] + 36))
         for child in self.child:
             child.draw()
 

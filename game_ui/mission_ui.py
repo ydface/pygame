@@ -24,7 +24,7 @@ screenheight = mypygame.screenheight
 
 class PlayerInfoButton(button.Button):
     def __init__(self, father):
-        image = resource.getImage("player")
+        image = resource.getImage("player_btn")
         pos = (screenwidth - 100 - 60 - 60, screenheight - 80)
 
         super(PlayerInfoButton, self).__init__(pos, image, None, father)
@@ -41,7 +41,7 @@ class PlayerInfoButton(button.Button):
 
 class BagButton(button.Button):
     def __init__(self, father):
-        image = resource.getImage("bag")
+        image = resource.getImage("bag_btn")
         pos = (screenwidth - 100 - 60, screenheight - 80)
 
         super(BagButton, self).__init__(pos, image, None, father)
@@ -57,7 +57,7 @@ class BagButton(button.Button):
 
 class SkillButton(button.Button):
     def __init__(self, father):
-        image = resource.getImage("bag")
+        image = resource.getImage("bag_btn")
         pos = (screenwidth - 100, screenheight - 80)
 
         super(SkillButton, self).__init__(pos, image, None, father)

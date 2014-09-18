@@ -83,8 +83,8 @@ def loadBtnImage():
 def loadMainUIImage():
     global game_sources
     image = loadImage("resource/mainUI.png")
-    game_sources["player"] = image.subsurface((75, 100), (40, 60))
-    game_sources["bag"] = image.subsurface((130, 100), (40, 60))
+    game_sources["player_btn"] = image.subsurface((75, 100), (40, 60))
+    game_sources["bag_btn"] = image.subsurface((130, 100), (40, 60))
 
     image = loadImage("resource/2.png")
     game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
@@ -137,6 +137,10 @@ def init():
     loadHeaderImage()
     game_sources["start_normal"] = loadImage("resource/start_normal.jpg")
     game_sources["start_down"] = loadImage("resource/start_down.jpg")
+
+    p_image = loadImage("resource/player.jpg")
+    p_image = pygame.transform.scale(p_image, (int(p_image.get_width() * 1.8), int(p_image.get_height() * 1.8)))
+    game_sources["player"] = p_image
 
     background.append(pygame.transform.scale(pygame.image.load("resource/background.jpg").convert_alpha(), screen.get_size()))
     background.append(pygame.transform.scale(pygame.image.load("resource/level_1_background.jpg").convert_alpha(), screen.get_size()))
