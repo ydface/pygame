@@ -9,10 +9,7 @@ import mypygame
 import util.node
 from util.node import *
 import util.ui
-import button
 import gamestate
-import resource
-import battle
 import label
 import game_ui.attribute_ui
 from equipment import *

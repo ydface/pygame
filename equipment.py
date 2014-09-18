@@ -59,7 +59,7 @@ equipment_template = {
     6: {
         "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
-        "part": Equip_Left_Weapon
+        "part": Equip_Left_Ring
     },
     7: {
         "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],

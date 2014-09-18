@@ -55,7 +55,9 @@ class Save(object):
         global save_obj
         if not save_obj:
             try:
-                save_obj = cPickle.load(open("save.sav"))
+                file = open("save.sav")
+                save_obj = cPickle.load(file)
+                file.close()
             except IOError, e:
                 Save.init_save()
         return save_obj[module]

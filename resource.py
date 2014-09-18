@@ -12,6 +12,7 @@ import button
 import gamestate
 import label
 from util.color import *
+import cPickle
 
 screen = mypygame.screen
 
@@ -128,6 +129,23 @@ def loadHeaderImage():
     game_sources["attribute"] = loadImage("resource/attributeUI.jpg")
 
 
+def load_ini(path):
+    global game_sources
+    file = open("resource/ui.ini")
+    cp = cPickle.load(file)
+    file.close()
+    image = loadImage("resource/ui.png")
+
+    for f in cp:
+        key = f.split(':', 1)[0]
+        key = key.strip('\"')
+        print key
+        val = eval(f.split(':', 1)[1])
+        pos = (max([int(val["x"]), 0]), int(val["y"]))
+        wh = (int(val["w"]), int(val["h"]))
+        t_image = image.subsurface(pos, wh)
+        game_sources[str(key)] = t_image
+        print game_sources.has_key("btn2")
 
 def init():
     global background
@@ -146,5 +164,7 @@ def init():
     background.append(pygame.transform.scale(pygame.image.load("resource/level_1_background.jpg").convert_alpha(), screen.get_size()))
     background.append(pygame.transform.scale(pygame.image.load("resource/level_2_background.jpg").convert_alpha(), screen.get_size()))
     background.append(pygame.transform.scale(pygame.image.load("resource/level_3_background.jpg").convert_alpha(), screen.get_size()))
+
+    load_ini("")
 
 init()
