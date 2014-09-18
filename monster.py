@@ -12,28 +12,28 @@ import attribute
 import equipment
 
 MC = {
-    "1": {
-        "attribute": [165, 165, 86, 23, 0.0, 0.0, 0, 0, 0, 0, 0],
+    1: {
+        "attr": [165, 165, 86, 23, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 0.2,
         "exp": 3
     },
-    "2": {
-        "attribute": [86, 86, 103, 15, 0.0, 0.0, 0, 0, 0, 0, 0],
+    2: {
+        "attr": [86, 86, 103, 15, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 0.3,
         "exp": 5
     },
-    "3": {
-        "attribute": [234, 234, 46, 41, 0.0, 0.0, 0, 0, 0, 0, 0],
+    3: {
+        "attr": [234, 234, 46, 41, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 0.2,
         "exp": 8
     },
-    "4": {
-        "attribute": [115, 115, 38, 69, 0.0, 0.0, 0, 0, 0, 0, 0],
+    4: {
+        "attr": [115, 115, 38, 69, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 1.2,
         "exp": 9
     },
-    "5": {
-        "attribute": [386, 386, 112, 95, 0.0, 0.0, 0, 0, 0, 0, 0],
+    5: {
+        "attr": [386, 386, 112, 95, 0.0, 0.0, 0, 0, 0, 0, 0],
         "lvadd": 0.2,
         "exp": 14
     }
@@ -46,11 +46,11 @@ class Monster(attribute.Attribute):
 
         self.level = level
 
-        m_attribute = MC[str(mid)]
+        m_attribute = MC[mid]
 
         lv_addition = 1 + m_attribute["lvadd"] * level
 
-        self.attribute = m_attribute["attribute"]
+        self.attribute = m_attribute["attr"]
         self.attribute = [attr * lv_addition for attr in self.attribute]
 
         self.exp = int(m_attribute["exp"] * lv_addition)

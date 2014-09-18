@@ -91,8 +91,6 @@ class ItemCell(util.node.Node):
         pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
         screen.blit(self.image, pos)
 
-        label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))
-
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()

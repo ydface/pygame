@@ -30,53 +30,53 @@ Equip_Name = [u"头盔", u"项链", u"护甲", u"主手", u"副手", u"左手戒
 QName = [u"粗糙", u"精致", u"无暇", u"完美", u"神器", u"传奇"]
 
 equipment_template = {
-    "1": {
-        "attribute": [121, 121, 7, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    1: {
+        "attr": [121, 121, 7, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Hat
     },
-    "2": {
-        "attribute": [264, 264, 3, 1, 0.3, 0.2, 0, 0, 0, 0, 0, 0],
+    2: {
+        "attr": [264, 264, 3, 1, 0.3, 0.2, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Clothes
     },
-    "3": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    3: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Necklace
     },
-    "4": {
-        "attribute": [3, 3, 18, 2, 1.2, 0.8, 4, 0, 0, 0, 0, 0],
+    4: {
+        "attr": [3, 3, 18, 2, 1.2, 0.8, 4, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Left_Weapon
     },
-    "5": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    5: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Right_Weapon
     },
-    "6": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    6: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Left_Weapon
     },
-    "7": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    7: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Right_Ring
     },
-    "8": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    8: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Gaiter
     },
-    "9": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    9: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Shoes
     },
-    "10": {
-        "attribute": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+    10: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Talisman
     },
@@ -90,10 +90,10 @@ class Equipment(attribute.Attribute):
 
     @staticmethod
     def create_equipment(level, eid, quality):
-        if not equipment_template.has_key(str(eid)):
+        if not equipment_template.has_key(eid):
             return None
 
-        e_attr = equipment_template[str(eid)]
+        e_attr = equipment_template[eid]
         equip = Equipment()
         equip.level = level
         equip.template = eid
@@ -102,7 +102,7 @@ class Equipment(attribute.Attribute):
 
         addition = 1 + e_attr["lv_add"][quality] * level
 
-        equip.attribute = e_attr["attribute"]
+        equip.attribute = e_attr["attr"]
         equip.attribute = [equip.attribute[attr] * addition for attr in range(Attribute_Hp, Attribute_None)]
 
         equip.image = resource.getImage("item_" + str(equip.template))

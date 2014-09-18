@@ -13,56 +13,56 @@ from attribute import *
 from util.color import *
 
 SC = {
-    "1": {
+    1: {
         "paras": [125, 25],
         "name": u"普通攻击",
         "content": u"对当前目标造成(125 + 5 * 等级)% + 25点固定伤害",
-        "cool_down": 0.0,
-        "release_time": 2.0,
+        "cd": 0.0,
+        "rt": 2.0,
         "anger": -8
     },
-    "2": {
+    2: {
         "paras": [145, 25],
         "name": u"普通攻击",
-        "cool_down": 3,
-        "release_time": 2.5,
+        "cd": 3,
+        "rt": 2.5,
         "anger": 25
     },
-    "3": {
+    3: {
         "paras": [100, 25, 30],
         "name": u"普通攻击",
-        "cool_down": 20,
-        "release_time": 1.5,
+        "cd": 20,
+        "rt": 1.5,
         "anger": 20
     },
-    "4": {
+    4: {
         "paras": [100, 25, 30],
         "name": u"普通攻击",
-        "cool_down": 30,
-        "release_time": 3,
+        "cd": 30,
+        "rt": 3,
         "anger": 20
     },
-    "5": {
+    5: {
         "paras": [175, 55],
         "name": u"普通攻击",
-        "cool_down": 35,
-        "release_time": 5,
+        "cd": 35,
+        "rt": 5,
         "anger": 35
     },
-    "101": {
+    101: {
         "paras": [85, 10],
         "name": u"普通攻击",
         "content": u"对当前目标造成(85 + 5 * 等级)% + 25点固定伤害",
-        "cool_down": 0.0,
-        "release_time": 2.0,
+        "cd": 0.0,
+        "rt": 2.0,
         "anger": -3
     },
-    "102": {
+    102: {
         "paras": [100, 25],
         "name": u"普通攻击",
         "content": u"对当前目标造成(100 + 5 * 等级)% + 25点固定伤害",
-        "cool_down": 3.0,
-        "release_time": 2.0,
+        "cd": 3.0,
+        "rt": 2.0,
         "anger": 14
     },
 }
@@ -79,7 +79,7 @@ class SkillEffect(object):
         super(SkillEffect, self).__init__()
 
         self.skill = skill
-        self.effect_paras = SC[str(self.skill.skill_id)]["paras"]
+        self.effect_paras = SC[self.skill.skill_id]["paras"]
         self.source = source
         self.target = target
         self.skill.go_cd()
@@ -103,7 +103,7 @@ class SkillEffect(object):
             ra = random.randint(1, 100)
             text = str(-damage)
             if ra <= self.effect_paras[2]:
-                damage = int(damage *1.5)
+                damage = int(damage * 1.5)
                 text += u"暴击 "
             self.target.damaged(damage)
 
@@ -124,8 +124,8 @@ class Skill(object):
         self.level = level
         self.father = father
         self.available = False
-        self.anger = SC[str(self.skill_id)]["anger"]
-        self.init_cd(SC[str(self.skill_id)]["cool_down"], SC[str(self.skill_id)]["release_time"])
+        self.anger = SC[self.skill_id]["anger"]
+        self.init_cd(SC[self.skill_id]["cd"], SC[self.skill_id]["rt"])
 
     def cd_update(self, **kwargs):
         time = kwargs['time']

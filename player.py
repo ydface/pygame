@@ -9,11 +9,11 @@ import skill
 import equipment
 from attribute import *
 
-level_exp_sequence = [100, 186, 368, 495, 602, 733, 901, 1186, 1423, 1765, 2132, 2598, 3065, 3656, 4645, 5243, 5923, 6885]
-skill_study = {
-    "4" : 3,
-    "5" : 4,
-    "6" : 5
+LES = [100, 186, 368, 495, 602, 733, 901, 1186, 1423, 1765, 2132, 2598, 3065, 3656, 4645, 5243, 5923, 6885]
+SS = {
+    4: 3,
+    5: 4,
+    6: 5
 }
 
 AttrAdd = [37, 37, 6, 4, 2, 1, 0, 0, 0, 0, 0, 0]
@@ -60,9 +60,9 @@ class Player(attribute.Attribute):
                 self.e_equips.append(equip)
 
     def level_up_exp(self):
-        global level_exp_sequence
-        if self.level < len(level_exp_sequence):
-            return level_exp_sequence[self.level]
+        global LES
+        if self.level < len(LES):
+            return LES[self.level]
         return 0
 
     def add_exp(self, exp):
@@ -114,9 +114,9 @@ class Player(attribute.Attribute):
         return equiped_obj
 
     def level_up_event(self):
-        global skill_study
-        if skill_study.has_key(str(self.level)):
-            self.skills.append(skill.Skill(skill_study[str(self.level)], 1, self))
+        global SS
+        if SS.has_key(self.level):
+            self.skills.append(skill.Skill(SS[self.level], 1, self))
 
         self.attribute = [self.attribute[attr] + AttrAdd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 

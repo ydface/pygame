@@ -35,7 +35,7 @@ class SkillCell(util.node.Node):
         pos = (self.rect[0], self.rect[1])
         screen.blit(self.image, pos)
 
-        text = SC[str(self.skill.skill_id)]["name"] + u" 等级: " + str(self.skill.level)
+        text = SC[self.skill.skill_id]["name"] + u" 等级: " + str(self.skill.level)
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 24.5))
 
         text = "CD: " + str(round(self.skill.cool_down, 1))
