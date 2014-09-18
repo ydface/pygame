@@ -82,9 +82,9 @@ def loadBtnImage():
 
 def loadMainUIImage():
     global game_sources
-    image = loadImage("resource/mainUI.png")
-    game_sources["player_btn"] = image.subsurface((75, 100), (40, 60))
-    game_sources["bag_btn"] = image.subsurface((130, 100), (40, 60))
+    image = loadImage("resource/test.png")
+    game_sources["player_btn"] = image.subsurface((0, 0), (39, 59))
+    game_sources["bag_btn"] = image.subsurface((39, 0), (40, 60))
 
     image = loadImage("resource/2.png")
     game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
