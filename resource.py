@@ -10,6 +10,8 @@ from pygame.locals import *
 import mypygame
 import button
 import gamestate
+import label
+from util.color import *
 
 screen = mypygame.screen
 
@@ -21,6 +23,31 @@ def getImage(key):
     global game_sources
     return game_sources[key]
 
+
+def getUIImage(key, wr, hr, text=u'界面', size=16):
+    global game_sources
+    if game_sources.has_key(key):
+        return game_sources[key]
+    else:
+        image1 = getImage("ui_label")
+        image1 = pygame.transform.scale(image1, (int(image1.get_width() / wr), image1.get_height()))
+        image2 = getImage("ui_main")
+        image2 = pygame.transform.scale(image2, (int(image2.get_width() / wr), int(image2.get_height() * hr)))
+
+        w = image1.get_rect()[2]
+        h1 = image1.get_rect()[3]
+        h2 = image2.get_rect()[3]
+        image = pygame.surface.Surface((w, h1 + h2), flags=SRCALPHA, depth=32)
+        image.blit(image1, (0, 0))
+        image.blit(image2, (0, h1))
+
+        tlen = len(text) * size
+        tlen = (w - tlen) / 2
+        hlen = (h1 - size) // 2
+        surface = label.FontLabel.D_Font[size].render(text, True, COLOR_WHITE)
+        image.blit(surface, (tlen, hlen))
+        game_sources[key] = image
+        return image
 
 def loadImage(path):
     try:
@@ -62,11 +89,14 @@ def loadMainUIImage():
     image = loadImage("resource/2.png")
     game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
 
+
+    game_sources["ui_label"] = image.subsurface((26, 285), (646, 37))
+    game_sources["ui_main"] = image.subsurface((26, 322), (646, 133))
     #image = loadImage(("resource/2.jpg"))
     #game_sources["play_btn"] = image.subsurface((20, 160), (130, 200))
 
-    image = loadImage("resource/bag.png")
-    game_sources["bag_background"] = image.subsurface((6, 455), (412, 135))
+    #image = loadImage("resource/bag.png")
+    #game_sources["bag_background"] = image.subsurface((6, 455), (412, 135))
 
 
 def loadBattleMapImage():
@@ -96,6 +126,7 @@ def loadHeaderImage():
     game_sources["header_line"] = hImage
 
     game_sources["attribute"] = loadImage("resource/attributeUI.jpg")
+
 
 
 def init():

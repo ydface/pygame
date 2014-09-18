@@ -33,13 +33,13 @@ class LabelViewState(object):
 class FontLabel(util.node.Node):
     TTF_Font = "resource/msyh.ttf"
     D_Font = {
-        "8": pygame.font.Font(TTF_Font, 8),
-        "9": pygame.font.Font(TTF_Font, 9),
-        "10": pygame.font.Font(TTF_Font, 10),
-        "12": pygame.font.Font(TTF_Font, 12),
-        "14": pygame.font.Font(TTF_Font, 14),
-        "16": pygame.font.Font(TTF_Font, 16),
-        "20": pygame.font.Font(TTF_Font, 20)
+        8: pygame.font.Font(TTF_Font, 8),
+        9: pygame.font.Font(TTF_Font, 9),
+        10: pygame.font.Font(TTF_Font, 10),
+        12: pygame.font.Font(TTF_Font, 12),
+        14: pygame.font.Font(TTF_Font, 14),
+        16: pygame.font.Font(TTF_Font, 16),
+        20: pygame.font.Font(TTF_Font, 20)
     }
 
     def __init__(self, pos, view_state, font_size, **kwargs):
@@ -52,7 +52,7 @@ class FontLabel(util.node.Node):
         text = kwargs['text']
         color = kwargs.get('color', COLOR_WHITE)
 
-        self.text_surface = FontLabel.D_Font[str(font_size)].render(text, True, color)
+        self.text_surface = FontLabel.D_Font[font_size].render(text, True, color)
 
     def update(self, **kwargs):
         self.pos[0] = self.pos[0] + self.viewState.move[0]
@@ -75,5 +75,5 @@ class FontLabel(util.node.Node):
 
     @staticmethod
     def draw_label(font_size, text, color, pos):
-        surface = FontLabel.D_Font[str(font_size)].render(text, True, color)
+        surface = FontLabel.D_Font[font_size].render(text, True, color)
         screen.blit(surface, pos)

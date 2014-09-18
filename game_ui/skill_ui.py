@@ -29,7 +29,7 @@ class SkillCell(util.node.Node):
         self.rect = self.image.get_rect()
         x = pos % 6
         y = pos / 6
-        self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + 37.5 * y + 15 * (y + 1))
+        self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + 20 + 37.5 * y + 15 * (y + 1))
 
     def draw(self):
         pos = (self.rect[0], self.rect[1])
@@ -46,8 +46,7 @@ class SkillUI(util.ui.BaseUI):
     def __init__(self, **kwargs):
         super(SkillUI, self).__init__()
 
-        image = resource.getImage("bag_background")
-        self.image = pygame.transform.scale(image, (image.get_width() * 2 / 3, image.get_height() * 2))
+        self.image = resource.getUIImage("skill_ui", 2.8, 2, u"技能")
 
         self.move_able = False
         self.rect = self.image.get_rect()

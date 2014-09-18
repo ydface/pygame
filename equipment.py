@@ -22,11 +22,12 @@ Equip_Left_Weapon = Equip_Clothes + 1
 Equip_Right_Weapon = Equip_Left_Weapon + 1
 Equip_Left_Ring = Equip_Right_Weapon + 1
 Equip_Right_Ring = Equip_Left_Ring + 1
-Equip_Gaiter = Equip_Right_Ring + 1
+Equip_Belt = Equip_Right_Ring + 1
+Equip_Gaiter = Equip_Belt + 1
 Equip_Shoes = Equip_Gaiter + 1
 Equip_Talisman = Equip_Right_Ring + 1
 
-Equip_Name = [u"头盔", u"项链", u"护甲", u"主手", u"副手", u"左手戒指", u"右手戒指", u"护腿", u"鞋子", u"护符"]
+Equip_Name = [u"头盔", u"项链", u"护甲", u"主手", u"副手", u"左手戒指", u"右手戒指", u"腰带", u"护腿", u"鞋子", u"护符"]
 QName = [u"粗糙", u"精致", u"无暇", u"完美", u"神器", u"传奇"]
 
 equipment_template = {
@@ -79,6 +80,11 @@ equipment_template = {
         "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
         "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
         "part": Equip_Talisman
+    },
+    11: {
+        "attr": [34, 34, 18, 2, 1.2, 0.8, 0, 0, 0, 0, 0, 0],
+        "lv_add": [0.2, 0.4, 0.7, 1.1, 1.6, 2.5],
+        "part": Equip_Belt
     },
 }
 

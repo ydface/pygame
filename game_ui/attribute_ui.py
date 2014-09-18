@@ -13,14 +13,15 @@ screen = mypygame.screen
 
 #装备栏各装备格的偏移
 ECO = [
-            [100, 10],
-    [20, 60],
-            [100, 110],
-    [20, 160],      [180, 160],
-    [20, 210],      [180, 210],
-            [100, 260],
-            [100, 310],
-            [180, 60]
+            [100, 30],
+    [20, 80],
+            [100, 130],
+    [20, 180],      [180, 180],
+    [20, 230],      [180, 230],
+            [100, 280],
+            [100, 330],
+            [100, 380],
+            [180, 80]
 ]
 
 #道具品质边框宽
@@ -86,8 +87,7 @@ class AttributeLabel(util.node.Node):
     def __init__(self, father):
         super(AttributeLabel, self).__init__(father=father)
 
-        image = resource.getImage("bag_background")
-        self.image = pygame.transform.scale(image, (image.get_width() * 2 / 7, image.get_height() * 5 / 2))
+        self.image = resource.getUIImage("attri_ui", 4, 3, u"属性详情")
 
         self.rect = self.image.get_rect()
         self.rect.topleft = self.father.rect.topleft
@@ -112,14 +112,11 @@ class AttributeUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        image = resource.getImage("bag_background")
-        self.image = pygame.transform.scale(image, (image.get_width() * 4 / 7, image.get_height() * 5 / 2))
+        self.image = resource.getUIImage("equip_ui", 2.6, 3, u"人物装备")
 
         self.move_able = False
         self.rect = self.image.get_rect()
         self.rect.topleft = (100, 300)
-
-        #self.add(AttributeLabel(self))
         self.rebuild()
 
     def draw(self):
