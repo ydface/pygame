@@ -12,6 +12,7 @@ import resource
 import gamestate
 import label
 import save_data
+import traceback
 
 screen = mypygame.screen
 clock = mypygame.clock
@@ -56,8 +57,15 @@ def hello_world():
     save_data.Save.save()
 
     pygame.quit()
-    sys.exit()
+    #sys.exit()
 
 if __name__ == "__main__":
-    hello_world()
+    try:
+        hello_world()
+    except:
+        log=open("log.txt",'a')
+        traceback.print_exc(file=log)
+        log.flush()
+        log.close()
+
     

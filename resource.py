@@ -13,6 +13,7 @@ import gamestate
 import label
 from util.color import *
 import cPickle
+import traceback
 
 screen = mypygame.screen
 
@@ -53,8 +54,12 @@ def getUIImage(key, wr, hr, text=u'界面', size=16):
 def loadImage(path):
     try:
        image = pygame.image.load(path).convert_alpha()
-    except pygame.error:
-        print "can't load the image from", path
+    except:
+        file = open("log.txt", "a")
+        traceback.print_exc(file=file)
+        file.write("\n")
+        file.flush()
+        file.close()
         raise SystemExit
     return image
 

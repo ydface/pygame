@@ -8,7 +8,7 @@ from pygame.locals import *
 import mypygame
 import util.node
 from util.color import *
-
+import traceback
 screen = mypygame.screen
 
 #永久显示
@@ -32,15 +32,22 @@ class LabelViewState(object):
 
 class FontLabel(util.node.Node):
     TTF_Font = "resource/msyh.ttf"
-    D_Font = {
-        8: pygame.font.Font(TTF_Font, 8),
-        9: pygame.font.Font(TTF_Font, 9),
-        10: pygame.font.Font(TTF_Font, 10),
-        12: pygame.font.Font(TTF_Font, 12),
-        14: pygame.font.Font(TTF_Font, 14),
-        16: pygame.font.Font(TTF_Font, 16),
-        20: pygame.font.Font(TTF_Font, 20)
-    }
+    try:
+        D_Font = {
+            8: pygame.font.Font(TTF_Font, 8),
+            9: pygame.font.Font(TTF_Font, 9),
+            10: pygame.font.Font(TTF_Font, 10),
+            12: pygame.font.Font(TTF_Font, 12),
+            14: pygame.font.Font(TTF_Font, 14),
+            16: pygame.font.Font(TTF_Font, 16),
+            20: pygame.font.Font(TTF_Font, 20)
+        }
+    except:
+        log = open("log.txt", 'a')
+        traceback.print_exc(file=log)
+        log.write("\n")
+        log.flush()
+        log.close()
 
     def __init__(self, pos, view_state, font_size, **kwargs):
         super(FontLabel, self).__init__(**kwargs)
