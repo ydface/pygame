@@ -90,10 +90,11 @@ class BattleUnit(button.Button):
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
-
+        if isinstance(self.unit, monster.Monster):
+            label.FontLabel.draw_label(12, self.unit.name, COLOR_WHITE, (self.rect[0] + 80, self.rect[1] + 1))
         #绘制等级
         text = str(self.unit.level)
-        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 60, self.rect[1] + 6))
+        label.FontLabel.draw_label(12, text, COLOR_WHITE, (self.rect[0] + 60, self.rect[1] + 3))
 
         #绘制血条
         hp_label = int(float(self.unit.attribute_value(Attribute_Hp)) / self.unit.attribute_value(Attribute_Max_Hp) * 100)

@@ -18,7 +18,7 @@ SC = {
     1: {
         "paras": [1.25, 25],
         "effect": 1,
-        "name": u"普通攻击",
+        "name": u"野球拳",
         "content": u"对当前目标造成125% + (25 * 技能等级)点固定伤害",
         "cd": 0.0,
         "rt": 2.0,
@@ -27,7 +27,8 @@ SC = {
     2: {
         "paras": [1.45, 25, 0.2],
         "effect": 2,
-        "name": u"对当前目标造成145% + (28 * 技能等级)点固定伤害, 技能额外增加20%暴击率",
+        "name": u"傲剑狂刀",
+        "content": u"对当前目标造成145% + (28 * 技能等级)点固定伤害, 技能额外增加20%暴击率",
         "cd": 15,
         "rt": 2.5,
         "anger": 25
@@ -35,7 +36,8 @@ SC = {
     3: {
         "paras": [1.15, 37, 0.35],
         "effect": 3,
-        "name": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 技能额外增加35%暴击伤害",
+        "name": u"力劈华山",
+        "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 技能额外增加35%暴击伤害",
         "cd": 20,
         "rt": 1.5,
         "anger": 20
@@ -43,7 +45,8 @@ SC = {
     4: {
         "paras": [1.20, 16, 0.15],
         "effect": 4,
-        "name": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 并恢复造成伤害的15%血量",
+        "name": u"吸星大法",
+        "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 并恢复造成伤害的15%血量",
         "cd": 30,
         "rt": 3,
         "anger": 20
@@ -51,7 +54,8 @@ SC = {
     5: {
         "paras": [1.75, 55, 0.1, 5],
         "effect": 5,
-        "name": u"175% + (55 * 技能等级)点固定伤害, 并提升10%的伤害， 持续5秒",
+        "name": u"易筋经",
+        "content": u"175% + (55 * 技能等级)点固定伤害, 并提升10%的伤害， 持续5秒",
         "cd": 35,
         "rt": 5,
         "anger": 35
@@ -59,7 +63,8 @@ SC = {
     6: {
         "paras": [0.9, 68, 1.5, 7],
         "effect": 6,
-        "name": u"90% + (68 * 技能等级)点固定伤害, 附加每3秒造成一定伤害的持续伤害,持续7秒",
+        "name": u"生死符",
+        "content": u"90% + (68 * 技能等级)点固定伤害, 附加每3秒造成一定伤害的持续伤害,持续7秒",
         "cd": 35,
         "rt": 6,
         "anger": 35
@@ -67,7 +72,7 @@ SC = {
     101: {
         "paras": [0.85, 10],
         "effect": 1,
-        "name": u"普通攻击",
+        "name": u"火球",
         "content": u"对当前目标造成(85 + 5 * 等级)% + 25点固定伤害",
         "cd": 0.0,
         "rt": 2.0,
@@ -76,7 +81,7 @@ SC = {
     102: {
         "paras": [1.00, 25],
         "effect": 1,
-        "name": u"普通攻击",
+        "name": u"火焰突击",
         "content": u"对当前目标造成(100 + 5 * 等级)% + 25点固定伤害",
         "cd": 3.0,
         "rt": 2.0,
@@ -237,6 +242,7 @@ class Skill(object):
         self.level = level
         self.father = father
         self.available = False
+        self.name = SC[self.skill_id]["name"]
         self.anger = SC[self.skill_id]["anger"]
         self.effect = SC[self.skill_id]["effect"]
         self.init_cd(SC[self.skill_id]["cd"], SC[self.skill_id]["rt"])
@@ -280,7 +286,7 @@ class Skill(object):
         w = 71 - float(self.release_time) * 71 / self.max_release_time
         pygame.draw.rect(screen, COLOR_GREEN, (father.rect[0] + 69, father.rect[1] + 42, w, 4))
 
-        text = str(round(float(self.release_time), 2))
+        text = self.name + "(" + str(round(float(self.release_time), 2)) + ")"
         pos = [father.rect[0] + 69 + 35, father.rect[1] + 45]
         label.FontLabel.draw_label(12, text, COLOR_WHITE, pos)
 

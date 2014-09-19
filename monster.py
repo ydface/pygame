@@ -31,6 +31,7 @@ class Monster(attribute.Attribute):
 
         self.attribute = m_attribute["attr"]
         self.attribute = [attr * lv_addition for attr in self.attribute]
+        self.name = m_attribute["name"]
 
         self.exp = int(m_attribute["exp"] * lv_addition)
 
