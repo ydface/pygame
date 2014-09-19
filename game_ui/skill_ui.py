@@ -27,19 +27,20 @@ class SkillCell(util.node.Node):
         self.image = resource.getImage("skill_" + str(self.skill.skill_id))
         self.index = pos
         self.rect = self.image.get_rect()
-        x = pos % 6
-        y = pos / 6
+        x = pos % 5
+        y = pos / 5
         self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + 20 + 37.5 * y + 15 * (y + 1))
 
     def draw(self):
         pos = (self.rect[0], self.rect[1])
         screen.blit(self.image, pos)
 
-        text = SC[self.skill.skill_id]["name"] + u" 等级: " + str(self.skill.level)
-        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 24.5))
-
+        text = SC[self.skill.skill_id]["name"]
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 30.5))
+        text = u"等级: " + str(self.skill.level)
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 40.5))
         text = "CD: " + str(round(self.skill.cool_down, 1))
-        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 35.5))
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 50.5))
 
     '''
     def event(self, event):
