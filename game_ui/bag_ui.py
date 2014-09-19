@@ -22,7 +22,7 @@ IBC = [COLOR_WHITE, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_RED, COLOR_GOLD
 IEW = 2
 
 #背包一栏可显示道具数
-ALEN = 7
+ALEN = 6
 
 #背包一列可显示道具数
 HLEN = 5
@@ -36,7 +36,7 @@ class ItemDetail(util.node.Node):
 
         #对比装备
         self.target = target
-        self.image = resource.getUIImage("idetail", 5, 3, u"装备详情")
+        self.image = resource.getUIImage("idetail", 0.56, 2.67, u"装备详情")
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.item.rect[0] + self.item.rect[2] + 5, self.item.rect[1])
         self.target_rect = self.image.get_rect()
@@ -82,7 +82,12 @@ class ItemCell(util.node.Node):
 
         self.father = father
         self.equip = equip
-        self.image = resource.getImage("item_" + str(self.equip.template))
+        if self.equip:
+            self.image = resource.getImage("item_" + str(self.equip.template))
+        else:
+            self.image = resource.getImage("ecell")
+            self.image = pygame.transform.scale(self.image, (37, 37))
+
         self.index = idx
         self.clicked = False
 
@@ -96,7 +101,8 @@ class ItemCell(util.node.Node):
     def draw(self):
         pos = self.rect.topleft
         e_rect = (pos[0] - IEW, pos[1] - IEW, self.rect[2] + IEW * 2, self.rect[3] + IEW * 2)
-        pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
+        if self.equip:
+            pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
         screen.blit(self.image, pos)
 
     def event(self, event):
@@ -115,7 +121,7 @@ class ItemCell(util.node.Node):
                     self.father.remove_ctype_child(ItemDetail)
                 return False
             else:
-                if not self.father.has_ctype_child(ItemDetail):
+                if not self.father.has_ctype_child(ItemDetail) and self.equip:
                     self.father.add(ItemDetail(self, self, gamestate.player.part_equipment(self.equip.part)))
                     return True
             return False
@@ -138,7 +144,7 @@ class BagUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = resource.getUIImage("bag_ui", 2, 2, u"背包", 20)
+        self.image = resource.getUIImage("bag_ui", 1.17, 2.2, u"背包", 20)
 
         self.move_able = False
         self.rect = Rect(280, 300, self.image.get_width(), self.image.get_height())
@@ -167,8 +173,8 @@ class BagUI(util.ui.BaseUI):
         for i in range(bidx, bidx + ALEN * HLEN):
             if i >= len(equips):
                 break
-            if equips[i] is not None:
-                self.add(ItemCell(self, equips[i], i, i - bidx))
+            #if equips[i] is not None:
+            self.add(ItemCell(self, equips[i], i, i - bidx))
 
     def self_event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
@@ -179,7 +185,7 @@ class BagUI(util.ui.BaseUI):
                 return True
             if self.up_btl_rect.collidepoint(position):
                 self.line += 1
-                self.line = min([self.max_line, self.line])
+                self.line = min([self.max_line - HLEN, self.line])
                 self.rebuild()
             elif self.down_btl_rect.collidepoint(position):
                 self.line -= 1

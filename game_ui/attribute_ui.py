@@ -87,7 +87,7 @@ class AttributeLabel(util.node.Node):
     def __init__(self, father):
         super(AttributeLabel, self).__init__(father=father)
 
-        self.image = resource.getUIImage("attri_ui", 4, 3, u"属性详情")
+        self.image = resource.getUIImage("attri_ui", 0.7, 3.1, u"属性详情")
 
         self.rect = self.image.get_rect()
         self.rect.topleft = self.father.rect.topleft
@@ -112,7 +112,7 @@ class AttributeUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = resource.getUIImage("equip_ui", 2.6, 3, u"人物装备")
+        self.image = resource.getUIImage("equip_ui", 1.07, 3.1, u"人物装备")
         self.p_image = resource.getImage("player")
         self.move_able = False
         self.rect = self.image.get_rect()

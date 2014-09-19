@@ -46,7 +46,7 @@ class SkillUI(util.ui.BaseUI):
     def __init__(self, **kwargs):
         super(SkillUI, self).__init__()
 
-        self.image = resource.getUIImage("skill_ui", 2.8, 2, u"技能")
+        self.image = resource.getUIImage("skill_ui", 0.93, 2, u"技能")
 
         self.move_able = False
         self.rect = self.image.get_rect()

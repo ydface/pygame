@@ -30,10 +30,10 @@ def getUIImage(key, wr, hr, text=u'界面', size=16):
     if game_sources.has_key(key):
         return game_sources[key]
     else:
-        image1 = getImage("ui_label")
-        image1 = pygame.transform.scale(image1, (int(image1.get_width() / wr), image1.get_height()))
-        image2 = getImage("ui_main")
-        image2 = pygame.transform.scale(image2, (int(image2.get_width() / wr), int(image2.get_height() * hr)))
+        image1 = getImage("ui1")
+        image1 = pygame.transform.scale(image1, (int(image1.get_width() * wr), image1.get_height()))
+        image2 = getImage("ui2")
+        image2 = pygame.transform.scale(image2, (int(image2.get_width() * wr), int(image2.get_height() * hr)))
 
         w = image1.get_rect()[2]
         h1 = image1.get_rect()[3]
@@ -83,16 +83,16 @@ def loadBtnImage():
 
 def loadMainUIImage():
     global game_sources
-    image = loadImage("resource/test.png")
-    game_sources["player_btn"] = image.subsurface((0, 0), (39, 59))
-    game_sources["bag_btn"] = image.subsurface((39, 0), (40, 60))
+    #image = loadImage("resource/test.png")
+    #game_sources["player_btn"] = image.subsurface((0, 0), (39, 59))
+    #game_sources["bag_btn"] = image.subsurface((39, 0), (40, 60))
 
-    image = loadImage("resource/2.png")
-    game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
+    #image = loadImage("resource/2.png")
+    #game_sources["mouse"] = image.subsurface((528, 32), (38, 38))
 
 
-    game_sources["ui_label"] = image.subsurface((26, 285), (646, 37))
-    game_sources["ui_main"] = image.subsurface((26, 322), (646, 133))
+    #game_sources["ui_label"] = image.subsurface((26, 285), (646, 37))
+    #game_sources["ui_main"] = image.subsurface((26, 322), (646, 133))
     #image = loadImage(("resource/2.jpg"))
     #game_sources["play_btn"] = image.subsurface((20, 160), (130, 200))
 
@@ -102,8 +102,8 @@ def loadMainUIImage():
 
 def loadBattleMapImage():
     global game_sources
-    image1 = loadImage("resource/worldmapUI/map_background1.pvr.ccz.png")
-    image2 = loadImage("resource/worldmapUI/worldmapui.pvr.ccz.png")
+    image1 = loadImage("resource/mb1.png")
+    image2 = loadImage("resource/mb2.png")
 
     game_sources["big_map"] = image1.subsurface((0, 0), (850, 570))
     game_sources["map_key"] = image1.subsurface((890, 2), (40, 620))
@@ -120,13 +120,13 @@ def loadBattleMapImage():
 
 def loadHeaderImage():
     global game_sources
-    image = loadImage("resource/header1.png")
+    #image = loadImage("resource/header1.png")
 
-    hImage = image.subsurface((365, 95), (175, 63))
-    hImage = pygame.transform.scale(hImage, (hImage.get_width(), hImage.get_height()))
-    game_sources["header_line"] = hImage
+    #hImage = image.subsurface((365, 95), (175, 63))
+    #hImage = pygame.transform.scale(hImage, (hImage.get_width(), hImage.get_height()))
+    #game_sources["header_line"] = hImage
 
-    game_sources["attribute"] = loadImage("resource/attributeUI.jpg")
+    #game_sources["attribute"] = loadImage("resource/attributeUI.jpg")
 
 
 def load_ini(path):
@@ -137,15 +137,12 @@ def load_ini(path):
     image = loadImage("resource/ui.png")
 
     for f in cp:
-        key = f.split(':', 1)[0]
-        key = key.strip('\"')
-        print key
-        val = eval(f.split(':', 1)[1])
-        pos = (max([int(val["x"]), 0]), int(val["y"]))
-        wh = (int(val["w"]), int(val["h"]))
+        key = f["key"]
+        pos = (max([f["x"], 0]), f["y"])
+        wh = (f["w"], f["h"])
         t_image = image.subsurface(pos, wh)
-        game_sources[str(key)] = t_image
-        print game_sources.has_key("btn2")
+        game_sources[key] = t_image
+        #print game_sources.has_key("btn2")
 
 def init():
     global background
@@ -156,7 +153,7 @@ def init():
     game_sources["start_normal"] = loadImage("resource/start_normal.jpg")
     game_sources["start_down"] = loadImage("resource/start_down.jpg")
 
-    p_image = loadImage("resource/player.jpg")
+    p_image = loadImage("resource/role1.png")
     p_image = pygame.transform.scale(p_image, (int(p_image.get_width() * 1.8), int(p_image.get_height() * 1.8)))
     game_sources["player"] = p_image
 

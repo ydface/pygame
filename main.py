@@ -19,7 +19,7 @@ clock = mypygame.clock
 
 def draw_mouse():
     pos = pygame.mouse.get_pos()
-    screen.blit(resource.getImage("mouse"), (pos[0], pos[1]))
+    screen.blit(resource.getImage("mouse1"), (pos[0], pos[1]))
 
 
 def hello_world():

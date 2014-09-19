@@ -36,7 +36,7 @@ class ExitButton(button.Button):
 
 class BattleUnit(button.Button):
     def __init__(self, unit, image, pos, father, target, **kwargs):
-        super(BattleUnit, self).__init__(pos, image, resource.getImage("header_line"), father)
+        super(BattleUnit, self).__init__(pos, image, resource.getImage("header"), father)
         self.unit = unit
         self.dead = False
         self.father = father
@@ -56,17 +56,17 @@ class BattleUnit(button.Button):
         #绘制血条
         hp_label = int(float(self.unit.attribute_value(Attribute_Hp)) / self.unit.attribute_value(Attribute_Max_Hp) * 100)
         if hp_label:
-            pygame.draw.rect(screen, COLOR_RED, (self.rect[0] + 69, self.rect[1] + 25, hp_label, 8))
+            pygame.draw.rect(screen, COLOR_RED, (self.rect[0] + 69, self.rect[1] + 22, hp_label, 8))
 
         text = str(self.unit.attribute_value(Attribute_Hp)) + " / " + str(self.unit.attribute_value(Attribute_Max_Hp))
-        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 71, self.rect[1] + 23))
+        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 71, self.rect[1] + 20))
 
         ##绘制怒气条
         anger_label = int(float(self.anger) / 100 * 100)
         if anger_label:
-            pygame.draw.rect(screen, COLOR_BLUE, (self.rect[0] + 69, self.rect[1] + 34, anger_label, 8))
+            pygame.draw.rect(screen, COLOR_BLUE, (self.rect[0] + 69, self.rect[1] + 31, anger_label, 8))
         text = str(self.anger) + " / " + str(100)
-        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 83, self.rect[1] + 33))
+        label.FontLabel.draw_label(8, text, COLOR_WHITE, (self.rect[0] + 83, self.rect[1] + 30))
 
         if not self.dead:
             self.next_skill.draw_process(self)
@@ -162,7 +162,7 @@ class Battle(util.node.Node):
         super(Battle, self).__init__()
 
         self.end = True
-        self.player = BattleUnit(gamestate.player, resource.getImage("header_line"), [100, 360], self, None, skill=gamestate.player.skills)
+        self.player = BattleUnit(gamestate.player, resource.getImage("header"), [100, 360], self, None, skill=gamestate.player.skills)
         self.player.dead = True
         self.add(self.player)
         self.monsters = []
@@ -194,7 +194,7 @@ class Battle(util.node.Node):
         for i in range(0, num):
             level = random.randint(max([1, gamestate.player.level - 3]), gamestate.player.level)
             mid = random.randint(1, 5)
-            m = BattleUnit(monster.Monster(mid, level), resource.getImage("header_line"), [400, 20 + 80 * i], self, self.player)
+            m = BattleUnit(monster.Monster(mid, level), resource.getImage("header"), [400, 20 + 80 * i], self, self.player)
             self.monsters.append(m)
             self.add(m)
 

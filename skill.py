@@ -164,9 +164,9 @@ class Skill(object):
 
     def draw_process(self, father):
         w = 71 - float(self.release_time) * 71 / self.max_release_time
-        pygame.draw.rect(screen, COLOR_GREEN, (father.rect[0] + 69, father.rect[1] + 45, w, 4))
+        pygame.draw.rect(screen, COLOR_GREEN, (father.rect[0] + 69, father.rect[1] + 42, w, 4))
 
         text = str(round(float(self.release_time), 2))
-        pos = [father.rect[0] + 69 + 35, father.rect[1] + 48]
+        pos = [father.rect[0] + 69 + 35, father.rect[1] + 45]
         label.FontLabel.draw_label(12, text, COLOR_WHITE, pos)
 
