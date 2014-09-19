@@ -20,6 +20,8 @@ import player
 from attribute import *
 from util.color import *
 
+MN = [60, 30, 10]
+
 screen = mypygame.screen
 
 class ExitButton(button.Button):
@@ -246,7 +248,15 @@ class Battle(util.node.Node):
     def new_battle(self):
         self.end = False
         self.player.dead = False
-        num = random.randint(1, 6)
+        num = random.randint(1, 100)
+        for i in range(len(MN)):
+            ra = MN[i]
+            if i > 0:
+                ra = MN[i] + MN[i-1]
+            if num < ra:
+                num = 3 + i
+                break
+        num = max([num, 5])
         for i in range(0, num):
             level = random.randint(max([1, gamestate.player.level - 3]), gamestate.player.level)
             mid = random.randint(1, 5)

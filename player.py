@@ -84,6 +84,10 @@ class Player(attribute.Attribute):
                     save_data.Save.save()
                     return
 
+    def destory_equipment(self, equip):
+        self.equips.remove(equip)
+        self.equips.append(None)
+
     def user_serialize_save(self):
         user_obj = dict()
         user_obj["level"] = self.level

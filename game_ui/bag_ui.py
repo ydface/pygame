@@ -114,6 +114,15 @@ class ItemCell(util.node.Node):
                 self.clicked = True
                 return True
             return False
+        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[2]:
+            position = pygame.mouse.get_pos()
+            if self.rect.collidepoint(position):
+                gamestate.player.destory_equipment(self.equip)
+                self.father.remove(self)
+                self.father.remove_ctype_child(ItemDetail)
+                self.father.rebuild()
+                return True
+            return False
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if not self.rect.collidepoint(position):
