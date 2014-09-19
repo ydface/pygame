@@ -49,6 +49,7 @@ class Monster(attribute.Attribute):
         result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in LMN[gamestate.SenceLevel]])
         result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in result])
 
+        print result
         for i in range(len(result)):
             level = random.randint(max([1, gamestate.player.level - 3]), gamestate.player.level)
             mid = result[i]

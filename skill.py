@@ -173,14 +173,17 @@ class SkillEffect(object):
         parry = self.parry_rate()
 
         text = str(-self.damage)
-        ra = random.randint(1, 100) / 100.0
+        ra = random.randint(1, int((crit + parry) * 100) + 30) / 100.0
+        #print ra, crit, parry
         if ra <= crit:
             self.damage *= (1.5 + self.crit_damage)
             self.damage = int(self.damage)
+            text = str(-self.damage)
             text += u"暴击"
         elif ra > crit and ra <= parry:
             self.damage *= 0.5
             self.damage = int(self.damage)
+            text = str(-self.damage)
             text += u"格挡"
 
         self.target.damaged(self.damage)
@@ -216,13 +219,13 @@ class SkillEffect(object):
         crit = self.base_crit_rate()
         parry = self.base_parry_rate()
         crit = crit / (crit + parry + (1 - parry) * (1 - crit))
-        return crit
+        return min([crit, 1.0])
 
     def parry_rate(self):
         crit = self.base_crit_rate()
         parry = self.base_parry_rate()
         parry = parry / (crit + parry + (1 - parry) * (1 - crit))
-        return parry
+        return min([parry, 1.0])
 
     def ext_damage_calc(self):
         pass
