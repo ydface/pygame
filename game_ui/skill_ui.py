@@ -41,6 +41,40 @@ class SkillCell(util.node.Node):
         text = "CD: " + str(round(self.skill.cool_down, 1))
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 35.5))
 
+    '''
+    def event(self, event):
+        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+            position = pygame.mouse.get_pos()
+            if self.rect.collidepoint(position):
+                self.clicked = True
+                return True
+            return False
+        elif event.type == MOUSEMOTION:
+            position = pygame.mouse.get_pos()
+            if not self.rect.collidepoint(position):
+                self.clicked = False
+                i_detail = self.father.has_ctype_child(ItemDetail)
+                if i_detail and i_detail.item == self:
+                    self.father.remove_ctype_child(ItemDetail)
+                return False
+            else:
+                if not self.father.has_ctype_child(ItemDetail) and self.equip:
+                    self.father.add(ItemDetail(self, self, gamestate.player.part_equipment(self.equip.part)))
+                    return True
+            return False
+        elif event.type == MOUSEBUTTONUP:
+            if self.clicked:
+                gamestate.player.put_on_equipment(self.index)
+                self.clicked = False
+                self.father.rebuild()
+                attr_ui = self.father.father.has_ctype_child(game_ui.attribute_ui.AttributeUI)
+                if attr_ui is not None:
+                    attr_ui.rebuild()
+                return True
+            return False
+        return False
+    '''
+
 
 class SkillUI(util.ui.BaseUI):
     def __init__(self, **kwargs):

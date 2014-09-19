@@ -54,6 +54,8 @@ class ItemDetail(util.node.Node):
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 98))
         for attr in range(Attribute_Hp, Attribute_None):
             text = self.item.equip.attribute_value_str(attr)
+            if self.target:
+                text += "(" + str((self.item.equip.attribute_value(attr) - self.target.attribute_value(attr))) + ")"
             label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 56 + 60 + 20 * attr))
 
         #已装备装备

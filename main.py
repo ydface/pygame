@@ -60,6 +60,7 @@ def hello_world():
     #sys.exit()
 
 if __name__ == "__main__":
+    '''
     try:
         hello_world()
     except:
@@ -67,5 +68,7 @@ if __name__ == "__main__":
         traceback.print_exc(file=log)
         log.flush()
         log.close()
+    '''
+    hello_world()
 
     

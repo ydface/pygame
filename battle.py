@@ -34,6 +34,47 @@ class ExitButton(button.Button):
         gamestate.current_ui = game_ui.mission_ui.UIGame()
 
 
+class BattleBuff(util.node.Node):
+    def __init__(self, source, target, effect, round, para, **kwargs):
+        super(BattleBuff, self).__init__()
+
+        self.source = source
+        self.target = target
+        self.effect = effect
+        self.round = round
+        self.para = para
+        self.interval = kwargs.get("interval", 0)   #生效间隔
+        self.time = self.interval  #生效剩余时间
+
+
+    def draw(self):
+        pass
+
+    def update(self, **kwargs):
+        time = kwargs["time"]
+        self.round -= time
+        if self.round <= 0:
+            self.target.buffs.remove(self)
+            return
+        if self.interval:
+            self.time -= time
+            if self.time <= 0:
+                self.time = self.interval
+                #buff效果
+                if self.effect == skill.BTY_HOT:
+                    self.target.recover(self.para)
+                    text = u"持续 " + str(self.para)
+                    self.target.add_hp_change_label(text, 16, COLOR_GREEN)
+                elif self.effect == skill.BTY_DOT:
+                    self.target.damaged(self.para)
+                    text = u"中毒" + str(-self.para)
+                    self.target.add_hp_change_label(text, 16, COLOR_RED)
+
+    @staticmethod
+    def append_buff(source, target, effect, round, para, **kwargs):
+        target.buffs.append(BattleBuff(source, target, effect, round, para, **kwargs))
+
+
 class BattleUnit(button.Button):
     def __init__(self, unit, image, pos, father, target, **kwargs):
         super(BattleUnit, self).__init__(pos, image, resource.getImage("header"), father)
@@ -45,6 +86,7 @@ class BattleUnit(button.Button):
         self.next_skill = self.skills[0]
         self.recover_time = 0.1
         self.anger = 0
+        self.buffs = []
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
@@ -76,6 +118,9 @@ class BattleUnit(button.Button):
         for child in self.child:
             child.draw()
 
+        for buff in self.buffs:
+            buff.draw()
+
     def click_up_effect(self):
         if self in self.father.monsters and not self.dead:
             self.target.target = self
@@ -93,6 +138,9 @@ class BattleUnit(button.Button):
         for child in self.child:
             child.update(**kwargs)
 
+        for buff in self.buffs:
+            buff.update(**kwargs)
+
     def recover(self, time):
         self.recover_time -= time
         if self.recover_time <= 0:
@@ -107,7 +155,8 @@ class BattleUnit(button.Button):
                 self.father.new_battle()
 
     def damaged(self, damage):
-        self.unit.hp_dec(damage)
+        if self.unit.hp_dec(damage):
+            self.dead = True
 
     def anger_change(self, val):
         self.anger -= val
@@ -125,7 +174,7 @@ class BattleUnit(button.Button):
                     self.target = m
 
         if self.next_skill.available:
-            effect = skill.SkillEffect(self.next_skill, self, self.target)
+            effect = skill.SkillEffect.create_skill_effect(self.next_skill, self, self.target)
             effect.effect_active()
             self.skill_available()
 
@@ -155,6 +204,13 @@ class BattleUnit(button.Button):
                 self.next_skill = s
             elif s.cool_down < self.next_skill.cool_down:
                 self.next_skill = s
+
+    def buff_effect_value(self, effect):
+        val = 0
+        for buff in self.buffs:
+            if buff.effect == effect:
+               val += buff.para
+        return val
 
 
 class Battle(util.node.Node):
