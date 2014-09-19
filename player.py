@@ -49,14 +49,14 @@ class Player(attribute.Attribute):
             if i is None:
                 self.equips.append(None)
             else:
-                self.equips.append(equipment.Equipment.create_equipment(i["level"], i["eid"], i["quality"]))
+                self.equips.append(equipment.Equipment.create_equipment(i["level"], i["eid"], i["quality"], i["random"]))
 
         equiped_obj = save_data.Save.load("equiped")
         for i in range(len(equiped_obj)):
             if equiped_obj[i] is None:
                 self.e_equips.append(None)
             else:
-                equip = equipment.Equipment.create_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"])
+                equip = equipment.Equipment.create_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["random"])
                 self.attribute = [self.attribute[attr] + equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
                 self.e_equips.append(equip)
 
@@ -106,7 +106,7 @@ class Player(attribute.Attribute):
             if e is None:
                 item_obj.append(e)
             else:
-                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality})
+                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "random": e.random})
         return item_obj
 
     def equiped_serialize_save(self):
@@ -115,7 +115,7 @@ class Player(attribute.Attribute):
             if e is None:
                 equiped_obj.append(e)
             else:
-                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality})
+                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "random": e.random})
         return equiped_obj
 
     def level_up_event(self):
@@ -126,7 +126,7 @@ class Player(attribute.Attribute):
         self.attribute = [self.attribute[attr] + AttrAdd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
     def put_on_equipment(self, idx):
-        if idx >= len(self.equips):
+        if idx >= len(self.equips) or self.equips[idx] is None:
             return
 
         equip = self.equips[idx]

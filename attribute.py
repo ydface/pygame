@@ -3,23 +3,7 @@
 
 __author__ = 'Ydface'
 
-
-Attribute_Hp = 0
-Attribute_Max_Hp = Attribute_Hp + 1
-Attribute_Attack = Attribute_Max_Hp + 1
-Attribute_Defense = Attribute_Attack + 1
-Attribute_Speed1 = Attribute_Defense + 1
-Attribute_Speed2 = Attribute_Speed1 + 1
-Attribute_Hit = Attribute_Speed2 + 1
-Attribute_Dodge = Attribute_Hit + 1
-Attribute_Crit = Attribute_Dodge + 1
-Attribute_Crit_Seal = Attribute_Crit + 1
-Attribute_Wreck = Attribute_Crit_Seal + 1
-Attribute_Parry = Attribute_Wreck + 1
-Attribute_None = Attribute_Parry + 1
-
-Attribute_Name = [u"血       量", u"最大血量", u"攻       击", u"防       御", u"冷却加速", u"施法加速", u"命      中",
-                  u"闪      避", u"暴      击", u"抗      暴", u"破      击", u"格      挡"]
+from util.macro import *
 
 
 class Attribute(object):

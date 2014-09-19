@@ -11,6 +11,7 @@ import label
 import math
 from attribute import *
 from util.color import *
+from util.macro import *
 import battle
 
 SC = {
@@ -86,17 +87,6 @@ SC = {
 NORMAL = 1
 CRIT = 2
 MISS = 3
-
-BTY_YUNXUAN = 1
-BTY_SHANGHAI_INC = 2
-BTY_SHANGHAI_DEC = 3
-BTY_BAOJI_SEAL = 4
-BTY_BAOJI_INC = 5
-BTY_DOT = 6
-BTY_HOT = 7
-BTY_MINGZHONG_DEC = 8
-BTY_ZUZHOU = 9
-BTY_ABSORB_BLOOD = 10
 
 screen = mypygame.screen
 
