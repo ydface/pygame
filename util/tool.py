@@ -32,7 +32,6 @@ class RandUtil(object):
                     continue
             else:
                 if para[i-1].key < ra and para[i].key >= ra:
-                    print para[i-1].key, ra, para[i].key
                     return para[i].val
                 else:
                     continue

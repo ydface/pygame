@@ -49,14 +49,14 @@ class Player(attribute.Attribute):
             if i is None:
                 self.equips.append(None)
             else:
-                self.equips.append(equipment.Equipment.create_equipment(i["level"], i["eid"], i["quality"], i["random"]))
+                self.equips.append(equipment.Equipment.load_equipment(i["level"], i["eid"], i["quality"], i["attr"]))
 
         equiped_obj = save_data.Save.load("equiped")
         for i in range(len(equiped_obj)):
             if equiped_obj[i] is None:
                 self.e_equips.append(None)
             else:
-                equip = equipment.Equipment.create_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["random"])
+                equip = equipment.Equipment.load_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["attr"])
                 self.attribute = [self.attribute[attr] + equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
                 self.e_equips.append(equip)
 
@@ -106,7 +106,7 @@ class Player(attribute.Attribute):
             if e is None:
                 item_obj.append(e)
             else:
-                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "random": e.random})
+                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute})
         return item_obj
 
     def equiped_serialize_save(self):
@@ -115,7 +115,7 @@ class Player(attribute.Attribute):
             if e is None:
                 equiped_obj.append(e)
             else:
-                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "random": e.random})
+                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute})
         return equiped_obj
 
     def level_up_event(self):

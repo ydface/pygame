@@ -20,14 +20,14 @@ from monster_group import *
 
 
 class Monster(attribute.Attribute):
-    def __init__(self, mid, level):
+    def __init__(self, mid):
         super(Monster, self).__init__()
-
-        self.level = level
 
         m_attribute = MC[mid]
 
-        lv_addition = m_attribute["add"] * level
+        self.level = random.randint(m_attribute["level"][0], m_attribute["level"][1])
+
+        lv_addition = m_attribute["add"] * self.level
 
         self.attribute = m_attribute["attr"]
         self.attribute = [attr * lv_addition for attr in self.attribute]
@@ -39,8 +39,7 @@ class Monster(attribute.Attribute):
 
         quality = RandUtil.random([RandSeed(m["key"], m["val"]) for m in m_attribute["equip"]])
         if quality is not None:
-            eid = random.randint(1, 11)
-            #quality = random.randint(equipment.Quality_White, equipment.Quality_Gold)
+            eid = RandUtil.random([RandSeed(m["key"], m["val"]) for m in m_attribute["part"]])
             self.equip = equipment.Equipment.create_equipment(self.level, eid, quality, None)
 
 
@@ -49,11 +48,9 @@ class Monster(attribute.Attribute):
         result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in LMN[gamestate.SenceLevel]])
         result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in result])
 
-        print result
         for i in range(len(result)):
-            level = random.randint(max([1, gamestate.player.level - 3]), gamestate.player.level)
             mid = result[i]
-            m = battle.BattleUnit(Monster(mid, level), resource.getImage("header"), [400, 20 + 80 * i], father, father.player)
+            m = battle.BattleUnit(Monster(mid), resource.getImage("header"), [400, 20 + 80 * i], father, father.player)
             father.monsters.append(m)
             father.add(m)
 

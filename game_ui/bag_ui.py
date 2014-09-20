@@ -36,7 +36,7 @@ class ItemDetail(util.node.Node):
 
         #对比装备
         self.target = target
-        self.image = resource.getUIImage("idetail", 0.56, 2.67, u"装备详情")
+        self.image = resource.getUIImage("idetail", 0.56, 2.2, u"装备详情")
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.item.rect[0] + self.item.rect[2] + 5, self.item.rect[1])
         self.target_rect = self.image.get_rect()
@@ -52,11 +52,16 @@ class ItemDetail(util.node.Node):
         label.FontLabel.draw_label(10, text, IBC[self.item.equip.quality], (self.rect[0] + 15, self.rect[1] + 78))
         text = u"部位:   " + Equip_Name[self.item.equip.part]
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 98))
+        i = 0
         for attr in range(Attribute_Hp, Attribute_None):
+            if not self.item.equip.attribute_value(attr):
+                if not self.target or not self.target.attribute_value(attr):
+                    continue
             text = self.item.equip.attribute_value_str(attr)
             if self.target:
-                text += "(" + str((self.item.equip.attribute_value(attr) - self.target.attribute_value(attr))) + ")"
-            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 56 + 60 + 20 * attr))
+                text += "   (" + str((self.item.equip.attribute_value(attr) - self.target.attribute_value(attr))) + ")"
+            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 56 + 60 + 20 * i))
+            i += 1
 
         #已装备装备
         if not self.target:
@@ -73,9 +78,13 @@ class ItemDetail(util.node.Node):
 
         text = u"部位:   " + Equip_Name[self.target.part]
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 108))
+        i = 0
         for attr in range(Attribute_Hp, Attribute_None):
+            if not self.target.attribute_value(attr) and not self.item.equip.attribute_value(attr):
+                continue
             text = self.target.attribute_value_str(attr)
-            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 56 + 70 + 20 * attr))
+            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 56 + 70 + 20 * i))
+            i += 1
 
 
 class ItemCell(util.node.Node):
