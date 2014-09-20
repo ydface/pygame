@@ -54,3 +54,9 @@ BTY_HOT = 7
 BTY_MINGZHONG_DEC = 8
 BTY_ZUZHOU = 9
 BTY_ABSORB_BLOOD = 10
+
+RNAME = {
+    Equip_Clothes: "clothes",
+    Equip_Left_Weapon: "weapon",
+    Equip_Hat: "hat"
+}

@@ -34,7 +34,11 @@ class EquipCell(util.node.Node):
 
         self.father = father
         self.equip = equip
-        self.image = resource.getImage("item_" + str(self.equip.template))
+        if self.equip.part in RNAME:
+            self.image = resource.getImage(RNAME[self.equip.part] + str(self.equip.quality))
+            self.image = pygame.transform.scale(self.image, (37, 37))
+        else:
+            self.image = resource.getImage("item_" + str(self.equip.template))
         self.clicked = False
 
         self.rect = self.image.get_rect()
@@ -44,7 +48,8 @@ class EquipCell(util.node.Node):
     def draw(self):
         pos = self.rect.topleft
         e_rect = (pos[0] - IEW, pos[1] - IEW, self.rect[2] + IEW * 2, self.rect[3] + IEW * 2)
-        pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
+        label.FontLabel.draw_rect_line((pos[0] - IEW, pos[1] - IEW), (self.rect[2] + IEW * 2, self.rect[3] + IEW * 2), IBC[self.equip.quality])
+        #pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
         screen.blit(self.image, pos)
 
         label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))

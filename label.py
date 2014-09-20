@@ -84,3 +84,10 @@ class FontLabel(util.node.Node):
     def draw_label(font_size, text, color, pos):
         surface = FontLabel.D_Font[font_size].render(text, True, color)
         screen.blit(surface, pos)
+
+    @staticmethod
+    def draw_rect_line(pos, wh, color):
+        pygame.draw.line(screen, color, (pos[0], pos[1]), (pos[0], pos[1] + wh[1]), 2)
+        pygame.draw.line(screen, color, (pos[0], pos[1]), (pos[0] + wh[0], pos[1]), 2)
+        pygame.draw.line(screen, color, (pos[0] + wh[0], pos[1]), (pos[0] + wh[0], pos[1] + wh[1]), 2)
+        pygame.draw.line(screen, color, (pos[0], pos[1] + wh [1]), (pos[0] + wh[0], pos[1] + wh[1]), 2)

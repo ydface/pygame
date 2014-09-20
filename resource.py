@@ -135,16 +135,17 @@ def loadHeaderImage():
 
 def load_ini(path):
     global game_sources
-    file = open("resource/ui.ini")
+    file = open("resource/" + path + ".ini")
     cp = cPickle.load(file)
     file.close()
-    image = loadImage("resource/ui.png")
+    image = loadImage("resource/" + path + ".png")
 
     for f in cp:
         key = f["key"]
         pos = (max([f["x"], 0]), f["y"])
         wh = (f["w"], f["h"])
         t_image = image.subsurface(pos, wh)
+        #t_image = pygame.transform.scale(t_image, (32, 32))
         game_sources[key] = t_image
         #print game_sources.has_key("btn2")
 
@@ -166,6 +167,7 @@ def init():
     background.append(pygame.transform.scale(pygame.image.load("resource/level_2_background.jpg").convert_alpha(), screen.get_size()))
     background.append(pygame.transform.scale(pygame.image.load("resource/level_3_background.jpg").convert_alpha(), screen.get_size()))
 
-    load_ini("")
+    load_ini("ui")
+    load_ini("good")
 
 init()

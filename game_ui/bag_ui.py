@@ -94,7 +94,11 @@ class ItemCell(util.node.Node):
         self.father = father
         self.equip = equip
         if self.equip:
-            self.image = resource.getImage("item_" + str(self.equip.template))
+            if self.equip.part in RNAME:
+                self.image = resource.getImage(RNAME[self.equip.part] + str(self.equip.quality))
+                self.image = pygame.transform.scale(self.image, (37, 37))
+            else:
+                self.image = resource.getImage("item_" + str(self.equip.template))
         else:
             self.image = resource.getImage("ecell")
             self.image = pygame.transform.scale(self.image, (37, 37))
@@ -113,7 +117,7 @@ class ItemCell(util.node.Node):
         pos = self.rect.topleft
         e_rect = (pos[0] - IEW, pos[1] - IEW, self.rect[2] + IEW * 2, self.rect[3] + IEW * 2)
         if self.equip:
-            pygame.draw.rect(screen, IBC[self.equip.quality], e_rect)
+            label.FontLabel.draw_rect_line((pos[0] - IEW, pos[1] - IEW), (self.rect[2] + IEW * 2, self.rect[3] + IEW * 2), IBC[self.equip.quality])
         screen.blit(self.image, pos)
 
     def event(self, event):
