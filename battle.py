@@ -167,6 +167,7 @@ class BattleUnit(button.Button):
     def damaged(self, damage):
         if self.unit.hp_dec(damage):
             self.dead = True
+            self.buffs = []
 
     def anger_change(self, val):
         self.anger -= val
