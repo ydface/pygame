@@ -215,7 +215,6 @@ class BattleUnit(button.Button):
                 continue
             if sk.cool_down <= 0:
                 self.next_skill = sk
-                print "next ", sk.skill_id
                 break
 
     def buff_effect_value(self, effect):

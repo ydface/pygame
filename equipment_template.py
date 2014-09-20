@@ -29,8 +29,8 @@ ETM = {
                 "na": [{"k": 13, "v": 2}, {"k": 33, "v": 3}],
                 "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
+                    Attribute_Hp: [121, 182],
+                    Attribute_Defense: [2, 8],
                     Attribute_Hit: [1.2, 1.5],
                     Attribute_Crit_Seal: [1, 1],
                     Attribute_Parry: [2, 4]
@@ -40,8 +40,8 @@ ETM = {
                 "na": [{"k": 29, "v": 3}],
                 "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
+                    Attribute_Hp: [121, 220],
+                    Attribute_Defense: [2, 11],
                     Attribute_Hit: [1.2, 1.5],
                     Attribute_Crit_Seal: [1, 1],
                     Attribute_Parry: [2, 4]
@@ -51,8 +51,8 @@ ETM = {
                 "na": [{"k": 43, "v": 3}, {"k": 11, "v": 4}],
                 "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
+                    Attribute_Hp: [121, 240],
+                    Attribute_Defense: [5, 13],
                     Attribute_Hit: [1.2, 1.5],
                     Attribute_Crit_Seal: [1, 1],
                     Attribute_Parry: [2, 4]
@@ -62,8 +62,8 @@ ETM = {
                 "na": [{"k": 11, "v": 3}, {"k": 45, "v": 4}],
                 "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
+                    Attribute_Hp: [121, 294],
+                    Attribute_Defense: [8, 15],
                     Attribute_Hit: [1.2, 1.5],
                     Attribute_Crit_Seal: [1, 1],
                     Attribute_Parry: [2, 4]
@@ -73,8 +73,8 @@ ETM = {
                 "na": [{"k": 45, "v": 5}],
                 "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
+                    Attribute_Hp: [121, 350],
+                    Attribute_Defense: [10, 23],
                     Attribute_Hit: [1.2, 1.5],
                     Attribute_Crit_Seal: [1, 1],
                     Attribute_Parry: [2, 4]
