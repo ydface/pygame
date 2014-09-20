@@ -45,7 +45,7 @@ class ItemDetail(util.node.Node):
     def draw(self):
         #当前装备
         screen.blit(self.image, self.rect.topleft)
-        screen.blit(self.item.image, (self.rect[0] + 14, self.rect[1] + 20 + 11))
+        screen.blit(self.item.equip.image, (self.rect[0] + 14, self.rect[1] + 20 + 11))
         text = u"等级:   " + str(self.item.equip.level)
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 62))
         text = u"品质:   " + QName[self.item.equip.quality]

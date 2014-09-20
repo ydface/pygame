@@ -3,6 +3,7 @@
 
 __author__ = 'Ydface'
 
+import pygame
 import math
 import resource
 import attribute
@@ -58,7 +59,14 @@ class Equipment(attribute.Attribute):
         equip.attribute = [equip.attribute[attr] * addition for attr in range(Attribute_Hp, Attribute_None)]
 
         equip.attribute[Attribute_Max_Hp] = equip.attribute[Attribute_Hp]
-        equip.image = resource.getImage("item_" + str(equip.template))
+
+        if equip.part in RNAME:
+            equip.image = resource.getImage(RNAME[equip.part] + str(equip.quality))
+            equip.image = pygame.transform.scale(equip.image, (37, 37))
+        else:
+            equip.image = resource.getImage("item_" + str(equip.template))
+
+        #equip.image = resource.getImage("item_" + str(equip.template))
         return equip
 
     @staticmethod
@@ -73,6 +81,10 @@ class Equipment(attribute.Attribute):
         equip.quality = quality
         equip.part = e_attr["part"]
         equip.attribute = attr
-        equip.image = resource.getImage("item_" + str(equip.template))
+        if equip.part in RNAME:
+            equip.image = resource.getImage(RNAME[equip.part] + str(equip.quality))
+            equip.image = pygame.transform.scale(equip.image, (37, 37))
+        else:
+            equip.image = resource.getImage("item_" + str(equip.template))
         return equip
 
