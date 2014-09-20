@@ -22,6 +22,7 @@ from util.color import *
 
 screen = mypygame.screen
 
+
 class ExitButton(button.Button):
     def __init__(self, father):
         pos = [345, 500]
@@ -44,11 +45,17 @@ class BattleBuff(util.node.Node):
         self.round = round
         self.para = para
         self.interval = kwargs.get("interval", 0)   #生效间隔
+        self.content = kwargs.get("content", u"无描述")
         self.time = self.interval  #生效剩余时间
+        self.image = resource.getImage("skill_" + str(self.effect))
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() // 2, self.image.get_height() // 2))
+        self.rect = self.image.get_rect()
+        self.detail = None
 
-
-    def draw(self):
-        pass
+    def draw(self, index):
+        self.rect.topleft = (self.target.rect[0], self.target.rect[1] + self.target.rect[3] + 5)
+        screen.blit(self.image, self.rect)
+        label.FontLabel.draw_label(12, str(round(self.round, 1)), COLOR_WHITE, (self.rect[0], self.rect[1] + 15))
 
     def update(self, **kwargs):
         time = kwargs["time"]
@@ -119,8 +126,10 @@ class BattleUnit(button.Button):
         for child in self.child:
             child.draw()
 
+        index = 0
         for buff in self.buffs:
-            buff.draw()
+            buff.draw(index)
+            index += 1
 
     def click_up_effect(self):
         if self in self.father.monsters and not self.dead:
@@ -152,7 +161,7 @@ class BattleUnit(button.Button):
                 self.target = None
 
                 for s in self.skills:
-                    s.go_cd()
+                    s.release_time = s.max_release_time
                 self.father.new_battle()
 
     def damaged(self, damage):
@@ -191,20 +200,23 @@ class BattleUnit(button.Button):
                 self.add(lb)
 
     def add_hp_change_label(self, text, font_size, color):
-        view = label.LabelViewState(label.ViewTimer, 0.6, [0, -0.4])
+        view = label.LabelViewState(label.ViewTimer, 1, [0, -1])
         rect = [self.rect[0] + 200, self.rect[1] + 30]
         lb = label.FontLabel(rect, view, font_size, text=text, color=color, father=self)
         self.add(lb)
 
     def skill_available(self):
         self.next_skill = self.skills[0]
-        for s in self.skills:
-            if self.anger < s.anger:
+        mlen = len(self.skills) - 1
+        while mlen >= 0:
+            sk = self.skills[mlen]
+            mlen -= 1
+            if self.anger < sk.anger:
                 continue
-            if s.cool_down <= 0:
-                self.next_skill = s
-            elif s.cool_down < self.next_skill.cool_down:
-                self.next_skill = s
+            if sk.cool_down <= 0:
+                self.next_skill = sk
+                print "next ", sk.skill_id
+                break
 
     def buff_effect_value(self, effect):
         val = 0

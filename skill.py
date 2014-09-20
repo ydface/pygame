@@ -29,45 +29,45 @@ SC = {
         "effect": 2,
         "name": u"傲剑狂刀",
         "content": u"对当前目标造成145% + (28 * 技能等级)点固定伤害, 技能额外增加20%暴击率",
-        "cd": 15,
+        "cd": 5,
         "rt": 2.5,
-        "anger": 25
+        "anger": 6
     },
     3: {
         "paras": [1.15, 37, 0.35],
         "effect": 3,
         "name": u"力劈华山",
         "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 技能额外增加35%暴击伤害",
-        "cd": 20,
+        "cd": 7,
         "rt": 1.5,
-        "anger": 20
+        "anger": 7
     },
     4: {
         "paras": [1.20, 16, 0.15],
         "effect": 4,
         "name": u"吸星大法",
         "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 并恢复造成伤害的15%血量",
-        "cd": 30,
+        "cd": 15,
         "rt": 3,
-        "anger": 20
+        "anger": 0
     },
     5: {
         "paras": [1.75, 55, 0.1, 5],
         "effect": 5,
         "name": u"易筋经",
         "content": u"175% + (55 * 技能等级)点固定伤害, 并提升10%的伤害， 持续5秒",
-        "cd": 35,
-        "rt": 5,
-        "anger": 35
+        "cd": 21,
+        "rt": 4,
+        "anger": 18
     },
     6: {
         "paras": [0.9, 68, 1.5, 7],
         "effect": 6,
         "name": u"生死符",
         "content": u"90% + (68 * 技能等级)点固定伤害, 附加每3秒造成一定伤害的持续伤害,持续7秒",
-        "cd": 35,
-        "rt": 6,
-        "anger": 35
+        "cd": 24,
+        "rt": 4,
+        "anger": 20
     },
     101: {
         "paras": [0.85, 10],
@@ -172,22 +172,24 @@ class SkillEffect(object):
         crit = self.crit_rate() + self.crit
         parry = self.parry_rate()
 
-        text = str(-self.damage)
         ra = random.randint(1, int((crit + parry) * 100) + 30) / 100.0
         #print ra, crit, parry
         if ra <= crit:
             self.damage *= (1.5 + self.crit_damage)
             self.damage = int(self.damage)
-            text = str(-self.damage)
-            text += u"暴击"
+            self.target.damaged(self.damage)
+            text = str(-self.damage) + u"暴击"
+            self.target.add_hp_change_label(text, 20, COLOR_PURPLE)
         elif ra > crit and ra <= parry:
             self.damage *= 0.5
             self.damage = int(self.damage)
+            self.target.damaged(self.damage)
+            text = str(-self.damage) + u"格挡"
+            self.target.add_hp_change_label(text, 20, COLOR_WHITE)
+        else:
+            self.target.damaged(self.damage)
             text = str(-self.damage)
-            text += u"格挡"
-
-        self.target.damaged(self.damage)
-        self.target.add_hp_change_label(text, 16, COLOR_RED)
+            self.target.add_hp_change_label(text, 16, COLOR_RED)
 
         self.source_absorb_blood()
 
@@ -336,6 +338,8 @@ class SkillEffect_5(SkillEffect):
 
     def append_source_buff(self):
         battle.BattleBuff.append_buff(self.source, self.source, BTY_SHANGHAI_INC, self.round, self.para)
+        self.source.add_hp_change_label(u"伤害↑", 20, COLOR_GOLD)
+        #label.FontLabel.draw_label(12, , COLOR_GOLD, [self.target.rect[0] + 5, self.target.rect[1] - 5])
 
 
 #使中毒
