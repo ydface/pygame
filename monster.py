@@ -23,7 +23,7 @@ class Monster(attribute.Attribute):
     def __init__(self, mid):
         super(Monster, self).__init__()
 
-        m_attribute = MC[mid]
+        m_attribute = MC[mid].copy()
 
         self.level = random.randint(m_attribute["level"][0], m_attribute["level"][1])
 

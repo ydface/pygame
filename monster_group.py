@@ -63,7 +63,7 @@ MC = {
         "attr": [245, 245, 67, 23, 7.0, 6.0, 32, 11, 0, 14, 0, 21],
         "add": 0.9,
         "exp": 5,
-        "equip": [{"key": 2, "val": Quality_Red}, {"key": 4, "val": Quality_Purple}, {"key": 13, "val": Quality_Blue}, {"key": 32, "val": Quality_Green}, {"key": 55, "val": None}],
+        "equip": [{"key": 2, "val": Quality_Red}, {"key": 4, "val": Quality_Purple}, {"key": 13, "val": Quality_Blue}, {"key": 32, "val": Quality_Green}, {"key": 124, "val": None}],
         "part": EPART_1_2,
         "name": u"精英炼狱魔",
         "level": [2, 7]
@@ -72,7 +72,7 @@ MC = {
         "attr": [324, 324, 97, 41, 10.0, 13.0, 47, 17, 0, 22, 0, 33],
         "add": 1.3,
         "exp": 8,
-        "equip": [{"key": 24, "val": Quality_Purple}, {"key": 11, "val": Quality_Red}, {"key": 3, "val": Quality_Gold}, {"key": 33, "val": Quality_Blue}, {"key": 68, "val": None}],
+        "equip": [{"key": 24, "val": Quality_Purple}, {"key": 11, "val": Quality_Red}, {"key": 3, "val": Quality_Gold}, {"key": 33, "val": Quality_Blue}, {"key": 320, "val": None}],
         "part": EPART_1_2,
         "name": u"炼狱魔王",
         "level": [3, 9]
