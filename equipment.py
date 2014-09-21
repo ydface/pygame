@@ -27,16 +27,16 @@ class Equipment(attribute.Attribute):
         if not eid in ETM:
             return None
 
-        e_attr = ETM[eid]
+        t_attr = ETM[eid]
         equip = Equipment()
         equip.level = level
         equip.template = eid
         equip.quality = quality
-        equip.part = e_attr["part"]
+        equip.part = t_attr["part"]
 
         #print e_attr
         #品质对应的属性生成规则数据
-        e_attr = e_attr["attr"]
+        e_attr = t_attr["attr"].copy()
         b_attr = e_attr[equip.quality]
         #属性数量规则
         num_rand = b_attr["na"]
@@ -44,11 +44,15 @@ class Equipment(attribute.Attribute):
         attr_num = RandUtil.random([RandSeed(m["k"], m["v"]) for m in num_rand])
 
         #属性类型列表
-        attr_l = b_attr["attr_l"][:]
+        attr_l = b_attr["attr_l"]
         #打乱顺序
         random.shuffle(attr_l)
         #获得属性
         r_attr_l = attr_l[0:attr_num]
+
+        if "m_attr" in t_attr:
+            m_attr = t_attr["m_attr"]
+            r_attr_l.append(m_attr)
 
         equip.attribute = DA[:]
         for a in r_attr_l:

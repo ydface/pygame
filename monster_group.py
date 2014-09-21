@@ -76,6 +76,15 @@ MC = {
         "part": EPART_1_2,
         "name": u"炼狱魔王",
         "level": [3, 9]
+    },
+    4: {
+        "attr": [462, 462, 134, 63, 10.0, 13.0, 47, 17, 0, 22, 0, 33],
+        "add": 1.6,
+        "exp": 33,
+        "equip": [{"key": 33, "val": Quality_White}, {"key": 11, "val": Quality_Green}, {"key": 6, "val": Quality_Blue}, {"key": 77, "val": None}],
+        "part": EPART_1_2,
+        "name": u"炼狱魔王",
+        "level": [10, 18]
     }
 }
 
