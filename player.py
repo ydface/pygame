@@ -10,7 +10,7 @@ import equipment
 from attribute import *
 import math
 
-LES = [80, 561, 1536, 1014, 2011, 3547, 10640, 14300, 18576, 23466, 28997, 35201, 42100, 49723, 58097, 67253, 77221, \
+LES = [80, 561, 1536, 3014, 5011, 7547, 10640, 14300, 18576, 23466, 28997, 35201, 42100, 49723, 58097, 67253, 77221, \
        88034, 99723, 112324, 125874, 140409, 155964, 172584, 190310, 209179, 229239, 250534, 273114, 297026, 322320, \
        349043, 377260, 407017, 438376, 471390, 506130, 542653, 581021, 621303, 663579, 707907, 754363, 803020, 853977, \
        907291, 963057, 1021341, 1082281, 1145917, 1212367, 1281726, 1354070, 1429563, 1508257, 1590274, 1675706, \
@@ -51,21 +51,27 @@ class Player(attribute.Attribute):
 
         skill_obj = save_data.Save.load("skill")
         for s in skill_obj:
-            self.skills.append(skill.Skill(s["skill_id"], s["level"],self))
+            self.skills.append(skill.Skill(s["skill_id"], s["level"], self))
 
         item_obj = save_data.Save.load("item")
         for i in item_obj:
             if i is None:
                 self.equips.append(None)
             else:
-                self.equips.append(equipment.Equipment.load_equipment(i["level"], i["eid"], i["quality"], i["attr"]))
+                equip = equipment.Equipment.load_equipment(i["level"], i["eid"], i["quality"], i["attr"], i.get("skill", 0))
+                if equip.skill_id:
+                    equip.skill = skill.Skill(equip.skill_id, 1, self)
+                self.equips.append(equip)
+
 
         equiped_obj = save_data.Save.load("equiped")
         for i in range(len(equiped_obj)):
             if equiped_obj[i] is None:
                 self.e_equips.append(None)
             else:
-                equip = equipment.Equipment.load_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["attr"])
+                equip = equipment.Equipment.load_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["attr"], equiped_obj[i].get("skill", 0))
+                if equip.skill_id:
+                    equip.skill = skill.Skill(equip.skill_id, 1, self)
                 self.attribute = [self.attribute[attr] + equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
                 self.e_equips.append(equip)
 
@@ -115,7 +121,7 @@ class Player(attribute.Attribute):
             if e is None:
                 item_obj.append(e)
             else:
-                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute})
+                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute, "skill": e.skill_id})
         return item_obj
 
     def equiped_serialize_save(self):
@@ -124,7 +130,7 @@ class Player(attribute.Attribute):
             if e is None:
                 equiped_obj.append(e)
             else:
-                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute})
+                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute, "skill": e.skill_id})
         return equiped_obj
 
     def level_up_event(self):
@@ -144,10 +150,17 @@ class Player(attribute.Attribute):
         part = equip.part
         if self.e_equips[part] is not None:
             o_equip = self.e_equips[part]
+            if o_equip.skill is not None:
+                self.skills.remove(o_equip.skill)
             self.attribute = [self.attribute[attr] - o_equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
             self.equips[idx] = o_equip
         self.e_equips[part] = equip
         self.attribute = [self.attribute[attr] + equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
+        if equip.skill is not None:
+            self.skills.append(equip.skill)
+
     def part_equipment(self, part):
+        if part >= len(self.e_equips):
+            self.e_equips.extend([None] * (part - len(self.e_equips) + 1))
         return self.e_equips[part]

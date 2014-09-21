@@ -52,7 +52,7 @@ class Monster(attribute.Attribute):
 
         for i in range(len(result)):
             mid = result[i]
-            m = battle.BattleUnit(Monster(mid), resource.getImage("header"), [400, 20 + 80 * i], father, father.player)
+            m = battle.BattleUnit(Monster(mid), resource.getImage("header"), [400, 20 + 160 * i], father, father.player)
             father.monsters.append(m)
             father.add(m)
 

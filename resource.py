@@ -147,6 +147,8 @@ def load_ini(path):
         t_image = image.subsurface(pos, wh)
         #t_image = pygame.transform.scale(t_image, (32, 32))
         game_sources[key] = t_image
+    if not "weapon2" in game_sources and "weapon1" in game_sources:
+        game_sources["weapon2"] = game_sources["weapon1"].copy()
         #print game_sources.has_key("btn2")
 
 def init():

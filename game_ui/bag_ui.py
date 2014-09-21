@@ -52,6 +52,12 @@ class ItemDetail(util.node.Node):
         label.FontLabel.draw_label(10, text, IBC[self.item.equip.quality], (self.rect[0] + 15, self.rect[1] + 78))
         text = u"部位:   " + Equip_Name[self.item.equip.part]
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 98))
+
+        text = u"秘技:   无"
+        if self.item.equip.skill is not None:
+            text = text = u"秘技:   " + self.item.equip.skill.name
+        label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 118))
+
         i = 0
         for attr in range(Attribute_Hp, Attribute_None):
             if not self.item.equip.attribute_value(attr):
@@ -60,7 +66,7 @@ class ItemDetail(util.node.Node):
             text = self.item.equip.attribute_value_str(attr)
             if self.target:
                 text += "   (" + str((self.item.equip.attribute_value(attr) - self.target.attribute_value(attr))) + ")"
-            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 56 + 60 + 20 * i))
+            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 76 + 60 + 20 * i))
             i += 1
 
         #已装备装备
@@ -78,13 +84,20 @@ class ItemDetail(util.node.Node):
 
         text = u"部位:   " + Equip_Name[self.target.part]
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 108))
+
+        text = u"秘技:   无"
+        if self.target.skill is not None:
+            text = text = u"秘技:   " + self.target.skill.name
+        label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 128))
+
         i = 0
         for attr in range(Attribute_Hp, Attribute_None):
             if not self.target.attribute_value(attr) and not self.item.equip.attribute_value(attr):
                 continue
             text = self.target.attribute_value_str(attr)
-            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 56 + 70 + 20 * i))
+            label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 76 + 70 + 20 * i))
             i += 1
+
 
 
 class ItemCell(util.node.Node):

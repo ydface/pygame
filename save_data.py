@@ -48,7 +48,7 @@ class Save(object):
         skill_obj.append({"skill_id": 2, "level": 1})
 
         save_obj["item"] = [None] * 90
-        save_obj["equiped"] = [None] * 10
+        save_obj["equiped"] = [None] * 11
 
     @staticmethod
     def load(module):

@@ -19,17 +19,18 @@ screen = mypygame.screen
 
 
 class SkillCell(util.node.Node):
-    def __init__(self, father, pos, skill):
+    def __init__(self, father, pos, skill, **kwargs):
         super(SkillCell, self).__init__()
 
         self.father = father
         self.skill = skill
-        self.image = resource.getImage("skill_" + str(self.skill.skill_id))
+        self.image = resource.getImage("skill_" + str(self.skill.res))
         self.index = pos
         self.rect = self.image.get_rect()
         x = pos % 5
         y = pos / 5
-        self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + 20 + 37.5 * y + 15 * (y + 1))
+        y_offest = kwargs.get("offest", 20)
+        self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + y_offest + 37.5 * y + 30 * (y + 1))
 
     def draw(self):
         pos = (self.rect[0], self.rect[1])

@@ -16,22 +16,24 @@ import battle
 
 SC = {
     1: {
-        "paras": [1.25, 25],
+        "paras": [0.85, 25, 0.15],
         "effect": 1,
         "name": u"野球拳",
-        "content": u"对当前目标造成125% + (25 * 技能等级)点固定伤害",
+        "content": u"对当前目标造成85% + (25 * 技能等级)点固定伤害，同时有15%的概率打断目标施法",
         "cd": 0.0,
-        "rt": 2.0,
-        "anger": -5
+        "rt": 1.2,
+        "anger": -5,
+        "res": 1
     },
     2: {
         "paras": [1.45, 25, 0.2],
         "effect": 2,
         "name": u"傲剑狂刀",
         "content": u"对当前目标造成145% + (28 * 技能等级)点固定伤害, 技能额外增加20%暴击率",
-        "cd": 4,
+        "cd": 5,
         "rt": 2.5,
-        "anger": 6
+        "anger": 6,
+        "res": 2
     },
     3: {
         "paras": [1.15, 37, 0.35],
@@ -40,7 +42,8 @@ SC = {
         "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 技能额外增加35%暴击伤害",
         "cd": 7,
         "rt": 1.5,
-        "anger": 7
+        "anger": 7,
+        "res": 3
     },
     4: {
         "paras": [1.20, 16, 0.45],
@@ -49,7 +52,8 @@ SC = {
         "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 并恢复造成伤害的45%血量",
         "cd": 15,
         "rt": 3,
-        "anger": 0
+        "anger": 0,
+        "res": 4
     },
     5: {
         "paras": [1.75, 55, 0.1, 5],
@@ -58,34 +62,78 @@ SC = {
         "content": u"175% + (55 * 技能等级)点固定伤害, 并提升10%的伤害， 持续5秒",
         "cd": 21,
         "rt": 4,
-        "anger": 0
+        "anger": 0,
+        "res": 5
     },
     6: {
-        "paras": [0.9, 68, 1.5, 7],
+        "paras": [0.9, 68, 1, 7],
         "effect": 6,
         "name": u"生死符",
-        "content": u"90% + (68 * 技能等级)点固定伤害, 附加每3秒造成一定伤害的持续伤害,持续7秒",
+        "content": u"90% + (68 * 技能等级)点固定伤害, 附加每1秒造成一定伤害的持续伤害,持续7秒",
         "cd": 24,
         "rt": 4,
-        "anger": 0
+        "anger": 0,
+        "res": 6
+    },
+    7: {
+        "paras": [0.2, 0],
+        "effect": 7,
+        "name": u"回春术(低级)",
+        "content": u"恢复当前最大生命值60%的生命值",
+        "cd": 25,
+        "rt": 2,
+        "anger": 0,
+        "res": 7
+    },
+    8: {
+        "paras": [0.4, 0],
+        "effect": 7,
+        "name": u"回春术(中级)",
+        "content": u"恢复当前最大生命值60%的生命值",
+        "cd": 25,
+        "rt": 2,
+        "anger": 0,
+        "res": 7
+    },
+    9: {
+        "paras": [0.6, 0],
+        "effect": 7,
+        "name": u"回春术(高级)",
+        "content": u"恢复当前最大生命值60%的生命值",
+        "cd": 25,
+        "rt": 2,
+        "anger": 0,
+        "res": 7
+    },
+    10: {
+        "paras": [0.05, 0],
+        "effect": 8,
+        "name": u"奥义·闪",
+        "content": u"5%几率秒杀对手",
+        "cd": 25,
+        "rt": 0.3,
+        "anger": 0,
+        "res": 8
     },
     101: {
         "paras": [0.85, 10],
-        "effect": 1,
+        "effect": 0,
         "name": u"火球",
         "content": u"对当前目标造成(85 + 5 * 等级)% + 25点固定伤害",
         "cd": 0.0,
         "rt": 2.0,
-        "anger": -3
+        "anger": -3,
+        "res": 1
     },
     102: {
         "paras": [1.00, 25],
-        "effect": 1,
+        "effect": 0,
         "name": u"火焰突击",
         "content": u"对当前目标造成(100 + 5 * 等级)% + 25点固定伤害",
         "cd": 3.0,
         "rt": 2.0,
-        "anger": 14
+        "anger": 14,
+        "res": 2
     },
 }
 
@@ -120,13 +168,17 @@ class SkillEffect(object):
         elif skill.effect == 2:
             return SkillEffect_2(skill, source, target)
         elif skill.effect == 3:
-            return  SkillEffect_3(skill, source, target)
+            return SkillEffect_3(skill, source, target)
         elif skill.effect == 4:
             return SkillEffect_4(skill, source, target)
         elif skill.effect == 5:
             return SkillEffect_5(skill, source, target)
         elif skill.effect == 6:
             return SkillEffect_6(skill, source, target)
+        elif skill.effect == 7:
+            return SkillEffect_7(skill, source, target)
+        elif skill.effect == 8:
+            return SkillEffect_8(skill, source, target)
         else:
             return SkillEffect(skill, source, target)
     #技能必命中?
@@ -197,6 +249,10 @@ class SkillEffect(object):
         if self.target.dead:
             return
         self.append_target_buff()
+        self.interrupt_release()
+
+    def interrupt_release(self):
+        pass
 
     def source_absorb_blood(self):
         pass
@@ -251,6 +307,7 @@ class Skill(object):
         self.anger = SC[self.skill_id]["anger"]
         self.effect = SC[self.skill_id]["effect"]
         self.init_cd(SC[self.skill_id]["cd"], SC[self.skill_id]["rt"])
+        self.res = SC[self.skill_id]["res"]
 
     def cd_update(self, **kwargs):
         time = kwargs['time']
@@ -299,6 +356,14 @@ class Skill(object):
 class SkillEffect_1(SkillEffect):
     def __init__(self, skill, source, target):
         super(SkillEffect_1, self).__init__(skill, source, target)
+
+        self.interrupt_rate = self.effect_paras[2]
+
+    def interrupt_release(self):
+        ra = random.randint(1, 100) / 100.0
+        if ra <= self.interrupt_rate:
+            self.target.next_skill.release_time = self.target.next_skill.max_release_time
+            self.target.add_hp_change_label(u"打断", 20, COLOR_RED)
 
 
 class SkillEffect_2(SkillEffect):
@@ -352,3 +417,33 @@ class SkillEffect_6(SkillEffect):
 
     def append_source_buff(self):
         battle.BattleBuff.append_buff(self.source, self.target, BTY_DOT, self.round, int(self.damage/self.round), interval=self.interval)
+
+
+#使中毒
+class SkillEffect_7(SkillEffect):
+    def __init__(self, skill, source, target):
+        super(SkillEffect_7, self).__init__(skill, source, target)
+
+        self.prec = self.effect_paras[0]
+
+    def effect_active(self):
+        self.source.anger_change(self.skill.anger)
+        hp_val = self.source.unit.attribute_value(Attribute_Max_Hp) * self.prec
+        self.source.recover_hp(hp_val)
+        self.source.add_hp_change_label(u"回春 " + str(hp_val), 16, COLOR_GREEN)
+
+
+#使中毒
+class SkillEffect_8(SkillEffect):
+    def __init__(self, skill, source, target):
+        super(SkillEffect_8, self).__init__(skill, source, target)
+
+        self.rate = self.effect_paras[0]
+
+    def effect_active(self):
+        self.source.anger_change(self.skill.anger)
+        ra = random.randint(1, 100) / 100.0
+        if ra <= self.rate:
+            damage = self.target.unit.attribute_value(Attribute_Hp)
+            self.target.damaged(damage)
+            self.source.add_hp_change_label(u"必杀 " + str(damage), 16, COLOR_PURPLE)

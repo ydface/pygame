@@ -27,7 +27,7 @@ Quality_Green = Quality_White + 1
 Quality_Blue = Quality_Green + 1
 Quality_Purple = Quality_Blue + 1
 Quality_Red = Quality_Purple + 1
-Quality_Gold =  Quality_Red + 1
+Quality_Gold = Quality_Red + 1
 
 Equip_Hat = 0
 Equip_Necklace = Equip_Hat + 1
@@ -39,7 +39,7 @@ Equip_Right_Ring = Equip_Left_Ring + 1
 Equip_Belt = Equip_Right_Ring + 1
 Equip_Gaiter = Equip_Belt + 1
 Equip_Shoes = Equip_Gaiter + 1
-Equip_Talisman = Equip_Right_Ring + 1
+Equip_Talisman = Equip_Shoes + 1
 
 Equip_Name = [u"头盔", u"项链", u"护甲", u"主手", u"副手", u"左手戒指", u"右手戒指", u"腰带", u"护腿", u"鞋子", u"护符"]
 QName = [u"粗糙", u"精致", u"无暇", u"完美", u"神器", u"传奇"]

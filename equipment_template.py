@@ -299,71 +299,66 @@ ETM = {
     },
     5: {
         "part": Equip_Right_Weapon,
+        "m_attr": Attribute_Speed1,
         "attr": {
             Quality_White: {
-                "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "na": [{"k": 24, "v": 1}, {"k": 29, "v": 2}],
+                "attr_l": [Attribute_Crit, Attribute_Wreck, Attribute_Hit],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
+                    Attribute_Speed1: [3, 7],
+                    Attribute_Crit: [1, 4],
+                    Attribute_Wreck: [2, 5],
+                    Attribute_Hit: [1.2, 1.5]
                 }
             },
             Quality_Green: {
-                "na": [{"k": 13, "v": 2}, {"k": 33, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "na": [{"k": 13, "v": 1}, {"k": 33, "v": 2}],
+                "attr_l": [Attribute_Crit, Attribute_Wreck, Attribute_Hit],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
+                    Attribute_Speed1: [6, 11],
+                    Attribute_Crit: [1, 4],
+                    Attribute_Wreck: [2, 5],
+                    Attribute_Hit: [1.2, 1.5]
                 }
             },
             Quality_Blue: {
-                "na": [{"k": 29, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "na": [{"k": 29, "v": 2}],
+                "attr_l": [Attribute_Crit, Attribute_Wreck, Attribute_Hit],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
+                    Attribute_Speed1: [5, 13],
+                    Attribute_Crit: [2, 5],
+                    Attribute_Wreck: [2, 5],
+                    Attribute_Hit: [1.2, 1.5]
                 }
             },
             Quality_Purple: {
-                "na": [{"k": 43, "v": 3}, {"k": 11, "v": 4}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "na": [{"k": 43, "v": 2}, {"k": 11, "v": 3}],
+                "attr_l": [Attribute_Crit, Attribute_Wreck, Attribute_Hit],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
+                    Attribute_Speed1: [7, 15],
+                    Attribute_Crit: [2, 7],
+                    Attribute_Wreck: [2, 5],
+                    Attribute_Hit: [1.2, 1.5]
                 }
             },
             Quality_Red: {
-                "na": [{"k": 11, "v": 3}, {"k": 45, "v": 4}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "na": [{"k": 11, "v": 2}, {"k": 45, "v": 3}],
+                "attr_l": [Attribute_Crit, Attribute_Wreck, Attribute_Hit],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
+                    Attribute_Speed1: [7, 18],
+                    Attribute_Crit: [4, 6],
+                    Attribute_Wreck: [2, 5],
+                    Attribute_Hit: [1.2, 1.5]
                 }
             },
             Quality_Gold: {
-                "na": [{"k": 45, "v": 5}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "na": [{"k": 45, "v": 3}],
+                "attr_l": [Attribute_Crit, Attribute_Wreck, Attribute_Hit],
                 "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
+                    Attribute_Speed1: [5, 26],
+                    Attribute_Crit: [2, 9],
+                    Attribute_Wreck: [2, 5],
+                    Attribute_Hit: [1.2, 1.5]
                 }
             }
         }
@@ -654,73 +649,13 @@ ETM = {
     },
     10: {
         "part": Equip_Talisman,
-        "attr": {
-            Quality_White: {
-                "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
-                "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
-                }
-            },
-            Quality_Green: {
-                "na": [{"k": 13, "v": 2}, {"k": 33, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
-                "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
-                }
-            },
-            Quality_Blue: {
-                "na": [{"k": 29, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
-                "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
-                }
-            },
-            Quality_Purple: {
-                "na": [{"k": 43, "v": 3}, {"k": 11, "v": 4}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
-                "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
-                }
-            },
-            Quality_Red: {
-                "na": [{"k": 11, "v": 3}, {"k": 45, "v": 4}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
-                "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
-                }
-            },
-            Quality_Gold: {
-                "na": [{"k": 45, "v": 5}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
-                "attr_v": {
-                    Attribute_Hp: [121, 141],
-                    Attribute_Defense: [2, 5],
-                    Attribute_Hit: [1.2, 1.5],
-                    Attribute_Crit_Seal: [1, 1],
-                    Attribute_Parry: [2, 4]
-                }
-            }
+        "skill": {
+            Quality_White: [{"k": 24, "v": 7}, {"k": 2, "v": 8}],
+            Quality_Green: [{"k": 24, "v": 7}, {"k": 29, "v": 8}],
+            Quality_Blue: [{"k": 24, "v": 8}, {"k": 3, "v": 9}],
+            Quality_Purple: [{"k": 24, "v": 8}, {"k": 29, "v": 9}],
+            Quality_Red: [{"k": 24, "v": 9}, {"k": 4, "v": 10}],
+            Quality_Gold: [{"k": 24, "v": 9}, {"k": 29, "v": 10}]
         }
     },
     11: {

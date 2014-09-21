@@ -95,6 +95,10 @@ class BattleUnit(button.Button):
         self.anger = 0
         self.buffs = []
 
+        if not isinstance(self.unit, monster.Monster):
+            for i in range(len(self.skills)):
+                self.add(game_ui.skill_ui.SkillCell(self, i, self.skills[i], offest=65))
+
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))
         if isinstance(self.unit, monster.Monster):
@@ -130,6 +134,9 @@ class BattleUnit(button.Button):
         for buff in self.buffs:
             buff.draw(index)
             index += 1
+
+        #技能冷却条
+
 
     def click_up_effect(self):
         if self in self.father.monsters and not self.dead:
