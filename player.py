@@ -142,6 +142,16 @@ class Player(attribute.Attribute):
         if equip.skill is not None:
             self.skills.append(equip.skill)
 
+    def skill_up(self, skill):
+        idx = self.skills.index(skill)
+        if idx != 0:
+            sk = self.skills[idx]
+            del self.skills[idx]
+            self.skills.insert(idx-1, sk)
+            return True
+        else:
+            return False
+
     def put_off_equipment(self, equip):
         if equip.skill is not None:
             self.skills.remove(equip.skill)

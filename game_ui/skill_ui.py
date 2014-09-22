@@ -68,6 +68,8 @@ class SkillCell(util.node.Node):
         y_offest = kwargs.get("offest", 20)
         self.rect.topleft = (self.father.rect[0] + 5, self.father.rect[1] + y_offest + 45.5 * pos + 15)
 
+        self.up_btn_rect = Rect(self.rect[0] + 200, self.rect[1], 60, 20)
+
     def draw(self):
         pos = (self.rect[0], self.rect[1])
         screen.blit(self.skill.image, pos)
@@ -85,29 +87,17 @@ class SkillCell(util.node.Node):
         text = u"详情: " + SC[self.skill.skill_id]["content"]
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 30.5))
 
-    '''
-    def event(self, event):
+        label.FontLabel.draw_label(20, u"向上移", label.COLOR_WHITE, self.up_btn_rect.topleft)
+
+    def self_event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
-            if self.rect.collidepoint(position):
-                self.clicked = True
+            if self.up_btn_rect.collidepoint(position):
+                if gamestate.player.skill_up(self.skill):
+                    self.father.build()
                 return True
-            return False
-        elif event.type == MOUSEMOTION:
-            position = pygame.mouse.get_pos()
-            if not self.rect.collidepoint(position):
-                self.clicked = False
-                i_detail = self.father.has_ctype_child(SkillDetail)
-                if i_detail and i_detail.skill == self:
-                    self.father.remove_ctype_child(SkillDetail)
-                return False
-            else:
-                if not self.father.has_ctype_child(SkillDetail):
-                    self.father.add(SkillDetail(self))
-                    return True
-            return False
         return False
-    '''
+
 
 
 class SkillUI(util.ui.BaseUI):
@@ -116,7 +106,7 @@ class SkillUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = resource.getUIImage("skill_ui", 1.57, 2.1, u"技能")
+        self.image = resource.getUIImage("skill_ui", 1.57, 2.6, u"技能")
 
         self.move_able = False
         self.rect = self.image.get_rect()
@@ -130,6 +120,7 @@ class SkillUI(util.ui.BaseUI):
             child.draw()
 
     def build(self):
+        self.child = []
         skills = gamestate.player.skills
         for i in range(len(skills)):
              self.add(SkillCell(self, i, skills[i]))
