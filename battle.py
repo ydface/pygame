@@ -82,6 +82,32 @@ class BattleBuff(util.node.Node):
         target.buffs.append(BattleBuff(source, target, effect, round, para, **kwargs))
 
 
+class SkillCD(util.node.Node):
+    def __init__(self, father, pos, skill, **kwargs):
+        super(SkillCD, self).__init__()
+
+        self.father = father
+        self.skill = skill
+        #self.image = resource.getImage("skill_" + str(self.skill.res))
+        self.index = pos
+        self.rect = self.skill.image.get_rect()
+        y_offest = kwargs.get("offest", 20)
+        x = pos % 5
+        y = pos / 5
+        self.rect.topleft = (self.father.rect[0] + 5 + 38.5 * x, self.father.rect[1] + y_offest + 45.5 * y + 15)
+
+    def draw(self):
+        pos = (self.rect[0], self.rect[1])
+        screen.blit(self.skill.image, pos)
+
+        text = self.skill.name
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 32.5))
+        text = u"等级: " + str(self.skill.level)
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 42.5))
+        text = "CD: " + str(round(self.skill.cool_down, 1)) + "s"
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 52.5))
+
+
 class BattleUnit(button.Button):
     def __init__(self, unit, image, pos, father, target, **kwargs):
         super(BattleUnit, self).__init__(pos, image, resource.getImage("header"), father)
@@ -97,7 +123,7 @@ class BattleUnit(button.Button):
 
         if not isinstance(self.unit, monster.Monster):
             for i in range(len(self.skills)):
-                self.add(game_ui.skill_ui.SkillCell(self, i, self.skills[i], offest=65))
+                self.add(SkillCD(self, i, self.skills[i], offest=65))
 
     def draw(self):
         screen.blit(self.image, (self.rect[0], self.rect[1]))

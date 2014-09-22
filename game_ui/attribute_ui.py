@@ -109,7 +109,7 @@ class AttributeUI(util.ui.BaseUI):
         self.p_image = resource.getImage("player")
         self.move_able = False
         self.rect = self.image.get_rect()
-        self.rect.topleft = (100, 300)
+        self.rect.topleft = (30, 230)
         self.rebuild()
 
     def draw(self):

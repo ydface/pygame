@@ -186,8 +186,8 @@ class BagUI(util.ui.BaseUI):
         self.move_able = False
         self.rect = Rect(280, 300, self.image.get_width(), self.image.get_height())
 
-        self.up_btl_rect = Rect(self.rect[0] + self.rect[1] + 3, self.rect[1] + 40, 20, 20)
-        self.down_btl_rect = Rect(self.rect[0] + self.rect[1] + 3, self.rect[1] + 70, 20, 20)
+        self.up_btl_rect = Rect(self.rect[0] + self.rect[1] + 3, self.rect[1] + 40, 60, 20)
+        self.down_btl_rect = Rect(self.rect[0] + self.rect[1] + 3, self.rect[1] + 70, 60, 20)
 
         self.items = dict()
         self.line = 0
@@ -199,8 +199,8 @@ class BagUI(util.ui.BaseUI):
         for child in self.child:
             child.draw()
 
-        label.FontLabel.draw_label(20, "+", label.COLOR_WHITE, self.up_btl_rect.topleft)
-        label.FontLabel.draw_label(20, "-", label.COLOR_WHITE, self.down_btl_rect.topleft)
+        label.FontLabel.draw_label(20, u"向下翻", label.COLOR_WHITE, self.up_btl_rect.topleft)
+        label.FontLabel.draw_label(20, u"向上翻", label.COLOR_WHITE, self.down_btl_rect.topleft)
 
     def rebuild(self):
         self.child = []
@@ -236,6 +236,10 @@ class BagUI(util.ui.BaseUI):
                 if self.move_able:
                     self.rect[0] += rel[0]
                     self.rect[1] += rel[1]
+                    self.up_btl_rect[0] += rel[0]
+                    self.up_btl_rect[1] += rel[1]
+                    self.down_btl_rect[0] += rel[0]
+                    self.down_btl_rect[1] += rel[1]
                     for child in self.child:
                         child.rect[0] += rel[0]
                         child.rect[1] += rel[1]

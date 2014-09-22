@@ -19,6 +19,7 @@ from skill import *
 screen = mypygame.screen
 
 
+'''
 class SkillDetail(util.node.Node):
     def __init__(self, skill_cell):
         super(SkillDetail, self).__init__()
@@ -52,6 +53,8 @@ class SkillDetail(util.node.Node):
         for i in range(0, tl):
             tx = text[i * lw: lw * (i + 1)]
             label.FontLabel.draw_label(12, tx, label.COLOR_WHITE, (pos[0], pos[1] + 88.5 + i * 12))
+'''
+
 
 class SkillCell(util.node.Node):
     def __init__(self, father, pos, skill, **kwargs):
@@ -62,23 +65,27 @@ class SkillCell(util.node.Node):
         #self.image = resource.getImage("skill_" + str(self.skill.res))
         self.index = pos
         self.rect = self.skill.image.get_rect()
-        x = pos % 5
-        y = pos / 5
         y_offest = kwargs.get("offest", 20)
-        self.rect.topleft = (self.father.rect[0] + 37.5 * x + 6 * (x + 1), self.father.rect[1] + y_offest + 37.5 * y + 30 * (y + 1))
+        self.rect.topleft = (self.father.rect[0] + 5, self.father.rect[1] + y_offest + 45.5 * pos + 15)
 
     def draw(self):
         pos = (self.rect[0], self.rect[1])
         screen.blit(self.skill.image, pos)
 
         text = SC[self.skill.skill_id]["name"]
-        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 30.5))
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 0.5))
         text = u"等级: " + str(self.skill.level)
-        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 40.5))
-        text = "CD: " + str(round(self.skill.cool_down, 1))
-        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 50.5))
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 10.5))
+        text = "CD: " + str(round(self.skill.cool_down, 1)) + "s"
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 20.5))
 
+        text = u"释放: " + str(self.skill.max_release_time) + "s"
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35 + 50, pos[1] + 20.5))
 
+        text = u"详情: " + SC[self.skill.skill_id]["content"]
+        label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 30.5))
+
+    '''
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
@@ -100,7 +107,7 @@ class SkillCell(util.node.Node):
                     return True
             return False
         return False
-
+    '''
 
 
 class SkillUI(util.ui.BaseUI):
@@ -109,11 +116,11 @@ class SkillUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = resource.getUIImage("skill_ui", 0.93, 2, u"技能")
+        self.image = resource.getUIImage("skill_ui", 1.57, 2.1, u"技能")
 
         self.move_able = False
         self.rect = self.image.get_rect()
-        self.rect.topleft = (580, 300)
+        self.rect.topleft = (430, 210)
 
         self.build()
 

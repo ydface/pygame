@@ -307,6 +307,14 @@ ETM = {
     },
     5: {
         "part": Equip_Right_Weapon,
+        "skill": {
+            Quality_White: [{"k": 24, "v": None}],
+            Quality_Green: [{"k": 24, "v": {"id": 10, "lv": 1}}, {"k": 985, "v": None}],
+            Quality_Blue: [{"k": 24, "v": {"id": 10, "lv": 1}}, {"k": 480, "v": None}],
+            Quality_Purple: [{"k": 24, "v": {"id": 10, "lv": 1}}, {"k": 280, "v": None}],
+            Quality_Red: [{"k": 24, "v": {"id": 10, "lv": 1}}, {"k": 180, "v": None}],
+            Quality_Gold: [{"k": 24, "v": {"id": 10, "lv": 1}}, {"k": 80, "v": None}]
+        },
         "m_attr": Attribute_Speed1,
         "attr": {
             Quality_White: {
@@ -474,7 +482,7 @@ ETM = {
             },
             Quality_Green: {
                 "na": [{"k": 13, "v": 2}, {"k": 33, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "attr_l": [Attribute_Attack, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
                     Attribute_Attack: [7, 24],
                     Attribute_Defense: [2, 5],
@@ -485,7 +493,7 @@ ETM = {
             },
             Quality_Blue: {
                 "na": [{"k": 29, "v": 3}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "attr_l": [Attribute_Attack, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
                     Attribute_Attack: [6, 30],
                     Attribute_Defense: [2, 5],
@@ -496,7 +504,7 @@ ETM = {
             },
             Quality_Purple: {
                 "na": [{"k": 43, "v": 3}, {"k": 11, "v": 4}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "attr_l": [Attribute_Attack, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
                     Attribute_Attack: [14, 30],
                     Attribute_Defense: [2, 5],
@@ -507,7 +515,7 @@ ETM = {
             },
             Quality_Red: {
                 "na": [{"k": 11, "v": 3}, {"k": 45, "v": 4}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "attr_l": [Attribute_Attack, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
                     Attribute_Attack: [17, 45],
                     Attribute_Defense: [2, 5],
@@ -518,7 +526,7 @@ ETM = {
             },
             Quality_Gold: {
                 "na": [{"k": 45, "v": 5}],
-                "attr_l": [Attribute_Hp, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
+                "attr_l": [Attribute_Attack, Attribute_Defense, Attribute_Hit, Attribute_Crit_Seal, Attribute_Parry],
                 "attr_v": {
                     Attribute_Attack: [39, 89],
                     Attribute_Defense: [2, 5],
