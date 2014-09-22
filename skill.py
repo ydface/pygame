@@ -20,27 +20,27 @@ SC = {
         "paras": [0.85, 25, 0.15],
         "effect": 1,
         "name": u"野球拳",
-        "content": u"对当前目标造成85% + (25 * 技能等级)点固定伤害，同时有15%的概率打断目标施法",
+        "content": u"造成(85 + 5 * 技能等级)% + 25点固定伤害，同时有15%的概率打断目标施法",
         "cd": 0.0,
         "rt": 1.2,
         "anger": -5,
         "res": 1
     },
     2: {
-        "paras": [1.45, 25, 0.2],
+        "paras": [1.45, 28, 0.2],
         "effect": 2,
         "name": u"傲剑狂刀",
-        "content": u"对当前目标造成145% + (28 * 技能等级)点固定伤害, 技能额外增加20%暴击率",
+        "content": u"造成(145 + 5 * 技能等级)% + 28点固定伤害, 技能额外增加20%暴击率",
         "cd": 5,
         "rt": 2.5,
         "anger": 6,
         "res": 2
     },
     3: {
-        "paras": [1.15, 37, 0.35],
+        "paras": [1.25, 37, 0.35],
         "effect": 3,
         "name": u"力劈华山",
-        "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 技能额外增加35%暴击伤害",
+        "content": u"造成(125 + 5 * 技能等级) + 37点固定伤害, 技能额外增加35%暴击伤害",
         "cd": 7,
         "rt": 1.5,
         "anger": 7,
@@ -50,7 +50,7 @@ SC = {
         "paras": [1.20, 16, 0.45],
         "effect": 4,
         "name": u"吸星大法",
-        "content": u"对当前目标造成115% + (37 * 技能等级)点固定伤害, 并恢复造成伤害的45%血量",
+        "content": u"造成(120 + 5 * 技能等级) + 16点固定伤害, 并恢复造成伤害的45%血量",
         "cd": 15,
         "rt": 3,
         "anger": 0,
@@ -60,7 +60,7 @@ SC = {
         "paras": [1.75, 55, 0.1, 5],
         "effect": 5,
         "name": u"易筋经",
-        "content": u"175% + (55 * 技能等级)点固定伤害, 并提升10%的伤害， 持续5秒",
+        "content": u"造成(175 + 5 * 技能等级) + 55点固定伤害, 并提升10%的伤害， 持续5秒",
         "cd": 21,
         "rt": 4,
         "anger": 0,
@@ -70,7 +70,7 @@ SC = {
         "paras": [0.9, 68, 1, 7],
         "effect": 6,
         "name": u"生死符",
-        "content": u"90% + (68 * 技能等级)点固定伤害, 附加每1秒造成一定伤害的持续伤害,持续7秒",
+        "content": u"造成(90 + 5 * 技能等级) + 68点固定伤害, 附加每1秒造成一定伤害的持续伤害,持续7秒",
         "cd": 24,
         "rt": 4,
         "anger": 0,
@@ -120,7 +120,7 @@ SC = {
         "paras": [0.85, 10],
         "effect": 0,
         "name": u"火球",
-        "content": u"对当前目标造成(85 + 5 * 等级)% + 25点固定伤害",
+        "content": u"造成(85 + 5 * 等级)% + 25点固定伤害",
         "cd": 0.0,
         "rt": 2.0,
         "anger": -3,
@@ -130,7 +130,7 @@ SC = {
         "paras": [1.00, 25],
         "effect": 0,
         "name": u"火焰突击",
-        "content": u"对当前目标造成(100 + 5 * 等级)% + 25点固定伤害",
+        "content": u"造成(100 + 5 * 等级)% + 25点固定伤害",
         "cd": 3.0,
         "rt": 2.0,
         "anger": 14,
@@ -153,8 +153,8 @@ class SkillEffect(object):
         self.effect_paras = SC[self.skill.skill_id]["paras"]
         self.source = source
         self.target = target
-        self.attack_ratio = self.effect_paras[0]
-        self.fixed_damage = self.effect_paras[1] * self.skill.level
+        self.attack_ratio = self.effect_paras[0] + 0.05 * self.skill.level
+        self.fixed_damage = self.effect_paras[1]
         self.damage = 0
         self.crit = 0
         self.hit = 0
@@ -325,19 +325,12 @@ class Skill(object):
             self.available = True
 
     def init_cd(self, cd_time, release_time):
-        q1 = math.exp(self.father.level % 3) * self.level
-        q2 = math.exp(self.father.level * 1.1)
-        q = q1 * q2
-
-        cdr = round(q / (self.father.attribute_value(Attribute_Speed1) + 0.01), 4)
-        cdr = min([max([0.5, cdr]), 1.0])
+        cdr = 1 - ((self.level - 1) * 0.05)
         cd_time *= cdr
         self.cool_down = cd_time
         self.max_cool_down = cd_time
 
-        rtr = round(q / (self.father.attribute_value(Attribute_Speed2) + 0.01), 4)
-        rtr = min([max([0.5, rtr]), 1.0])
-        release_time *= rtr
+        release_time *= cdr
         self.release_time = release_time
         self.max_release_time = release_time
 

@@ -5,6 +5,8 @@ __author__ = 'Ydface'
 
 import gamestate
 import cPickle
+from util.macro import *
+import equipment
 
 save_obj = None
 
@@ -23,7 +25,6 @@ class Save(object):
         player = gamestate.player
 
         sav_obj["user"] = player.user_serialize_save()
-        sav_obj["skill"] = player.skill_serialize_save()
         sav_obj["item"] = player.item_serialize_save()
         sav_obj["equiped"] = player.equiped_serialize_save()
 
@@ -37,18 +38,16 @@ class Save(object):
         save_obj = dict()
         save_obj["user"] = dict()
         save_obj["bag"] = dict()
-        save_obj["skill"] = []
 
         user_obj = save_obj["user"]
         user_obj["level"] = 1
         user_obj["exp"] = 0
 
-        skill_obj = save_obj["skill"]
-        skill_obj.append({"skill_id": 1, "level": 1})
-        skill_obj.append({"skill_id": 2, "level": 1})
-
         save_obj["item"] = [None] * 90
         save_obj["equiped"] = [None] * 11
+
+        equip = equipment.Equipment.create_equipment(1, 4, Quality_White, None)
+        save_obj["equiped"][Equip_Left_Weapon] = equip.get_save()
 
     @staticmethod
     def load(module):

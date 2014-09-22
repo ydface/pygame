@@ -57,7 +57,7 @@ MC = {
         "equip": [{"key": 33, "val": Quality_White}, {"key": 11, "val": Quality_Green}, {"key": 6, "val": Quality_Blue}, {"key": 77, "val": None}],
         "part": EPART_1,
         "name": u"炼狱小妖",
-        "level": [1, 3]
+        "level": [0, 3]
     },
     2: {
         "attr": [245, 245, 67, 23, 7.0, 6.0, 32, 11, 0, 14, 0, 21],
@@ -66,7 +66,7 @@ MC = {
         "equip": [{"key": 8, "val": Quality_Red}, {"key": 9, "val": Quality_Purple}, {"key": 13, "val": Quality_Blue}, {"key": 32, "val": Quality_Green}, {"key": 86, "val": None}],
         "part": EPART_2,
         "name": u"精英炼狱魔",
-        "level": [2, 5]
+        "level": [0, 5]
     },
     3: {
         "attr": [324, 324, 97, 41, 10.0, 13.0, 47, 17, 0, 22, 0, 33],
@@ -75,7 +75,7 @@ MC = {
         "equip": [{"key": 24, "val": Quality_Purple}, {"key": 11, "val": Quality_Red}, {"key": 3, "val": Quality_Gold}, {"key": 33, "val": Quality_Blue}, {"key": 94, "val": None}],
         "part": EPART_2,
         "name": u"炼狱魔王",
-        "level": [3, 9]
+        "level": [0, 9]
     }
 }
 

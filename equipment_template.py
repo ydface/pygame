@@ -227,6 +227,14 @@ ETM = {
     },
     4: {
         "part": Equip_Left_Weapon,
+        "skill": {
+            Quality_White: [{"k": 24, "v": {"id": 1, "lv": 1}}],
+            Quality_Green: [{"k": 24, "v": {"id": 1, "lv": 1}}, {"k": 29, "v": {"id": 1, "lv": 2}}],
+            Quality_Blue: [{"k": 24, "v": {"id": 1, "lv": 2}}, {"k": 3, "v": {"id": 1, "lv": 3}}],
+            Quality_Purple: [{"k": 24, "v": {"id": 1, "lv": 3}}, {"k": 29, "v": {"id": 1, "lv": 4}}],
+            Quality_Red: [{"k": 24, "v": {"id": 1, "lv": 4}}, {"k": 4, "v": {"id": 1, "lv": 5}}],
+            Quality_Gold: [{"k": 24, "v": {"id": 1, "lv": 5}}]
+        },
         "m_attr": Attribute_Attack,
         "attr": {
             Quality_White: {
@@ -365,6 +373,14 @@ ETM = {
     },
     6: {
         "part": Equip_Left_Ring,
+        "skill": {
+            Quality_White: [{"k": 24, "v": {"id": 2, "lv": 1}}, {"k": 56, "v": None}],
+            Quality_Green: [{"k": 24, "v": {"id": 2, "lv": 1}}, {"k": 29, "v": {"id": 2, "lv": 2}}],
+            Quality_Blue: [{"k": 24, "v": {"id": 2, "lv": 2}}, {"k": 3, "v": {"id": 2, "lv": 3}}],
+            Quality_Purple: [{"k": 24, "v": {"id": 2, "lv": 3}}, {"k": 29, "v": {"id": 2, "lv": 4}}],
+            Quality_Red: [{"k": 24, "v": {"id": 2, "lv": 4}}, {"k": 4, "v": {"id": 2, "lv": 5}}],
+            Quality_Gold: [{"k": 24, "v": {"id": 2, "lv": 5}}]
+        },
         "attr": {
             Quality_White: {
                 "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],
@@ -436,6 +452,14 @@ ETM = {
     },
     7: {
         "part": Equip_Right_Ring,
+        "skill": {
+            Quality_White: [{"k": 24, "v": {"id": 3, "lv": 1}}, {"k": 56, "v": None}],
+            Quality_Green: [{"k": 24, "v": {"id": 3, "lv": 1}}, {"k": 29, "v": {"id": 3, "lv": 2}}],
+            Quality_Blue: [{"k": 24, "v": {"id": 3, "lv": 2}}, {"k": 3, "v": {"id": 3, "lv": 3}}],
+            Quality_Purple: [{"k": 24, "v": {"id": 3, "lv": 3}}, {"k": 29, "v": {"id": 3, "lv": 4}}],
+            Quality_Red: [{"k": 24, "v": {"id": 3, "lv": 4}}, {"k": 4, "v": {"id": 3, "lv": 5}}],
+            Quality_Gold: [{"k": 24, "v": {"id": 3, "lv": 5}}]
+        },
         "attr": {
             Quality_White: {
                 "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],
@@ -507,6 +531,14 @@ ETM = {
     },
     8: {
         "part": Equip_Gaiter,
+        "skill": {
+            Quality_White: [{"k": 24, "v": {"id": 4, "lv": 1}}, {"k": 56, "v": None}],
+            Quality_Green: [{"k": 24, "v": {"id": 4, "lv": 1}}, {"k": 29, "v": {"id": 4, "lv": 2}}],
+            Quality_Blue: [{"k": 24, "v": {"id": 4, "lv": 2}}, {"k": 3, "v": {"id": 4, "lv": 3}}],
+            Quality_Purple: [{"k": 24, "v": {"id": 4, "lv": 3}}, {"k": 29, "v": {"id": 4, "lv": 4}}],
+            Quality_Red: [{"k": 24, "v": {"id": 4, "lv": 4}}, {"k": 4, "v": {"id": 4, "lv": 5}}],
+            Quality_Gold: [{"k": 24, "v": {"id": 4, "lv": 5}}]
+        },
         "attr": {
             Quality_White: {
                 "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],
@@ -578,6 +610,14 @@ ETM = {
     },
     9: {
         "part": Equip_Shoes,
+        "skill": {
+            Quality_White: [{"k": 24, "v": {"id": 5, "lv": 1}}, {"k": 56, "v": None}],
+            Quality_Green: [{"k": 24, "v": {"id": 5, "lv": 1}}, {"k": 29, "v": {"id": 5, "lv": 2}}, {"k": 35, "v": None}],
+            Quality_Blue: [{"k": 24, "v": {"id": 5, "lv": 2}}, {"k": 3, "v": {"id": 5, "lv": 3}}, {"k": 42, "v": None}],
+            Quality_Purple: [{"k": 24, "v": {"id": 5, "lv": 3}}, {"k": 29, "v": {"id": 5, "lv": 4}}, {"k": 34, "v": None}],
+            Quality_Red: [{"k": 24, "v": {"id": 5, "lv": 4}}, {"k": 4, "v": {"id": 5, "lv": 5}}, {"k": 45, "v": None}],
+            Quality_Gold: [{"k": 24, "v": {"id": 5, "lv": 5}}, {"k": 24, "v": None}]
+        },
         "attr": {
             Quality_White: {
                 "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],
@@ -650,16 +690,24 @@ ETM = {
     10: {
         "part": Equip_Talisman,
         "skill": {
-            Quality_White: [{"k": 24, "v": 7}, {"k": 2, "v": 8}],
-            Quality_Green: [{"k": 24, "v": 7}, {"k": 29, "v": 8}],
-            Quality_Blue: [{"k": 24, "v": 8}, {"k": 3, "v": 9}],
-            Quality_Purple: [{"k": 24, "v": 8}, {"k": 29, "v": 9}],
-            Quality_Red: [{"k": 24, "v": 9}, {"k": 4, "v": 10}],
-            Quality_Gold: [{"k": 24, "v": 9}, {"k": 29, "v": 10}]
+            Quality_White: [{"k": 24, "v": {"id": 7, "lv": 1}}, {"k": 2, "v": {"id": 7, "lv": 2}}],
+            Quality_Green: [{"k": 24, "v": {"id": 7, "lv": 1}}, {"k": 29, "v": {"id": 7, "lv": 2}}],
+            Quality_Blue: [{"k": 24, "v": {"id": 8, "lv": 1}}, {"k": 3, "v": {"id": 8, "lv": 2}}],
+            Quality_Purple: [{"k": 24, "v": {"id": 8, "lv": 1}}, {"k": 29, "v": {"id": 7, "lv": 2}}],
+            Quality_Red: [{"k": 24, "v": {"id": 9, "lv": 1}}, {"k": 4, "v": {"id": 9, "lv": 2}}],
+            Quality_Gold: [{"k": 24, "v": {"id": 7, "lv": 1}}, {"k": 29, "v": {"id": 7, "lv": 2}}]
         }
     },
     11: {
         "part": Equip_Belt,
+        "skill": {
+            Quality_White: [{"k": 24, "v": {"id": 6, "lv": 1}}, {"k": 135, "v": None}],
+            Quality_Green: [{"k": 24, "v": {"id": 6, "lv": 1}}, {"k": 29, "v": {"id": 6, "lv": 2}}, {"k": 135, "v": None}],
+            Quality_Blue: [{"k": 24, "v": {"id": 6, "lv": 2}}, {"k": 3, "v": {"id": 6, "lv": 3}}, {"k": 135, "v": None}],
+            Quality_Purple: [{"k": 24, "v": {"id": 6, "lv": 3}}, {"k": 29, "v": {"id": 6, "lv": 4}}, {"k": 135, "v": None}],
+            Quality_Red: [{"k": 24, "v": {"id": 6, "lv": 4}}, {"k": 4, "v": {"id": 6, "lv": 5}}, {"k": 135, "v": None}],
+            Quality_Gold: [{"k": 24, "v": {"id": 6, "lv": 5}}]
+        },
         "attr": {
             Quality_White: {
                 "na": [{"k": 24, "v": 2}, {"k": 29, "v": 3}],

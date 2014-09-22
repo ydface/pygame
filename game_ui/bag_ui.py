@@ -55,7 +55,7 @@ class ItemDetail(util.node.Node):
 
         text = u"秘技:   无"
         if self.item.equip.skill is not None:
-            text = text = u"秘技:   " + self.item.equip.skill.name
+            text = text = u"秘技:   " + self.item.equip.skill.name + " " + str(self.item.equip.skill.level) + u"级"
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.rect[0] + 15, self.rect[1] + 118))
 
         i = 0
@@ -87,7 +87,7 @@ class ItemDetail(util.node.Node):
 
         text = u"秘技:   无"
         if self.target.skill is not None:
-            text = text = u"秘技:   " + self.target.skill.name
+            text = text = u"秘技:   " + self.target.skill.name + " " + str(self.target.skill.level) + u"级"
         label.FontLabel.draw_label(10, text, COLOR_WHITE, (self.target_rect[0] + 15, self.target_rect[1] + 128))
 
         i = 0

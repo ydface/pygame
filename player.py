@@ -19,14 +19,9 @@ LES = [80, 561, 1536, 3014, 5011, 7547, 10640, 14300, 18576, 23466, 28997, 35201
        5341291, 5569440, 5805646, 6050229, 6303394, 6565760, 6837189, 7118160, 7408777, 7709806, 8021063, 8343143, \
        8675966, 9020686, 9376914, 9745211, 10125829, 10519680, 10926606, 11347109, 11781714, 13759226, 14281534, \
        14820686, 15377709, 15952577, 16547117, 17160660, 17794131, 18447891, 19123560, 19820674, 20540263, 21282377]
-SS = {
-    4: 3,
-    5: 4,
-    6: 5,
-    7: 6
-}
 
-AttrAdd = [37, 37, 6, 4, 2, 1, 0, 0, 0, 0, 0, 0]
+
+AttrAdd = [37, 37, 6, 4, 2, 1, 1, 1, 1, 1, 1, 1]
 InitAttr = [378, 378, 126, 63, 0, 0, 50, 27, 34, 29, 18, 18]
 
 
@@ -49,18 +44,14 @@ class Player(attribute.Attribute):
 
         self.attribute = [InitAttr[attr] + self.level * AttrAdd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
-        skill_obj = save_data.Save.load("skill")
-        for s in skill_obj:
-            self.skills.append(skill.Skill(s["skill_id"], s["level"], self))
-
         item_obj = save_data.Save.load("item")
         for i in item_obj:
             if i is None:
                 self.equips.append(None)
             else:
-                equip = equipment.Equipment.load_equipment(i["level"], i["eid"], i["quality"], i["attr"], i.get("skill", 0))
+                equip = equipment.Equipment.load_equipment(i["level"], i["eid"], i["quality"], i["attr"], i.get("skill", None))
                 if equip.skill_id:
-                    equip.skill = skill.Skill(equip.skill_id, 1, self)
+                    equip.skill = skill.Skill(equip.skill_id, equip.skill_level, self)
                 self.equips.append(equip)
 
 
@@ -69,9 +60,10 @@ class Player(attribute.Attribute):
             if equiped_obj[i] is None:
                 self.e_equips.append(None)
             else:
-                equip = equipment.Equipment.load_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["attr"], equiped_obj[i].get("skill", 0))
+                equip = equipment.Equipment.load_equipment(equiped_obj[i]["level"], equiped_obj[i]["eid"], equiped_obj[i]["quality"], equiped_obj[i]["attr"], equiped_obj[i].get("skill", None))
                 if equip.skill_id:
-                    equip.skill = skill.Skill(equip.skill_id, 1, self)
+                    equip.skill = skill.Skill(equip.skill_id, equip.skill_level, self)
+                    self.skills.append(equip.skill)
                 self.attribute = [self.attribute[attr] + equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
                 self.e_equips.append(equip)
 
@@ -109,19 +101,13 @@ class Player(attribute.Attribute):
         user_obj["exp"] = self.exp
         return user_obj
 
-    def skill_serialize_save(self):
-        skill_obj = []
-        for s in self.skills:
-            skill_obj.append({"skill_id": s.skill_id, "level": s.level})
-        return skill_obj
-
     def item_serialize_save(self):
         item_obj = []
         for e in self.equips:
             if e is None:
                 item_obj.append(e)
             else:
-                item_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute, "skill": e.skill_id})
+                item_obj.append(e.get_save())
         return item_obj
 
     def equiped_serialize_save(self):
@@ -130,14 +116,10 @@ class Player(attribute.Attribute):
             if e is None:
                 equiped_obj.append(e)
             else:
-                equiped_obj.append({"eid": e.template, "level": e.level, "quality": e.quality, "attr": e.attribute, "skill": e.skill_id})
+                equiped_obj.append(e.get_save())
         return equiped_obj
 
     def level_up_event(self):
-        global SS
-        if SS.has_key(self.level):
-            self.skills.append(skill.Skill(SS[self.level], 1, self))
-
         self.attribute = [self.attribute[attr] + AttrAdd[attr] for attr in range(Attribute_Hp, Attribute_None)]
 
     def put_on_equipment(self, idx):
@@ -159,6 +141,7 @@ class Player(attribute.Attribute):
 
         if equip.skill is not None:
             self.skills.append(equip.skill)
+
     def put_off_equipment(self, equip):
         if equip.skill is not None:
             self.skills.remove(equip.skill)

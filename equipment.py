@@ -19,7 +19,20 @@ class Equipment(attribute.Attribute):
         self.template = 0
         self.attribute = DA[:]
         self.skill_id = 0
+        self.skill_level = 0
         self.skill = None
+
+    def get_save(self):
+        save = dict()
+        save["eid"] = self.template
+        save["level"] = self.level
+        save["quality"] = self.quality
+        save["attr"] = self.attribute
+        if self.skill:
+            save["skill"] = {"id": self.skill_id, "lv": self.skill_level}
+        else:
+            save["skill"] = None
+        return save
 
     @staticmethod
     def create_equipment(level, eid, quality, rand):
@@ -66,8 +79,11 @@ class Equipment(attribute.Attribute):
         if "skill" in t_attr:
             rs = t_attr["skill"]
             rs = rs[equip.quality]
-            equip.skill_id = RandUtil.random([RandSeed(m["k"], m["v"]) for m in rs])
-            equip.skill = skill.Skill(equip.skill_id, 1, gamestate.player)
+            rsk = RandUtil.random([RandSeed(m["k"], m["v"]) for m in rs])
+            if rsk:
+                equip.skill_id = rsk["id"]
+                equip.skill_level = rsk["lv"]
+                equip.skill = skill.Skill(equip.skill_id, equip.skill_level, gamestate.player)
             #print equip.part
 
         if equip.part in RNAME:
@@ -80,7 +96,7 @@ class Equipment(attribute.Attribute):
         return equip
 
     @staticmethod
-    def load_equipment(level, eid, quality, attr, skill_id):
+    def load_equipment(level, eid, quality, attr, sk):
         if not eid in ETM:
             return None
 
@@ -91,7 +107,9 @@ class Equipment(attribute.Attribute):
         equip.quality = quality
         equip.part = e_attr["part"]
         equip.attribute = attr
-        equip.skill_id = skill_id
+        if sk:
+            equip.skill_id = sk["id"]
+            equip.skill_level = sk["lv"]
 
         if equip.part in RNAME:
             equip.image = resource.getImage(RNAME[equip.part] + str(equip.quality))
