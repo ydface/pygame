@@ -7,6 +7,7 @@ import mypygame
 import util.node
 import util.ui
 from attribute import *
+import game_ui.bag_ui
 from bag_ui import *
 from equipment import *
 screen = mypygame.screen
@@ -49,10 +50,14 @@ class EquipCell(util.node.Node):
         label.FontLabel.draw_label(10, Equip_Name[self.equip.part], label.COLOR_WHITE, (pos[0] + 12, pos[1] + 38))
 
     def event(self, event):
-        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[2]:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
-                self.clicked = True
+                gamestate.player.put_off_equipment(self.equip)
+                self.father.rebuild()
+                bag_ui = self.father.father.has_ctype_child(game_ui.bag_ui.BagUI)
+                if bag_ui is not None:
+                    bag_ui.rebuild()
                 return True
             return False
         elif event.type == MOUSEMOTION:
@@ -67,16 +72,6 @@ class EquipCell(util.node.Node):
                 if not self.father.has_ctype_child(ItemDetail):
                     self.father.add(ItemDetail(self, self, None))
                     return True
-            return False
-        elif event.type == MOUSEBUTTONUP:
-            if self.clicked:
-                gamestate.player.put_on_equipment(self.index)
-                self.clicked = False
-                self.father.rebuild()
-                attr_ui = self.father.father.has_ctype_child(game_ui.attribute_ui.AttributeUI)
-                if attr_ui is not None:
-                    attr_ui.rebuild()
-                return True
             return False
         return False
 

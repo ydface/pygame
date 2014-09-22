@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import *
 import mypygame
 import util.node
+from util.node import *
 import util.ui
 import button
 import gamestate
@@ -18,15 +19,46 @@ from skill import *
 screen = mypygame.screen
 
 
+class SkillDetail(util.node.Node):
+    def __init__(self, skill_cell):
+        super(SkillDetail, self).__init__()
+
+        self.skill = skill_cell
+
+        self.background = resource.getUIImage("sdetail", 0.8, 0.8, u"技能详情")
+        self.rect = self.background.get_rect()
+        self.rect.topleft = (self.skill.rect[0] + self.skill.rect[2] + 5, self.skill.rect[1])
+
+    def draw(self):
+        screen.blit(self.background, self.rect.topleft)
+        screen.blit(self.skill.skill.image, (self.rect[0] + 5, self.rect[1] + 25))
+
+        pos = [self.rect[0] + 5, self.rect[1] + 25]
+
+        text = self.skill.skill.name
+        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 0.5))
+        text = u"等级: " + str(self.skill.skill.level)
+        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 12.5))
+        text = "CD: " + str(round(self.skill.skill.cool_down, 1))
+        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 24.5))
+
+        lw = int(self.rect[2] / 12.0)
+        text = u"详情: " + SC[self.skill.skill.skill_id]["content"]
+        tl = len(text) / lw + 1
+
+        for i in range(0, tl):
+            tx = text[i * lw: lw * (i + 1)]
+            label.FontLabel.draw_label(12, tx, label.COLOR_WHITE, (pos[0], pos[1] + 36.5 + i * 12))
+
 class SkillCell(util.node.Node):
     def __init__(self, father, pos, skill, **kwargs):
         super(SkillCell, self).__init__()
 
         self.father = father
         self.skill = skill
-        self.image = resource.getImage("skill_" + str(self.skill.res))
+        #self.image = resource.getImage("skill_" + str(self.skill.res))
         self.index = pos
-        self.rect = self.image.get_rect()
+        self.rect = self.skill.image.get_rect()
         x = pos % 5
         y = pos / 5
         y_offest = kwargs.get("offest", 20)
@@ -34,7 +66,7 @@ class SkillCell(util.node.Node):
 
     def draw(self):
         pos = (self.rect[0], self.rect[1])
-        screen.blit(self.image, pos)
+        screen.blit(self.skill.image, pos)
 
         text = SC[self.skill.skill_id]["name"]
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 30.5))
@@ -43,7 +75,7 @@ class SkillCell(util.node.Node):
         text = "CD: " + str(round(self.skill.cool_down, 1))
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 50.5))
 
-    '''
+
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             position = pygame.mouse.get_pos()
@@ -55,32 +87,24 @@ class SkillCell(util.node.Node):
             position = pygame.mouse.get_pos()
             if not self.rect.collidepoint(position):
                 self.clicked = False
-                i_detail = self.father.has_ctype_child(ItemDetail)
-                if i_detail and i_detail.item == self:
-                    self.father.remove_ctype_child(ItemDetail)
+                i_detail = self.father.has_ctype_child(SkillDetail)
+                if i_detail and i_detail.skill == self:
+                    self.father.remove_ctype_child(SkillDetail)
                 return False
             else:
-                if not self.father.has_ctype_child(ItemDetail) and self.equip:
-                    self.father.add(ItemDetail(self, self, gamestate.player.part_equipment(self.equip.part)))
+                if not self.father.has_ctype_child(SkillDetail):
+                    self.father.add(SkillDetail(self))
                     return True
             return False
-        elif event.type == MOUSEBUTTONUP:
-            if self.clicked:
-                gamestate.player.put_on_equipment(self.index)
-                self.clicked = False
-                self.father.rebuild()
-                attr_ui = self.father.father.has_ctype_child(game_ui.attribute_ui.AttributeUI)
-                if attr_ui is not None:
-                    attr_ui.rebuild()
-                return True
-            return False
         return False
-    '''
+
 
 
 class SkillUI(util.ui.BaseUI):
     def __init__(self, **kwargs):
         super(SkillUI, self).__init__()
+
+        self.event_type = Event_Type_Child
 
         self.image = resource.getUIImage("skill_ui", 0.93, 2, u"技能")
 

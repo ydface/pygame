@@ -25,7 +25,7 @@ class Monster(attribute.Attribute):
 
         m_attribute = MC[mid].copy()
 
-        self.level = random.randint(m_attribute["level"][0], m_attribute["level"][1])
+        self.level = gamestate.player.level + random.randint(m_attribute["level"][0], m_attribute["level"][1])
 
         lv_addition = m_attribute["add"] * self.level
         rand_addition = random.randint(-10, 10)

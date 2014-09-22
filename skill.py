@@ -13,6 +13,7 @@ from attribute import *
 from util.color import *
 from util.macro import *
 import battle
+import resource
 
 SC = {
     1: {
@@ -307,7 +308,8 @@ class Skill(object):
         self.anger = SC[self.skill_id]["anger"]
         self.effect = SC[self.skill_id]["effect"]
         self.init_cd(SC[self.skill_id]["cd"], SC[self.skill_id]["rt"])
-        self.res = SC[self.skill_id]["res"]
+        res = SC[self.skill_id]["res"]
+        self.image = resource.getImage("skill_" + str(res))
 
     def cd_update(self, **kwargs):
         time = kwargs['time']
@@ -419,7 +421,7 @@ class SkillEffect_6(SkillEffect):
         battle.BattleBuff.append_buff(self.source, self.target, BTY_DOT, self.round, int(self.damage/self.round), interval=self.interval)
 
 
-#使中毒
+#回春术
 class SkillEffect_7(SkillEffect):
     def __init__(self, skill, source, target):
         super(SkillEffect_7, self).__init__(skill, source, target)
@@ -428,12 +430,12 @@ class SkillEffect_7(SkillEffect):
 
     def effect_active(self):
         self.source.anger_change(self.skill.anger)
-        hp_val = self.source.unit.attribute_value(Attribute_Max_Hp) * self.prec
+        hp_val = int(self.source.unit.attribute_value(Attribute_Max_Hp) * self.prec)
         self.source.recover_hp(hp_val)
         self.source.add_hp_change_label(u"回春 " + str(hp_val), 16, COLOR_GREEN)
 
 
-#使中毒
+#奥义·闪
 class SkillEffect_8(SkillEffect):
     def __init__(self, skill, source, target):
         super(SkillEffect_8, self).__init__(skill, source, target)

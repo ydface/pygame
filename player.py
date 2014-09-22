@@ -159,6 +159,13 @@ class Player(attribute.Attribute):
 
         if equip.skill is not None:
             self.skills.append(equip.skill)
+    def put_off_equipment(self, equip):
+        if equip.skill is not None:
+            self.skills.remove(equip.skill)
+        self.attribute = [self.attribute[attr] - equip.attribute[attr] for attr in range(Attribute_Hp, Attribute_None)]
+        self.e_equips[equip.part] = None
+        self.get_equipment(equip)
+        pass
 
     def part_equipment(self, part):
         if part >= len(self.e_equips):
