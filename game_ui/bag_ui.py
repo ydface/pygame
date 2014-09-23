@@ -4,7 +4,7 @@
 __author__ = 'Ydface'
 
 import mypygame
-import res
+import gameresource
 import util.node
 from util.node import *
 import util.ui
@@ -34,7 +34,7 @@ class ItemDetail(util.node.Node):
 
         #对比装备
         self.target = target
-        self.image = res.getUIImage("idetail", 0.56, 2.2, u"装备详情")
+        self.image = gameresource.getUIImage("idetail", 0.56, 2.2, u"装备详情")
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.item.rect[0] + self.item.rect[2] + 5, self.item.rect[1])
         self.target_rect = self.image.get_rect()
@@ -106,12 +106,12 @@ class ItemCell(util.node.Node):
         self.equip = equip
         if self.equip:
             if self.equip.part in RNAME:
-                self.image = res.get_image(RNAME[self.equip.part] + str(self.equip.quality))
+                self.image = gameresource.get_image(RNAME[self.equip.part] + str(self.equip.quality))
                 self.image = pygame.transform.scale(self.image, (37, 37))
             else:
-                self.image = res.get_image("item_" + str(self.equip.template))
+                self.image = gameresource.get_image("item_" + str(self.equip.template))
         else:
-            self.image = res.get_image("ecell")
+            self.image = gameresource.get_image("ecell")
             self.image = pygame.transform.scale(self.image, (37, 37))
 
         self.index = idx
@@ -179,7 +179,7 @@ class BagUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = res.getUIImage("bag_ui", 1.17, 2.2, u"背包", 20)
+        self.image = gameresource.getUIImage("bag_ui", 1.17, 2.2, u"背包", 20)
 
         self.move_able = False
         self.rect = Rect(280, 300, self.image.get_width(), self.image.get_height())

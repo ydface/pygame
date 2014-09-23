@@ -11,7 +11,7 @@ except ImportError:
 import mypygame
 import game_ui.mission_ui
 import random
-import res
+import gameresource
 import label
 import util.node
 import gamestate
@@ -28,8 +28,8 @@ screen = mypygame.screen
 class ExitButton(button.Button):
     def __init__(self, father):
         pos = [345, 500]
-        image1 = res.get_image("start_normal")
-        image0 = res.get_image("start_down")
+        image1 = gameresource.get_image("start_normal")
+        image0 = gameresource.get_image("start_down")
 
         super(ExitButton, self).__init__(pos, image1, image0, father)
 
@@ -49,7 +49,7 @@ class BattleBuff(util.node.Node):
         self.interval = kwargs.get("interval", 0)   #生效间隔
         self.content = kwargs.get("content", u"无描述")
         self.time = self.interval  #生效剩余时间
-        self.image = res.get_image("skill_" + str(self.effect))
+        self.image = gameresource.get_image("skill_" + str(self.effect))
         self.image = pygame.transform.scale(self.image, (self.image.get_width() // 2, self.image.get_height() // 2))
         self.rect = self.image.get_rect()
         self.detail = None
@@ -90,7 +90,7 @@ class SkillCD(util.node.Node):
 
         self.father = father
         self.skill = skill
-        #self.image = resource.get_image("skill_" + str(self.skill.res))
+        #self.image = gameresourceource.get_image("skill_" + str(self.skill.gameresource))
         self.index = pos
         self.rect = self.skill.image.get_rect()
         y_offest = kwargs.get("offest", 20)
@@ -112,7 +112,7 @@ class SkillCD(util.node.Node):
 
 class BattleUnit(button.Button):
     def __init__(self, unit, image, pos, father, target, **kwargs):
-        super(BattleUnit, self).__init__(pos, image, res.get_image("header"), father)
+        super(BattleUnit, self).__init__(pos, image, gameresource.get_image("header"), father)
         self.unit = unit
         self.dead = False
         self.father = father
@@ -266,7 +266,7 @@ class Battle(util.node.Node):
         super(Battle, self).__init__()
 
         self.end = True
-        self.player = BattleUnit(gamestate.player, res.get_image("header"), [100, 360], self, None, skill=gamestate.player.skills)
+        self.player = BattleUnit(gamestate.player, gameresource.get_image("header"), [100, 360], self, None, skill=gamestate.player.skills)
         self.player.dead = True
         self.add(self.player)
         self.monsters = []

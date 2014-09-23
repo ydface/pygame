@@ -8,7 +8,7 @@ import mypygame
 import util.node
 import button
 import gamestate
-import res
+import gameresource
 import battle
 
 screen = mypygame.screen
@@ -17,10 +17,10 @@ screenheight = mypygame.screenheight
 
 class LevelButton1(button.Button):
     def __init__(self, father):
-        image1 = res.get_image("level_1_1")
+        image1 = gameresource.get_image("level_1_1")
         image1 = pygame.transform.scale(image1,(image1.get_width() / 2, image1.get_height() / 2))
 
-        image0 = res.get_image("level_1_0")
+        image0 = gameresource.get_image("level_1_0")
         image0 = pygame.transform.scale(image0,(image0.get_width() / 2, image0.get_height() / 2))
 
         pos = (163, 111)
@@ -33,10 +33,10 @@ class LevelButton1(button.Button):
 
 class LevelButton2(button.Button):
     def __init__(self, father):
-        image1 = res.get_image("level_2_1")
+        image1 = gameresource.get_image("level_2_1")
         image1 = pygame.transform.scale(image1,(image1.get_width() / 2, image1.get_height() / 2))
 
-        image0 = res.get_image("level_2_0")
+        image0 = gameresource.get_image("level_2_0")
         image0 = pygame.transform.scale(image0,(image0.get_width() / 2, image0.get_height() / 2))
 
         pos = (100, 104)
@@ -50,10 +50,10 @@ class LevelButton2(button.Button):
 
 class LevelButton3(button.Button):
     def __init__(self, father):
-        image1 = res.get_image("level_3_1")
+        image1 = gameresource.get_image("level_3_1")
         image1 = pygame.transform.scale(image1,(image1.get_width() / 2, image1.get_height() / 2))
 
-        image0 = res.get_image("level_3_0")
+        image0 = gameresource.get_image("level_3_0")
         image0 = pygame.transform.scale(image0,(image0.get_width() / 2, image0.get_height() / 2))
 
         pos = (100, 160)
@@ -75,10 +75,10 @@ class MissionMapUI(util.node.Node):
 
         self.offest = 0
 
-        background = res.get_image("big_map")
+        background = gameresource.get_image("big_map")
         self.background = pygame.transform.scale(background,(background.get_width() / 2, background.get_height() / 2))
 
-        background_side = res.get_image("map_key")
+        background_side = gameresource.get_image("map_key")
         self.background_side = pygame.transform.scale(background_side,(background_side.get_width() / 2, background_side.get_height() / 2))
 
         self.level1 = LevelButton1(self)

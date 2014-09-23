@@ -10,7 +10,7 @@ import label
 from util.color import *
 from util.macro import *
 import battle
-import res
+import gameresource
 
 SC = {
     1: {
@@ -307,7 +307,7 @@ class Skill(object):
         self.effect = SC[self.skill_id]["effect"]
         self.init_cd(SC[self.skill_id]["cd"], SC[self.skill_id]["rt"])
         res_id = SC[self.skill_id]["res"]
-        self.image = res.get_image("skill_" + str(res_id))
+        self.image = gameresource.get_image("skill_" + str(res_id))
 
     def cd_update(self, **kwargs):
         time = kwargs['time']

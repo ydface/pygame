@@ -8,7 +8,7 @@ import util.node
 import game_ui.mission_ui
 import button
 import gamestate
-import res
+import gameresource
 
 screen = mypygame.screen
 
@@ -16,8 +16,8 @@ screen = mypygame.screen
 class StartButton(button.Button):
     def __init__(self, father):
         pos = (345, 420)
-        image1 = res.get_image("start_normal")
-        image0 = res.get_image("start_down")
+        image1 = gameresource.get_image("start_normal")
+        image0 = gameresource.get_image("start_down")
 
         super(StartButton, self).__init__(pos, image1, image0, father)
 
@@ -29,8 +29,8 @@ class StartButton(button.Button):
 class ExitButton(button.Button):
     def __init__(self, father):
         pos = (345, 500)
-        image1 = res.get_image("start_normal")
-        image0 = res.get_image("start_down")
+        image1 = gameresource.get_image("start_normal")
+        image0 = gameresource.get_image("start_down")
 
         super(ExitButton, self).__init__(pos, image1, image0, father)
 

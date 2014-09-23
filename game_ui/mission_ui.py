@@ -8,7 +8,7 @@ import util.node
 from util.node import *
 import button
 import gamestate
-import res
+import gameresource
 import game_ui.mission_map
 import game_ui.attribute_ui
 import game_ui.bag_ui
@@ -18,9 +18,10 @@ screen = mypygame.screen
 screenwidth = mypygame.screenwidth
 screenheight = mypygame.screenheight
 
+
 class PlayerInfoButton(button.Button):
     def __init__(self, father):
-        image = res.get_image("btn1")
+        image = gameresource.get_image("btn1")
         pos = (screenwidth - 100 - 60 - 60, screenheight - 80)
 
         super(PlayerInfoButton, self).__init__(pos, image, None, father)
@@ -37,7 +38,7 @@ class PlayerInfoButton(button.Button):
 
 class BagButton(button.Button):
     def __init__(self, father):
-        image = res.get_image("btn2")
+        image = gameresource.get_image("btn2")
         pos = (screenwidth - 100 - 60, screenheight - 80)
 
         super(BagButton, self).__init__(pos, image, None, father)
@@ -51,9 +52,10 @@ class BagButton(button.Button):
             self.father.remove(self.bag)
             self.bag = None
 
+
 class SkillButton(button.Button):
     def __init__(self, father):
-        image = res.get_image("btn2")
+        image = gameresource.get_image("btn2")
         pos = (screenwidth - 100, screenheight - 80)
 
         super(SkillButton, self).__init__(pos, image, None, father)

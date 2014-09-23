@@ -6,7 +6,7 @@ __author__ = 'Ydface'
 import equipment
 from equipment import *
 import battle
-import res
+import gameresource
 from util.tool import *
 from monster_group import *
 import gamestate
@@ -40,12 +40,12 @@ class Monster(attribute.Attribute):
 
     @staticmethod
     def create_monsters(father):
-        result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in LMN[gamestate.SenceLevel]])
-        result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in result])
+        gameresourceult = RandUtil.random([RandSeed(m["key"], m["val"]) for m in LMN[gamestate.SenceLevel]])
+        gameresourceult = RandUtil.random([RandSeed(m["key"], m["val"]) for m in gameresourceult])
 
-        for i in range(len(result)):
-            mid = result[i]
-            m = battle.BattleUnit(Monster(mid), res.get_image("header"), [400, 20 + 160 * i], father, father.player)
+        for i in range(len(gameresourceult)):
+            mid = gameresourceult[i]
+            m = battle.BattleUnit(Monster(mid), gameresource.get_image("header"), [400, 20 + 160 * i], father, father.player)
             father.monsters.append(m)
             father.add(m)
 

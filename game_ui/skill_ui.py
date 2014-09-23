@@ -4,7 +4,7 @@
 __author__ = 'Ydface'
 
 import util.node
-import res
+import gameresource
 from util.node import *
 import util.ui
 import gamestate
@@ -55,7 +55,7 @@ class SkillCell(util.node.Node):
 
         self.father = father
         self.skill = skill
-        #self.image = resource.get_image("skill_" + str(self.skill.res))
+        #self.image = resource.get_image("skill_" + str(self.skill.gameresource))
         self.index = pos
         self.rect = self.skill.image.get_rect()
         y_offest = kwargs.get("offest", 20)
@@ -99,7 +99,7 @@ class SkillUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = res.getUIImage("skill_ui", 1.57, 2.6, u"技能")
+        self.image = gameresource.getUIImage("skill_ui", 1.57, 2.6, u"技能")
 
         self.move_able = False
         self.rect = self.image.get_rect()

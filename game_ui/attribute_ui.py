@@ -5,7 +5,7 @@ __author__ = 'Ydface'
 
 import util.node
 import util.ui
-import res
+import gameresource
 import game_ui.bag_ui
 from bag_ui import *
 from equipment import *
@@ -79,7 +79,7 @@ class AttributeLabel(util.node.Node):
     def __init__(self, father):
         super(AttributeLabel, self).__init__(father=father)
 
-        self.image = res.getUIImage("attri_ui", 0.7, 3.1, u"属性详情")
+        self.image = gameresource.getUIImage("attri_ui", 0.7, 3.1, u"属性详情")
 
         self.rect = self.image.get_rect()
         self.rect.topleft = self.father.rect.topleft
@@ -104,8 +104,8 @@ class AttributeUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = res.getUIImage("equip_ui", 1.07, 3.1, u"人物装备")
-        self.p_image = res.get_image("player")
+        self.image = gameresource.getUIImage("equip_ui", 1.07, 3.1, u"人物装备")
+        self.p_image = gameresource.get_image("player")
         self.move_able = False
         self.rect = self.image.get_rect()
         self.rect.topleft = (30, 230)

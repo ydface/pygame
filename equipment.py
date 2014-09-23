@@ -4,7 +4,7 @@
 __author__ = 'Ydface'
 
 import pygame
-import res
+import gameresource
 import attribute
 from equipment_template import *
 from util.tool import *
@@ -87,10 +87,10 @@ class Equipment(attribute.Attribute):
             #print equip.part
 
         if equip.part in RNAME:
-            equip.image = res.get_image(RNAME[equip.part] + str(equip.quality))
+            equip.image = gameresource.get_image(RNAME[equip.part] + str(equip.quality))
             equip.image = pygame.transform.scale(equip.image, (37, 37))
         else:
-            equip.image = res.get_image("item_" + str(equip.template))
+            equip.image = gameresource.get_image("item_" + str(equip.template))
 
         #equip.image = resource.get_image("item_" + str(equip.template))
         return equip
@@ -112,9 +112,9 @@ class Equipment(attribute.Attribute):
             equip.skill_level = sk["lv"]
 
         if equip.part in RNAME:
-            equip.image = res.get_image(RNAME[equip.part] + str(equip.quality))
+            equip.image = gameresource.get_image(RNAME[equip.part] + str(equip.quality))
             equip.image = pygame.transform.scale(equip.image, (37, 37))
         else:
-            equip.image = res.get_image("item_" + str(equip.template))
+            equip.image = gameresource.get_image("item_" + str(equip.template))
         return equip
 
