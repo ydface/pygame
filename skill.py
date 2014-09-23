@@ -4,16 +4,13 @@
 __author__ = 'Ydface'
 
 import pygame
-from pygame.locals import *
 import random
 import mypygame
 import label
-import math
-from attribute import *
 from util.color import *
 from util.macro import *
 import battle
-import resource
+import res
 
 SC = {
     1: {
@@ -182,6 +179,7 @@ class SkillEffect(object):
             return SkillEffect_8(skill, source, target)
         else:
             return SkillEffect(skill, source, target)
+
     #技能必命中?
     def hit_certainly(self):
         return False
@@ -308,8 +306,8 @@ class Skill(object):
         self.anger = SC[self.skill_id]["anger"]
         self.effect = SC[self.skill_id]["effect"]
         self.init_cd(SC[self.skill_id]["cd"], SC[self.skill_id]["rt"])
-        res = SC[self.skill_id]["res"]
-        self.image = resource.getImage("skill_" + str(res))
+        res_id = SC[self.skill_id]["res"]
+        self.image = res.get_image("skill_" + str(res_id))
 
     def cd_update(self, **kwargs):
         time = kwargs['time']

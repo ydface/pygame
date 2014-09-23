@@ -3,16 +3,12 @@
 
 __author__ = 'Ydface'
 
-import pygame
-from pygame.locals import *
 import mypygame
 import util.node
 from util.node import *
 import button
 import gamestate
-import resource
-import battle
-import label
+import res
 import game_ui.mission_map
 import game_ui.attribute_ui
 import game_ui.bag_ui
@@ -24,7 +20,7 @@ screenheight = mypygame.screenheight
 
 class PlayerInfoButton(button.Button):
     def __init__(self, father):
-        image = resource.getImage("btn1")
+        image = res.get_image("btn1")
         pos = (screenwidth - 100 - 60 - 60, screenheight - 80)
 
         super(PlayerInfoButton, self).__init__(pos, image, None, father)
@@ -41,7 +37,7 @@ class PlayerInfoButton(button.Button):
 
 class BagButton(button.Button):
     def __init__(self, father):
-        image = resource.getImage("btn2")
+        image = res.get_image("btn2")
         pos = (screenwidth - 100 - 60, screenheight - 80)
 
         super(BagButton, self).__init__(pos, image, None, father)
@@ -57,7 +53,7 @@ class BagButton(button.Button):
 
 class SkillButton(button.Button):
     def __init__(self, father):
-        image = resource.getImage("btn2")
+        image = res.get_image("btn2")
         pos = (screenwidth - 100, screenheight - 80)
 
         super(SkillButton, self).__init__(pos, image, None, father)

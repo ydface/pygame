@@ -3,15 +3,12 @@
 
 __author__ = 'Ydface'
 
-import pygame, sys, pygame.mixer
-from pygame.locals import *
 import mypygame
 import util.node
 import game_ui.mission_ui
 import button
 import gamestate
-import resource
-import label
+import res
 
 screen = mypygame.screen
 
@@ -19,8 +16,8 @@ screen = mypygame.screen
 class StartButton(button.Button):
     def __init__(self, father):
         pos = (345, 420)
-        image1 = resource.getImage("start_normal")
-        image0 = resource.getImage("start_down")
+        image1 = res.get_image("start_normal")
+        image0 = res.get_image("start_down")
 
         super(StartButton, self).__init__(pos, image1, image0, father)
 
@@ -32,8 +29,8 @@ class StartButton(button.Button):
 class ExitButton(button.Button):
     def __init__(self, father):
         pos = (345, 500)
-        image1 = resource.getImage("start_normal")
-        image0 = resource.getImage("start_down")
+        image1 = res.get_image("start_normal")
+        image0 = res.get_image("start_down")
 
         super(ExitButton, self).__init__(pos, image1, image0, father)
 

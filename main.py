@@ -8,7 +8,7 @@ import pygame
 from pygame.locals import *
 from game_ui import main_ui
 import mypygame
-import resource
+import res
 import gamestate
 import label
 import save_data
@@ -20,7 +20,7 @@ clock = mypygame.clock
 
 def draw_mouse():
     pos = pygame.mouse.get_pos()
-    screen.blit(resource.getImage("mouse1"), (pos[0], pos[1]))
+    screen.blit(res.get_image("mouse1"), (pos[0], pos[1]))
 
 
 def hello_world():
@@ -31,7 +31,7 @@ def hello_world():
     #循环，直到接收到窗口关闭事件
     while mypygame.running:
          #处理事件
-        screen.blit(resource.background[gamestate.SenceLevel], (0, 0))
+        screen.blit(res.background[gamestate.SenceLevel], (0, 0))
         for event in pygame.event.get():
             #接收到窗口关闭事件
             if event.type == QUIT:

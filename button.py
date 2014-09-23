@@ -4,8 +4,10 @@
 __author__ = 'Ydface'
 
 import pygame
-import sys
-import pygame.mixer
+try:
+    import pygame.mixer as mixer
+except ImportError:
+    import android.mixer as mixer
 from pygame.locals import *
 import mypygame
 import util.node

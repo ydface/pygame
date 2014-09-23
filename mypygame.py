@@ -5,9 +5,10 @@ __author__ = 'Ydface'
 
 
 import pygame
-import sys
-import pygame.mixer
-from pygame.locals import *
+try:
+    import pygame.mixer as mixer
+except ImportError:
+    import android.mixer as mixer
 
 #pygame 初始化
 pygame.init()
@@ -20,7 +21,7 @@ screen = pygame.display.set_mode(ScreenSize)
 
 #鼠标可用
 pygame.mouse.set_visible(False)
-pygame.mixer.set_num_channels(32)
+mixer.set_num_channels(32)
 
 #设置窗口标题
 pygame.display.set_caption("放置传奇")

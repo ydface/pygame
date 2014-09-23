@@ -3,18 +3,11 @@
 
 __author__ = 'Ydface'
 
-import pygame
-from pygame.locals import *
-import mypygame
 import util.node
+import res
 from util.node import *
 import util.ui
-import button
 import gamestate
-import resource
-import battle
-import label
-import skill
 from skill import *
 screen = mypygame.screen
 
@@ -62,7 +55,7 @@ class SkillCell(util.node.Node):
 
         self.father = father
         self.skill = skill
-        #self.image = resource.getImage("skill_" + str(self.skill.res))
+        #self.image = resource.get_image("skill_" + str(self.skill.res))
         self.index = pos
         self.rect = self.skill.image.get_rect()
         y_offest = kwargs.get("offest", 20)
@@ -106,7 +99,7 @@ class SkillUI(util.ui.BaseUI):
 
         self.event_type = Event_Type_Child
 
-        self.image = resource.getUIImage("skill_ui", 1.57, 2.6, u"技能")
+        self.image = res.getUIImage("skill_ui", 1.57, 2.6, u"技能")
 
         self.move_able = False
         self.rect = self.image.get_rect()

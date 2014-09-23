@@ -3,20 +3,13 @@
 
 __author__ = 'Ydface'
 
-import pygame
-from pygame.locals import *
-import random
-import mypygame
-import gamestate
-import label
-import attribute
 import equipment
 from equipment import *
 import battle
-import resource
-import util.tool
+import res
 from util.tool import *
 from monster_group import *
+import gamestate
 
 
 class Monster(attribute.Attribute):
@@ -52,7 +45,7 @@ class Monster(attribute.Attribute):
 
         for i in range(len(result)):
             mid = result[i]
-            m = battle.BattleUnit(Monster(mid), resource.getImage("header"), [400, 20 + 160 * i], father, father.player)
+            m = battle.BattleUnit(Monster(mid), res.get_image("header"), [400, 20 + 160 * i], father, father.player)
             father.monsters.append(m)
             father.add(m)
 

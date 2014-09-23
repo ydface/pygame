@@ -3,8 +3,11 @@
 
 __author__ = 'Ydface'
 
-import pygame, sys, pygame.mixer
-from pygame.locals import *
+import pygame
+try:
+    import pygame.mixer as mixer
+except ImportError:
+    import android.mixer as mixer
 import mypygame
 import util.node
 from util.color import *

@@ -4,12 +4,12 @@
 __author__ = 'Ydface'
 
 import pygame
-import sys
-import pygame.mixer
+try:
+    import pygame.mixer as mixer
+except ImportError:
+    import android.mixer as mixer
 from pygame.locals import *
 import mypygame
-import button
-import gamestate
 import label
 from util.color import *
 import cPickle
@@ -21,7 +21,7 @@ game_sources = dict()
 background = []
 
 
-def getImage(key):
+def get_image(key):
     global game_sources
     return game_sources[key]
 
@@ -31,9 +31,9 @@ def getUIImage(key, wr, hr, text=u'界面', size=16):
     if game_sources.has_key(key):
         return game_sources[key]
     else:
-        image1 = getImage("ui1")
+        image1 = get_image("ui1")
         image1 = pygame.transform.scale(image1, (int(image1.get_width() * wr), image1.get_height()))
-        image2 = getImage("ui2")
+        image2 = get_image("ui2")
         image2 = pygame.transform.scale(image2, (int(image2.get_width() * wr), int(image2.get_height() * hr)))
 
         w = image1.get_rect()[2]
