@@ -50,7 +50,7 @@ class EquipCell(util.node.Node):
 
     def event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[2]:
-            position = pygame.mouse.get_pos()
+            position = event.pos()
             if self.rect.collidepoint(position):
                 gamestate.player.put_off_equipment(self.equip)
                 self.father.rebuild()

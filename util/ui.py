@@ -21,14 +21,14 @@ class BaseUI(util.node.Node):
 
     def self_event(self, event):
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-            position = pygame.mouse.get_pos()
+            position = event.pos
             if self.rect.collidepoint(position):
                 self.move_able = True
                 self.top()
                 return True
             return False
         elif event.type == MOUSEMOTION:
-            position = pygame.mouse.get_pos()
+            position = event.pos
             if self.rect.collidepoint(position):
                 rel = pygame.mouse.get_rel()
                 if self.move_able:

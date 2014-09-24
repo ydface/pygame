@@ -7,6 +7,7 @@ import gamestate
 import cPickle
 from util.macro import *
 import equipment
+import client
 
 save_obj = None
 
@@ -27,6 +28,9 @@ class Save(object):
         sav_obj["user"] = player.user_serialize_save()
         sav_obj["item"] = player.item_serialize_save()
         sav_obj["equiped"] = player.equiped_serialize_save()
+
+        client.connection.write("test")
+
 
         out = open("save.sav", "wb")
         cPickle.dump(sav_obj, out)

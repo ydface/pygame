@@ -10,6 +10,11 @@ try:
 except ImportError:
     import android.mixer as mixer
 
+try:
+    import android
+except ImportError:
+    android = None
+
 #pygame 初始化
 pygame.init()
 

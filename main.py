@@ -6,31 +6,28 @@ import sys
 #导入pygame模块，第8行的作用是简化你的输入，如不用在event前再加上pygame模块名
 import pygame
 from pygame.locals import *
-from game_ui import main_ui
+#from game_ui import main_ui
 import mypygame
 import gameresource
 import gamestate
 import label
 import save_data
 import traceback
+import client
 
 screen = mypygame.screen
 clock = mypygame.clock
 
+
+game_running = True
 
 def draw_mouse():
     pos = pygame.mouse.get_pos()
     screen.blit(gameresource.get_image("mouse1"), (pos[0], pos[1]))
 
 
-def hello_world():
-    #resource.init()
-
-    gamestate.current_ui = main_ui.UIMain()
-
-    #循环，直到接收到窗口关闭事件
-    while mypygame.running:
-         #处理事件
+def update():
+    if mypygame.running:
         screen.blit(gameresource.background[gamestate.SenceLevel], (0, 0))
         for event in pygame.event.get():
             #接收到窗口关闭事件
@@ -47,28 +44,27 @@ def hello_world():
         label.FontLabel.draw_label(16, text, label.COLOR_WHITE, (10, 600))
 
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
-        draw_mouse()
+        if mypygame.android is None:
+            draw_mouse()
 
         #将Surface对象绘制在屏幕上
         pygame.display.update()
 
-    gamestate.current_ui = None
+    if not mypygame.running:
+        gamestate.current_ui = None
+        save_data.Save.save()
+        pygame.quit()
 
-    save_data.Save.save()
+    return mypygame.running
 
-    pygame.quit()
-    #sys.exit()
+
+def start():
+    if mypygame.android:
+        mypygame.android.init()
+
+    client.start()
 
 if __name__ == "__main__":
-    '''
-    try:
-        hello_world()
-    except:
-        log=open("log.txt",'a')
-        traceback.print_exc(file=log)
-        log.flush()
-        log.close()
-    '''
-    hello_world()
+    start()
 
     

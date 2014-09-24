@@ -11,6 +11,7 @@ except ImportError:
 from pygame.locals import *
 import mypygame
 import util.node
+import label
 
 screen = mypygame.screen
 
@@ -40,10 +41,17 @@ class Button(util.node.Node):
 
     def event(self, event):
         #点击事件检测与处理
-        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-            position = pygame.mouse.get_pos()
-            if self.rect.collidepoint(position):
-                self.click_down()
+        if event.type == MOUSEBUTTONDOWN:
+            position = event.pos
+            '''text = "pos : " + str(position[0]) + " " + str(position[1])
+            if mypygame.android is None:
+                text += " windows"
+            label.FontLabel.draw_label(16, text, label.COLOR_WHITE, (10, 500))'''
+            if (mypygame.android is None and pygame.mouse.get_pressed()[0]) or mypygame.android is not None:
+                position = event.pos
+                #position = pygame.mouse.get_pos()
+                if self.rect.collidepoint(position):
+                    self.click_down()
         elif event.type == MOUSEMOTION:
             position = pygame.mouse.get_pos()
             if self.rect.collidepoint(position):
@@ -55,7 +63,7 @@ class Button(util.node.Node):
 
         elif event.type == MOUSEBUTTONUP:
             self.click_up()
-            position = pygame.mouse.get_pos()
+            position = event.pos
             if self.rect.collidepoint(position):
                 if self.clicked:
                     #点中影响

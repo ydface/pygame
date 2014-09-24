@@ -4,6 +4,7 @@
 __author__ = 'Ydface'
 
 import player
+import game_ui.main_ui
 
 LEVEL_0 = 0
 LEVEL_1 = 1
@@ -14,6 +15,6 @@ LEVEL_5 = 5
 LEVEL_6 = 6
 SenceLevel = LEVEL_0
 
-current_ui = None
+current_ui = game_ui.main_ui.UIMain()
 
 player = player.Player()

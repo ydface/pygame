@@ -40,11 +40,11 @@ class Monster(attribute.Attribute):
 
     @staticmethod
     def create_monsters(father):
-        gameresourceult = RandUtil.random([RandSeed(m["key"], m["val"]) for m in LMN[gamestate.SenceLevel]])
-        gameresourceult = RandUtil.random([RandSeed(m["key"], m["val"]) for m in gameresourceult])
+        result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in LMN[gamestate.SenceLevel]])
+        result = RandUtil.random([RandSeed(m["key"], m["val"]) for m in result])
 
-        for i in range(len(gameresourceult)):
-            mid = gameresourceult[i]
+        for i in range(len(result)):
+            mid = result[i]
             m = battle.BattleUnit(Monster(mid), gameresource.get_image("header"), [400, 20 + 160 * i], father, father.player)
             father.monsters.append(m)
             father.add(m)
