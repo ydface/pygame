@@ -3,50 +3,18 @@
 
 __author__ = 'Ydface'
 
+import pygame
 import util.node
+import mypygame
 import gameresource
 from util.node import *
 import util.ui
 import gamestate
-from skill import *
+import skill
+import label
+
+
 screen = mypygame.screen
-
-
-'''
-class SkillDetail(util.node.Node):
-    def __init__(self, skill_cell):
-        super(SkillDetail, self).__init__()
-
-        self.skill = skill_cell
-
-        self.background = resource.getUIImage("sdetail", 0.8, 1, u"技能详情")
-        self.rect = self.background.get_rect()
-        self.rect.topleft = (self.skill.rect[0] + self.skill.rect[2] + 5, self.skill.rect[1])
-
-    def draw(self):
-        screen.blit(self.background, self.rect.topleft)
-        screen.blit(self.skill.skill.image, (self.rect[0] + 5, self.rect[1] + 25))
-
-        pos = [self.rect[0] + 5, self.rect[1] + 25]
-
-        text = self.skill.skill.name
-        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0], pos[1] + 36.5))
-        text = u"等级: " + str(self.skill.skill.level)
-        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0], pos[1] + 48.5))
-        text = "CD: " + str(round(self.skill.skill.cool_down, 1))
-        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0], pos[1] + 60.5))
-
-        text = u"释放: " + str(self.skill.skill.max_release_time)
-        label.FontLabel.draw_label(12, text, label.COLOR_WHITE, (pos[0], pos[1] + 72.5))
-
-        lw = int(self.rect[2] / 12.0)
-        text = u"详情: " + SC[self.skill.skill.skill_id]["content"]
-        tl = len(text) / lw + 1
-
-        for i in range(0, tl):
-            tx = text[i * lw: lw * (i + 1)]
-            label.FontLabel.draw_label(12, tx, label.COLOR_WHITE, (pos[0], pos[1] + 88.5 + i * 12))
-'''
 
 
 class SkillCell(util.node.Node):
@@ -67,7 +35,7 @@ class SkillCell(util.node.Node):
         pos = (self.rect[0], self.rect[1])
         screen.blit(self.skill.image, pos)
 
-        text = SC[self.skill.skill_id]["name"]
+        text = skill.SC[self.skill.skill_id]["name"]
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 0.5))
         text = u"等级: " + str(self.skill.level)
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35, pos[1] + 10.5))
@@ -77,7 +45,7 @@ class SkillCell(util.node.Node):
         text = u"释放: " + str(self.skill.max_release_time) + "s"
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0] + 35 + 50, pos[1] + 20.5))
 
-        text = u"详情: " + SC[self.skill.skill_id]["content"]
+        text = u"详情: " + skill.SC[self.skill.skill_id]["content"]
         label.FontLabel.draw_label(10, text, label.COLOR_WHITE, (pos[0], pos[1] + 30.5))
 
         label.FontLabel.draw_label(20, u"向上移", label.COLOR_WHITE, self.up_btn_rect.topleft)

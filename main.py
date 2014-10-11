@@ -44,8 +44,8 @@ def update():
         label.FontLabel.draw_label(16, text, label.COLOR_WHITE, (10, 600))
 
         #先绘制场景界面，再绘制鼠标，鼠标在最上层
-        if mypygame.android is None:
-            draw_mouse()
+        #if mypygame.android is None:
+        draw_mouse()
 
         #将Surface对象绘制在屏幕上
         pygame.display.update()
@@ -59,8 +59,8 @@ def update():
 
 
 def start():
-    if mypygame.android:
-        mypygame.android.init()
+    #if mypygame.android:
+    #    mypygame.android.init()
 
     client.start()
 

@@ -8,6 +8,7 @@ import cPickle
 from util.macro import *
 import equipment
 import client
+import json
 
 save_obj = None
 
@@ -29,8 +30,10 @@ class Save(object):
         sav_obj["item"] = player.item_serialize_save()
         sav_obj["equiped"] = player.equiped_serialize_save()
 
-        client.connection.write("test")
+        j = json.dumps(sav_obj)
 
+        if client.connection:
+            client.connection.write(j)
 
         out = open("save.sav", "wb")
         cPickle.dump(sav_obj, out)

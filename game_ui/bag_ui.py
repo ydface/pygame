@@ -12,6 +12,7 @@ import label
 import game_ui.attribute_ui
 from equipment import *
 from util.color import *
+import gamestate
 screen = mypygame.screen
 
 #道具品质颜色
