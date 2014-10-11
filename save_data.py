@@ -7,11 +7,11 @@ import gamestate
 import cPickle
 from util.macro import *
 import equipment
-import client
 import json
+import session
 
 save_obj = None
-
+mysession = None
 
 class Save(object):
     def __init__(self):
@@ -32,12 +32,15 @@ class Save(object):
 
         j = json.dumps(sav_obj)
 
-        if client.connection:
-            client.connection.write(j)
-
         out = open("save.sav", "wb")
         cPickle.dump(sav_obj, out)
         out.close()
+
+        global mysession
+        if not mysession:
+            mysession = session.Session()
+        result = mysession.save_exp(False, j)
+        #mysession = None
 
     @staticmethod
     def init_save():

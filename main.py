@@ -13,13 +13,10 @@ import gamestate
 import label
 import save_data
 import traceback
-import client
 
 screen = mypygame.screen
 clock = mypygame.clock
 
-
-game_running = True
 
 def draw_mouse():
     pos = pygame.mouse.get_pos()
@@ -27,7 +24,7 @@ def draw_mouse():
 
 
 def update():
-    if mypygame.running:
+    while mypygame.running:
         screen.blit(gameresource.background[gamestate.SenceLevel], (0, 0))
         for event in pygame.event.get():
             #接收到窗口关闭事件
@@ -55,14 +52,9 @@ def update():
         save_data.Save.save()
         pygame.quit()
 
-    return mypygame.running
-
 
 def start():
-    #if mypygame.android:
-    #    mypygame.android.init()
-
-    client.start()
+    update()
 
 if __name__ == "__main__":
     start()
